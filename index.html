@@ -19,11 +19,11 @@
       </div>
 
       <nav class="sidebar-nav">
-        <a href="#" class="nav-item active">
+        <a href="#" class="nav-item">
           <span class="material-symbols-rounded">grid_view</span>
           Dashboard
         </a>
-        <a href="#" class="nav-item">
+        <a href="#" class="nav-item active">
           <span class="material-symbols-rounded">receipt_long</span>
           Transactions
         </a>
@@ -86,13 +86,12 @@
       </header>
 
       <!-- Dashboard Grid -->
+      <!-- Commented out for Transaction History View
       <div class="dashboard-container">
         <div class="dashboard-grid">
           
-          <!-- Left Main Column -->
           <div class="main-column">
             
-            <!-- Hero Card -->
             <div class="card hero-card">
               <div class="hero-content">
                 <div class="net-worth-row">
@@ -118,7 +117,6 @@
               </div>
             </div>
 
-            <!-- Recent Transactions Card -->
             <div class="card">
               <div class="card-title-row">
                 <div>
@@ -131,7 +129,6 @@
               </div>
 
               <div class="transaction-list">
-                <!-- Transaction Item 1 -->
                 <div class="tx-item">
                   <div class="tx-icon">
                     <span class="material-symbols-rounded">restaurant</span>
@@ -146,7 +143,6 @@
                   </div>
                 </div>
 
-                <!-- Transaction Item 2 -->
                 <div class="tx-item">
                   <div class="tx-icon">
                     <span class="material-symbols-rounded">flight</span>
@@ -161,7 +157,6 @@
                   </div>
                 </div>
 
-                <!-- Transaction Item 3 -->
                 <div class="tx-item">
                   <div class="tx-icon">
                     <span class="material-symbols-rounded">account_balance</span>
@@ -176,7 +171,6 @@
                   </div>
                 </div>
 
-                <!-- Transaction Item 4 -->
                 <div class="tx-item">
                   <div class="tx-icon">
                     <span class="material-symbols-rounded">home_work</span>
@@ -195,10 +189,8 @@
 
           </div>
 
-          <!-- Right Side Column -->
           <div class="side-column">
             
-            <!-- Budgets Card -->
             <div class="card">
               <div class="card-title-row" style="margin-bottom: 2rem;">
                 <h2 class="card-title">Top Budgets</h2>
@@ -238,7 +230,6 @@
               </div>
             </div>
 
-            <!-- Allocation Card -->
             <div class="card allocation-card">
               <h2 class="card-title" style="text-align: center;">Allocation by<br>Category</h2>
               
@@ -267,7 +258,6 @@
               </div>
             </div>
 
-            <!-- Advisor Tip -->
             <div class="card tip-card">
               <div class="tip-icon">
                 <span class="material-symbols-rounded">lightbulb</span>
@@ -276,6 +266,192 @@
                 <h4>Advisor Tip</h4>
                 <p>Consider rebalancing your equity portfolio to capture higher yields in emerging markets.</p>
               </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      -->
+
+      <!-- Transaction History View -->
+      <div class="transactions-view">
+        <div class="breadcrumb">Ledger &rsaquo; <strong>All Transactions</strong></div>
+        
+        <div class="page-title-row">
+          <h1>Transaction History</h1>
+          <div class="title-actions">
+            <button class="period-btn">Period: <strong>Last 30 Days</strong> <span class="material-symbols-rounded" style="font-size: 1.2rem;">expand_more</span></button>
+            <button class="filter-btn"><span class="material-symbols-rounded" style="font-size: 1.2rem;">tune</span></button>
+          </div>
+        </div>
+
+        <div class="tx-layout">
+          <!-- Left Column -->
+          <div class="tx-list-col">
+            <div class="tx-table">
+              <div class="tx-th">
+                <div>Date</div>
+                <div>Description</div>
+                <div>Category</div>
+                <div>Account</div>
+                <div style="text-align: right;">Amount</div>
+              </div>
+              
+              <!-- row 1 -->
+              <div class="tx-row-item">
+                <div class="tx-col">
+                  <span class="tx-date">Oct 24, 2023</span>
+                  <span class="tx-time">14:32 PM</span>
+                </div>
+                <div class="tx-desc-wrapper">
+                  <div class="tx-icon-box blue">
+                    <span class="material-symbols-rounded" style="font-size: 1.2rem;">shopping_bag</span>
+                  </div>
+                  <div class="tx-col">
+                    <span class="tx-desc-title">Apple Store Regent St</span>
+                    <span class="tx-desc-sub">Electronics & Gear</span>
+                  </div>
+                </div>
+                <div class="tx-col">
+                  <span class="tx-badge badge-shopping">Shopping</span>
+                </div>
+                <div class="tx-col">
+                  <span class="tx-account-name">Sovereign</span>
+                  <span class="tx-account-sub">Black Card</span>
+                </div>
+                <div class="tx-col amount text-danger-custom">-$1,299.00</div>
+              </div>
+
+              <!-- row 2 -->
+              <div class="tx-row-item">
+                <div class="tx-col">
+                  <span class="tx-date">Oct 23, 2023</span>
+                  <span class="tx-time">09:15 AM</span>
+                </div>
+                <div class="tx-desc-wrapper">
+                  <div class="tx-icon-box blue">
+                    <span class="material-symbols-rounded" style="font-size: 1.2rem;">payments</span>
+                  </div>
+                  <div class="tx-col">
+                    <span class="tx-desc-title">Vanguard Group Div</span>
+                    <span class="tx-desc-sub">Investment Income</span>
+                  </div>
+                </div>
+                <div class="tx-col">
+                  <span class="tx-badge badge-income">Income</span>
+                </div>
+                <div class="tx-col">
+                  <span class="tx-account-name">Fidelity</span>
+                  <span class="tx-account-sub">Brokerage</span>
+                </div>
+                <div class="tx-col amount text-success-custom">+$4,520.45</div>
+              </div>
+
+              <!-- row 3 -->
+              <div class="tx-row-item">
+                <div class="tx-col">
+                  <span class="tx-date">Oct 22, 2023</span>
+                  <span class="tx-time">20:45 PM</span>
+                </div>
+                <div class="tx-desc-wrapper">
+                  <div class="tx-icon-box">
+                    <span class="material-symbols-rounded" style="font-size: 1.2rem;">restaurant</span>
+                  </div>
+                  <div class="tx-col">
+                    <span class="tx-desc-title">The Ivy Chelsea Garden</span>
+                    <span class="tx-desc-sub">Dining & Entertainment</span>
+                  </div>
+                </div>
+                <div class="tx-col">
+                  <span class="tx-badge badge-leisure">Leisure</span>
+                </div>
+                <div class="tx-col">
+                  <span class="tx-account-name">Sovereign</span>
+                  <span class="tx-account-sub">Black Card</span>
+                </div>
+                <div class="tx-col amount text-danger-custom">-$245.80</div>
+              </div>
+              
+              <div class="empty-state">
+                <span class="material-symbols-rounded empty-icon">filter_list_off</span>
+                <div class="empty-title">No results found for current filters</div>
+                <div class="empty-text">Try adjusting your date range or removing specific category filters to see more activity.</div>
+                <div class="clear-filters">Clear All Filters</div>
+              </div>
+            </div>
+
+            <div class="pagination">
+              <div>Showing <strong>1-10</strong> of <strong>2,480</strong> transactions</div>
+              <div class="page-numbers">
+                <span class="material-symbols-rounded" style="font-size: 1.2rem; cursor: pointer;">chevron_left</span>
+                <div class="page-btn active">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn">3</div>
+                <span class="material-symbols-rounded" style="font-size: 1.2rem; cursor: pointer;">chevron_right</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="tx-side-col">
+            
+            <!-- Detail Card -->
+            <div class="detail-card">
+              <div class="detail-top">
+                <span>DETAIL VIEW</span>
+                <span class="material-symbols-rounded detail-icon-open" style="font-size: 1.1rem;">open_in_new</span>
+              </div>
+              
+              <div class="detail-center">
+                <div class="detail-big-icon">
+                  <span class="material-symbols-rounded">shopping_bag</span>
+                </div>
+                <div class="detail-title">Apple Store Regent St</div>
+                <div class="detail-date">Oct 24, 2023 &bull; 14:32 PM</div>
+              </div>
+
+              <div class="detail-info-list">
+                <div class="info-row">
+                  <span class="info-label">Status</span>
+                  <span class="info-value status-cleared">Cleared</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Merchant</span>
+                  <span class="info-value">Apple Retail UK</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Method</span>
+                  <span class="info-value">Apple Pay (**** 9921)</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Tax</span>
+                  <span class="info-value">$216.50</span>
+                </div>
+              </div>
+
+              <div class="internal-note">
+                <div class="note-label">INTERNAL NOTE</div>
+                <div class="note-box">
+                  "Purchase of new iPad Pro for quarterly design review. Eligible for capital expenditure tax deduction."
+                </div>
+              </div>
+
+              <button class="edit-btn">
+                <span class="material-symbols-rounded" style="font-size: 1.1rem;">edit</span>
+                Edit Transaction
+              </button>
+            </div>
+
+            <!-- Tip Card -->
+            <div class="tip-card-green">
+              <div class="tip-header">
+                <span class="material-symbols-rounded">lightbulb</span>
+                <div class="tip-title">Unusual spending in "Shopping" this month.</div>
+              </div>
+              <div class="tip-text">
+                You've spent 24% more than your average monthly budget in this category.
+              </div>
+              <div class="tip-link">VIEW BUDGET ANALYSIS</div>
             </div>
 
           </div>
