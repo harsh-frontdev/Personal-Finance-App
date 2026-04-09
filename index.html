@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,49 +8,59 @@
   <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
   <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body class="font-inter bg-body text-main leading-relaxed flex h-screen overflow-hidden">
   <div class="flex w-full">
-    
+
     <!-- Sidebar -->
     <aside class="w-[300px] bg-sidebar flex flex-col h-full border-r border-border p-[2rem_1.5rem] shrink-0">
       <div class="sidebar-logo">
-        <h1 class="text-[1.5rem] font-bold text-primary leading-tight mb-2 uppercase tracking-wide">The Sovereign<br>Ledger</h1>
+        <h1 class="text-[1.5rem] font-bold text-primary leading-tight mb-2 uppercase tracking-wide">The
+          Sovereign<br>Ledger</h1>
         <p class="text-[0.75rem] text-muted font-medium tracking-wide uppercase">Private Wealth Management</p>
       </div>
 
       <nav class="flex flex-col gap-2 mt-8">
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+        <a href="#"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">grid_view</span>
           Dashboard
         </a>
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold transition-colors bg-primary text-white hover:bg-primary-hover hover:text-white">
+        <a href="#"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold transition-colors bg-primary text-white hover:bg-primary-hover hover:text-white">
           <span class="material-symbols-rounded">receipt_long</span>
           Transactions
         </a>
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+        <a href="#"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">account_balance_wallet</span>
           Budgets
         </a>
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+        <a href="#"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">account_balance</span>
           Accounts
         </a>
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+        <a href="#"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">bar_chart</span>
           Reports
         </a>
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+        <a href="#"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">track_changes</span>
           Goals
         </a>
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+        <a href="#"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">settings</span>
           Settings
         </a>
       </nav>
 
       <div class="mt-auto pt-4 border-t border-border">
-        <button id="btnOpenAddTransaction" class="w-full flex items-center justify-center gap-2 bg-primary text-white border-none rounded-lg py-3 text-[0.9rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">
+        <button id="btnOpenAddTransaction"
+          class="w-full flex items-center justify-center gap-2 bg-primary text-white border-none rounded-lg py-3 text-[0.9rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">
           <span class="material-symbols-rounded">add_circle</span>
           Add Transaction
         </button>
@@ -58,14 +69,16 @@
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col overflow-y-auto">
-      
+
       <!-- Top Header -->
-      <header class="h-[80px] bg-body/80 backdrop-blur-sm flex items-center justify-between px-8 sticky top-0 z-10 border-b border-border shrink-0">
+      <header
+        class="h-[80px] bg-body/80 backdrop-blur-sm flex items-center justify-between px-8 sticky top-0 z-10 border-b border-border shrink-0">
         <div class="flex items-center gap-3 bg-white px-4 py-2.5 rounded-full shadow-sm w-[400px] border border-border">
           <span class="material-symbols-rounded text-muted">search</span>
-          <input type="text" placeholder="Search wealth reports..." class="border-none bg-transparent outline-none w-full text-sm text-main placeholder-muted">
+          <input type="text" placeholder="Search wealth reports..."
+            class="border-none bg-transparent outline-none w-full text-sm text-main placeholder-muted">
         </div>
-        
+
         <div class="flex items-center gap-6">
           <div class="flex items-center gap-4 text-muted cursor-pointer">
             <span class="material-symbols-rounded hover:text-primary transition-colors">notifications</span>
@@ -78,7 +91,8 @@
             </div>
             <div class="avatar">
               <!-- Placeholder for user avatar -->
-              <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling" class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
+              <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
+                class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
             </div>
           </div>
         </div>
@@ -87,12 +101,14 @@
       <!-- Transaction History View -->
       <div class="p-8 mx-auto w-full">
         <div class="text-sm text-muted mb-6">Ledger &rsaquo; <strong class="text-main">All Transactions</strong></div>
-        
+
         <div class="flex justify-between items-center mb-8">
           <h1 class="text-4xl text-primary font-bold tracking-tight m-0">Transaction History</h1>
           <div class="flex gap-3">
-            <button class="flex items-center gap-2 bg-white border border-border rounded-lg px-4 py-2 text-sm font-semibold text-main cursor-pointer shadow-sm hover:border-light transition-colors">Period: <strong class="text-main">Last 30 Days</strong> <span class="material-symbols-rounded text-[1.2rem]">expand_more</span></button>
-            <button class="flex items-center gap-2 bg-white border border-border rounded-lg px-4 py-2 text-sm font-semibold text-main cursor-pointer shadow-sm hover:border-light transition-colors"><span class="material-symbols-rounded text-[1.2rem]">tune</span></button>
+            <button
+              class="flex items-center gap-2 bg-white border border-border rounded-lg px-4 py-2 text-sm font-semibold text-main cursor-pointer shadow-sm hover:border-light transition-colors">Period:
+              <strong class="text-main">Last 30 Days</strong> <span
+                class="material-symbols-rounded text-[1.2rem]">expand_more</span></button>
           </div>
         </div>
 
@@ -100,104 +116,33 @@
           <!-- Left Column -->
           <div class="flex-1 flex flex-col gap-6 min-w-0">
             <div class="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
-              <div class="grid grid-cols-[1.5fr_2fr_1fr_1fr_1fr] gap-4 px-6 py-4 bg-card-alt border-b border-border text-[0.65rem] font-bold text-light uppercase tracking-wider">
+              <div
+                class="grid grid-cols-[1.5fr_2fr_1fr_1fr_1fr] gap-4 px-6 py-4 bg-card-alt border-b border-border text-[0.65rem] font-bold text-light uppercase tracking-wider">
                 <div>Date</div>
                 <div>Description</div>
                 <div>Category</div>
                 <div>Account</div>
                 <div class="text-right">Amount</div>
               </div>
-              
-              <!-- row 1 -->
-              <div class="grid grid-cols-[1.5fr_2fr_1fr_1fr_1fr] gap-4 items-center px-6 py-4 border-b border-border hover:bg-slate-50 transition-colors">
-                <div>
-                  <span class="font-medium text-sm text-main block">Oct 24, 2023</span>
-                  <span class="text-xs text-muted mt-1 block">14:32 PM</span>
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="w-10 h-10 rounded-full flex items-center justify-center bg-[#eff6ff] text-[#3b82f6] shrink-0">
-                    <span class="material-symbols-rounded text-[1.2rem]">shopping_bag</span>
-                  </div>
-                  <div class="min-w-0">
-                    <span class="font-bold text-sm text-main block truncate">Apple Store Regent St</span>
-                    <span class="text-xs text-muted block mt-1 truncate">Electronics & Gear</span>
-                  </div>
-                </div>
-                <div>
-                  <span class="inline-block px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-[#fefce8] text-[#ca8a04]">Shopping</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-sm text-main block truncate">Sovereign</span>
-                  <span class="text-xs text-muted block mt-1 truncate">Black Card</span>
-                </div>
-                <div class="font-bold text-right text-[1.05rem] text-[#dc2626]">-$1,299.00</div>
-              </div>
 
-              <!-- row 2 -->
-              <div class="grid grid-cols-[1.5fr_2fr_1fr_1fr_1fr] gap-4 items-center px-6 py-4 border-b border-border hover:bg-slate-50 transition-colors">
-                <div>
-                  <span class="font-medium text-sm text-main block">Oct 23, 2023</span>
-                  <span class="text-xs text-muted mt-1 block">09:15 AM</span>
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="w-10 h-10 rounded-full flex items-center justify-center bg-[#eff6ff] text-[#3b82f6] shrink-0">
-                    <span class="material-symbols-rounded text-[1.2rem]">payments</span>
-                  </div>
-                  <div class="min-w-0">
-                    <span class="font-bold text-sm text-main block truncate">Vanguard Group Div</span>
-                    <span class="text-xs text-muted block mt-1 truncate">Investment Income</span>
-                  </div>
-                </div>
-                <div>
-                  <span class="inline-block px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-[#dcfce7] text-[#16a34a]">Income</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-sm text-main block truncate">Fidelity</span>
-                  <span class="text-xs text-muted block mt-1 truncate">Brokerage</span>
-                </div>
-                <div class="font-bold text-right text-[1.05rem] text-[#16a34a]">+$4,520.45</div>
-              </div>
-
-              <!-- row 3 -->
-              <div class="grid grid-cols-[1.5fr_2fr_1fr_1fr_1fr] gap-4 items-center px-6 py-4 border-b border-border hover:bg-slate-50 transition-colors">
-                <div>
-                  <span class="font-medium text-sm text-main block">Oct 22, 2023</span>
-                  <span class="text-xs text-muted mt-1 block">20:45 PM</span>
-                </div>
-                <div class="flex items-center gap-4">
-                  <div class="w-10 h-10 rounded-full flex items-center justify-center bg-card-alt text-main shrink-0">
-                    <span class="material-symbols-rounded text-[1.2rem]">restaurant</span>
-                  </div>
-                  <div class="min-w-0">
-                    <span class="font-bold text-sm text-main block truncate">The Ivy Chelsea Garden</span>
-                    <span class="text-xs text-muted block mt-1 truncate">Dining & Entertainment</span>
-                  </div>
-                </div>
-                <div>
-                  <span class="inline-block px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-[#f3e8ff] text-[#9333ea]">Leisure</span>
-                </div>
-                <div>
-                  <span class="font-semibold text-sm text-main block truncate">Sovereign</span>
-                  <span class="text-xs text-muted block mt-1 truncate">Black Card</span>
-                </div>
-                <div class="font-bold text-right text-[1.05rem] text-[#dc2626]">-$245.80</div>
-              </div>
-              
-              <div class="flex flex-col items-center justify-center p-12 text-center border-t border-border">
-                <span class="material-symbols-rounded text-4xl text-border mb-4">filter_list_off</span>
-                <div class="font-bold text-main mb-2">No results found for current filters</div>
-                <div class="text-sm text-muted max-w-[300px] mb-6 inline-block">Try adjusting your date range or removing specific category filters to see more activity.</div>
-                <div class="text-sm font-semibold text-primary cursor-pointer hover:underline inline-block">Clear All Filters</div>
-              </div>
+              <div id="transactionData"></div>
             </div>
 
-            <div class="flex justify-between items-center bg-white px-6 py-4 rounded-xl shadow-sm border border-border text-sm text-muted">
-              <div>Showing <strong class="text-main">1-10</strong> of <strong class="text-main">2,480</strong> transactions</div>
+            <div
+              class="flex justify-between items-center bg-white px-6 py-4 rounded-xl shadow-sm border border-border text-sm text-muted">
+              <div>Showing <strong class="text-main">1-10</strong> of <strong class="text-main" id="noOfTransaction">2,480</strong>
+                transactions</div>
               <div class="flex items-center gap-2">
                 <span class="material-symbols-rounded text-[1.2rem] cursor-pointer hover:text-main">chevron_left</span>
-                <div class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer transition-colors bg-primary text-white">1</div>
-                <div class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer hover:bg-card-alt transition-colors text-main">2</div>
-                <div class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer hover:bg-card-alt transition-colors text-main">3</div>
+                <div
+                  class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer transition-colors bg-primary text-white">
+                  1</div>
+                <div
+                  class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer hover:bg-card-alt transition-colors text-main">
+                  2</div>
+                <div
+                  class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer hover:bg-card-alt transition-colors text-main">
+                  3</div>
                 <span class="material-symbols-rounded text-[1.2rem] cursor-pointer hover:text-main">chevron_right</span>
               </div>
             </div>
@@ -205,45 +150,49 @@
 
           <!-- Right Column -->
           <div class="w-[330px] flex flex-col gap-6 shrink-0">
-            
+
             <!-- Detail Card -->
             <div class="bg-white rounded-xl shadow-sm border border-border p-6 flex flex-col gap-6">
-              <div class="flex justify-between items-center text-[0.65rem] font-bold text-light tracking-wider uppercase">
+              <div
+                class="flex justify-between items-center text-[0.65rem] font-bold text-light tracking-wider uppercase">
                 <span>DETAIL VIEW</span>
                 <span class="material-symbols-rounded text-[1.1rem]">open_in_new</span>
               </div>
-              
+
               <div class="flex flex-col items-center text-center gap-2">
-                <div class="w-16 h-16 rounded-full bg-[#eff6ff] text-[#3b82f6] flex items-center justify-center text-3xl mb-2">
-                  <span class="material-symbols-rounded text-[2rem]">shopping_bag</span>
+                <div
+                  class="w-16 h-16 rounded-full bg-[#eff6ff] text-[#3b82f6] flex items-center justify-center text-3xl mb-2">
+                  <span class="material-symbols-rounded text-[2rem]">bookmark</span>
                 </div>
-                <div class="font-bold text-[1.1rem] text-main">Apple Store Regent St</div>
-                <div class="text-[0.75rem] font-medium text-muted">Oct 24, 2023 &bull; 14:32 PM</div>
+                <div id="detail-desc" class="font-bold text-[1.1rem] text-main">Apple Store Regent St</div>
+                <div class="text-[0.75rem] font-medium text-muted"><span id="detail-date">Oct 24, 2023</span> &bull; <span id="detail-time">14:32 PM</span></div>
               </div>
 
               <div class="flex flex-col border-t border-border pt-4 gap-3">
                 <div class="flex justify-between items-center text-sm">
                   <span class="text-muted font-medium">Status</span>
-                  <span class="font-semibold text-main text-right text-[#16a34a] flex items-center gap-1 before:content-[''] before:block before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#16a34a]">Cleared</span>
+                  <span
+                    class="font-semibold text-main text-right text-[#16a34a] flex items-center gap-1 before:content-[''] before:block before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#16a34a]">Cleared</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-muted font-medium">Merchant</span>
-                  <span class="font-semibold text-main text-right">Apple Retail UK</span>
+                  <span class="text-muted font-medium">Category</span>
+                  <span id="detail-category" class="font-semibold text-main text-right">Apple Retail UK</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-muted font-medium">Method</span>
-                  <span class="font-semibold text-main text-right">Apple Pay (**** 9921)</span>
+                  <span class="text-muted font-medium">Account</span>
+                  <span id="detail-account" class="font-semibold text-main text-right">Apple Pay (**** 9921)</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                  <span class="text-muted font-medium">Tax</span>
-                  <span class="font-semibold text-main text-right">$216.50</span>
+                  <span class="text-muted font-medium">Amount</span>
+                  <span id="detail-amount" class="font-semibold text-main text-right">₹216.50</span>
                 </div>
               </div>
 
               <div class="bg-[#fffbeb] rounded-lg p-4 border border-[#fef3c7]">
                 <div class="text-[0.65rem] font-bold text-[#b45309] uppercase tracking-wider mb-2">INTERNAL NOTE</div>
                 <div class="text-sm text-[#92400e] italic leading-relaxed">
-                  "Purchase of new iPad Pro for quarterly design review. Eligible for capital expenditure tax deduction."
+                  "Purchase of new iPad Pro for quarterly design review. Eligible for capital expenditure tax
+                  deduction."
                 </div>
               </div>
 
@@ -262,26 +211,31 @@
               <div class="text-[0.8rem] text-[#a2c6b6] leading-relaxed">
                 You've spent 24% more than your average monthly budget in this category.
               </div>
-              <div class="mt-2 text-[0.65rem] font-bold tracking-wider text-[#6ee7b7] cursor-pointer hover:underline uppercase inline-block">VIEW BUDGET ANALYSIS</div>
+              <div
+                class="mt-2 text-[0.65rem] font-bold tracking-wider text-[#6ee7b7] cursor-pointer hover:underline uppercase inline-block">
+                VIEW BUDGET ANALYSIS</div>
             </div>
 
           </div>
         </div>
       </div>
-      
+
     </main>
   </div>
 
   <!-- Add Transaction Modal -->
-  <div id="addTransactionModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
+  <div id="addTransactionModal"
+    class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
     <div class="flex w-[900px] h-[560px] bg-white rounded-xl overflow-hidden shadow-2xl">
-      
+
       <!-- Left Section -->
       <div class="bg-primary text-white w-[320px] p-[3rem_2.5rem] flex flex-col justify-between">
         <div>
-          <span class="text-[0.65rem] tracking-[0.1em] uppercase text-[#a2c6b6] font-bold mb-6 inline-block">LEDGER ENTRY</span>
+          <span class="text-[0.65rem] tracking-[0.1em] uppercase text-[#a2c6b6] font-bold mb-6 inline-block">LEDGER
+            ENTRY</span>
           <h2 class="text-4xl font-normal leading-[1.25] mb-4">Record a<br>new<br>Transaction</h2>
-          <p class="text-[0.85rem] text-[#d1fae5] leading-relaxed">Every cent is a seed in the garden of your future. Categorize with intent.</p>
+          <p class="text-[0.85rem] text-[#d1fae5] leading-relaxed">Every cent is a seed in the garden of your future.
+            Categorize with intent.</p>
         </div>
         <div class="mt-8">
           <div class="flex items-center gap-1.5 text-[0.75rem] font-bold text-[#a2c6b6] mb-1">
@@ -294,27 +248,35 @@
 
       <!-- Right Section -->
       <div class="flex-1 p-[2.5rem_3rem] bg-white">
-        <form class="flex flex-col gap-6 h-full" onsubmit="event.preventDefault();">
-          
+        <form id="addTrasactionForm" class="flex flex-col gap-6 h-full">
+
           <!-- Amount -->
           <div class="flex flex-col gap-2">
             <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">AMOUNT</label>
             <div class="flex items-baseline gap-2">
               <span class="text-2xl text-main font-medium">₹</span>
-              <input type="text" placeholder="0.00" class="border-none text-5xl font-semibold text-main outline-none w-full bg-transparent placeholder-[#e0e7ff]" value="0.00">
+              <input name="price" type="text" placeholder="0.00"
+                class="border-none text-5xl font-semibold text-main outline-none w-full bg-transparent placeholder-[#e0e7ff]"
+                value="0.00" required>
             </div>
           </div>
 
           <!-- Date & Account Row -->
           <div class="flex gap-6">
             <div class="flex flex-col gap-2 flex-1">
-              <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">DATE & TIME</label>
-              <input type="datetime-local" class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400" placeholder="mm/dd/yyyy, --:-">
+              <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">DATE</label>
+              <input name="date-time" type="date"
+                class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400"
+                placeholder="mm/dd/yyyy, --:-" required>
             </div>
             <div class="flex flex-col gap-2 flex-1">
               <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">ACCOUNT</label>
-              <select class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 cursor-pointer">
-                <option>Private Bank (***42)</option>
+              <select name="account"
+                class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 cursor-pointer"
+                required>
+                <option>SBI Bank</option>
+                <option>AXIS Bank</option>
+                <option>IDBI Bank</option>
               </select>
             </div>
           </div>
@@ -323,40 +285,49 @@
           <div class="flex flex-col gap-2">
             <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">CATEGORY</label>
             <div class="flex gap-3">
-              <button type="button" class="flex-1 bg-primary border-primary text-white border rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 cursor-pointer transition-all">
-                <span class="material-symbols-rounded text-[1.25rem]">shopping_cart</span>
-                <span class="text-[0.7rem] font-semibold">Groceries</span>
-              </button>
-              <button type="button" class="flex-1 bg-slate-50 border border-slate-100 text-main rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 cursor-pointer transition-all hover:border-slate-200">
-                <span class="material-symbols-rounded text-[1.25rem]">restaurant</span>
-                <span class="text-[0.7rem] font-semibold">Dining</span>
-              </button>
-              <button type="button" class="flex-1 bg-slate-50 border border-slate-100 text-main rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 cursor-pointer transition-all hover:border-slate-200">
-                <span class="material-symbols-rounded text-[1.25rem]">directions_car</span>
-                <span class="text-[0.7rem] font-semibold">Transport</span>
-              </button>
-              <button type="button" class="flex-1 bg-slate-50 border border-slate-100 text-main rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 cursor-pointer transition-all hover:border-slate-200">
-                <span class="material-symbols-rounded text-[1.25rem]">home</span>
-                <span class="text-[0.7rem] font-semibold">Rent</span>
-              </button>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Groceries" class="peer hidden" checked required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Groceries
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Dining" class="peer hidden" required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Dining
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Transport" class="peer hidden" required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Transport
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Rent" class="peer hidden" required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Rent
+                </div>
+              </label>
             </div>
           </div>
 
           <!-- Description -->
           <div class="flex flex-col gap-2">
             <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">DESCRIPTION / NOTES</label>
-            <textarea class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 resize-none h-[60px]" placeholder="e.g. Weekly supplies from Artisan Market"></textarea>
+            <textarea name="desc"
+              class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 resize-none h-[60px]"
+              placeholder="e.g. Weekly supplies from Artisan Market"></textarea>
           </div>
 
           <!-- Form Actions -->
-          <div class="flex justify-between items-center mt-auto pt-4">
-            <button type="button" class="flex items-center gap-1.5 bg-transparent border-none text-main text-[0.85rem] font-semibold cursor-pointer">
-              <span class="material-symbols-rounded text-muted text-[1.1rem]" style="transform: rotate(-45deg);">attach_file</span>
-              Add Receipt
-            </button>
+          <div class="flex justify-end items-center mt-auto pt-4">
             <div class="flex items-center gap-6">
-              <button type="button" id="btnCloseAddTransaction" class="bg-transparent border-none text-[0.9rem] font-semibold text-main cursor-pointer hover:underline">Cancel</button>
-              <button type="submit" class="bg-primary text-white border-none rounded-md px-6 py-3 text-[0.85rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">Add Transaction</button>
+              <button type="button" id="btnCloseAddTransaction"
+                class="bg-transparent border-none text-[0.9rem] font-semibold text-main cursor-pointer hover:underline">Cancel</button>
+              <button type="submit"
+                class="bg-primary text-white border-none rounded-md px-6 py-3 text-[0.85rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">Add
+                Transaction</button>
             </div>
           </div>
 
@@ -366,9 +337,7 @@
     </div>
   </div>
 
-  <script>
-    
-  </script>
   <script src="js/app.js" type="module"></script>
 </body>
+
 </html>

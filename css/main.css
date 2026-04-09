@@ -648,10 +648,6 @@ body{
   display: flex;
 }
 
-.inline-flex{
-  display: inline-flex;
-}
-
 .grid{
   display: grid;
 }
@@ -774,6 +770,10 @@ body{
 
 .items-baseline{
   align-items: baseline;
+}
+
+.justify-end{
+  justify-content: flex-end;
 }
 
 .justify-center{
@@ -926,11 +926,6 @@ body{
   background-color: rgb(240 243 250 / var(--tw-bg-opacity));
 }
 
-.bg-hero{
-  --tw-bg-opacity: 1;
-  background-color: rgb(6 64 43 / var(--tw-bg-opacity));
-}
-
 .bg-primary{
   --tw-bg-opacity: 1;
   background-color: rgb(6 64 43 / var(--tw-bg-opacity));
@@ -1020,16 +1015,6 @@ body{
 .px-8{
   padding-left: 2rem;
   padding-right: 2rem;
-}
-
-.py-0{
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.py-0\.5{
-  padding-top: 0.125rem;
-  padding-bottom: 0.125rem;
 }
 
 .py-1{
@@ -1270,11 +1255,6 @@ body{
   color: rgb(226 232 240 / var(--tw-text-opacity));
 }
 
-.text-hero-label{
-  --tw-text-opacity: 1;
-  color: rgb(162 198 182 / var(--tw-text-opacity));
-}
-
 .text-light{
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity));
@@ -1453,4 +1433,24 @@ body{
 
 .hover\:underline:hover{
   text-decoration-line: underline;
+}
+
+.peer:checked ~ .peer-checked\:border-primary{
+  --tw-border-opacity: 1;
+  border-color: rgb(6 64 43 / var(--tw-border-opacity));
+}
+
+.peer:checked ~ .peer-checked\:bg-primary{
+  --tw-bg-opacity: 1;
+  background-color: rgb(6 64 43 / var(--tw-bg-opacity));
+}
+
+.peer:checked ~ .peer-checked\:text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.peer:checked ~ .peer-checked\:hover\:border-primary:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(6 64 43 / var(--tw-border-opacity));
 }
