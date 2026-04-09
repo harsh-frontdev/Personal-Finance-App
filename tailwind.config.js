@@ -17,11 +17,11 @@ module.exports = {
         light: '#94a3b8',
         'hero-label': '#a2c6b6',
         primary: {
-          DEFAULT: '#06402b',
+          DEFAULT: '#2B6954',
           hover: '#085237',
         },
         accent: '#22c55e',
-        danger: '#ef4444',
+        danger: '#BA1A1A',
         border: '#e2e8f0',
       },
       backgroundImage: {
@@ -29,6 +29,7 @@ module.exports = {
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
+        manrope: ['Manrope', 'sans-serif'],
       },
       boxShadow: {
         sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',

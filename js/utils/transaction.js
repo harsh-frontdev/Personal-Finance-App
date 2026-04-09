@@ -15,6 +15,21 @@ export default function updateTransactions(data) {
             year: 'numeric'
             });
 
+            let amountString, colorCode, amount;
+            if(element.amount > 0) {
+                colorCode = 'text-primary';
+                amount = parseFloat(element.amount);
+                amountString = `+ ₹${amount}`;
+            } else{
+                amount = String(element.amount);
+                if (amount.startsWith("-")) {
+                   amount = amount.slice(1);
+                }
+                colorCode = 'text-danger';
+                amountString = `- ₹${amount}`;
+            }
+            // 2B6954
+
             transactionDataEl.innerHTML += `
                 <div class="grid grid-cols-[1.5fr_2fr_1fr_1fr_1fr] gap-4 items-center px-6 py-4 border-b border-border hover:bg-slate-50 transition-colors">
                 <div>
@@ -38,8 +53,8 @@ export default function updateTransactions(data) {
                     ${element.account}
                     </span>
                 </div>
-                <div class="font-bold text-right text-[1.05rem] text-[#dc2626]">
-                    ₹${element.amount}
+                <div class="font-bold text-right text-[1.05rem] ${colorCode}">
+                    ${amountString}
                 </div>
                 </div>
             `;
@@ -48,7 +63,7 @@ export default function updateTransactions(data) {
         transactionDataEl.innerHTML += `
             <div class="flex flex-col items-center justify-center p-12 text-center border-t border-border">
                 <span class="material-symbols-rounded text-4xl text-border mb-4">filter_list_off</span>
-                <div class="font-bold text-main mb-2">No results found for current filters</div>
+                <div class="font-bold text-main mb-2 font-manrope">No results found for current filters</div>
                 <div class="text-sm text-muted max-w-[300px] mb-6 inline-block">Try adjusting your date range or
                 removing specific category filters to see more activity.</div>
                 <div class="text-sm font-semibold text-primary cursor-pointer hover:underline inline-block">Clear All

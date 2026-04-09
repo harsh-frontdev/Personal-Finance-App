@@ -26,7 +26,7 @@ function addTransaction(e){
         description: formData.get('desc'),
         category: formData.get('category'),
         account: formData.get('account'),
-        amount: formData.get('price')
+        amount: parseFloat(formData.get('price'))
     }), ...existingTrans];
 
     localStorage.setItem('myTransactions', JSON.stringify(existingTrans));
