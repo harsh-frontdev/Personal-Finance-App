@@ -14,15 +14,7 @@ const __dirname = path.dirname(__filename);
 
 connectDB();
 
-// app.use(express.json());
-
-// app.use(express.static(path.join(__dirname, "../"))); 
-
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../index.html"));
-// });
-
-const rootPath = path.join(__dirname, ".."); 
+const rootPath = path.join(__dirname, "..");
 
 app.use(express.static(rootPath));
 
@@ -32,19 +24,27 @@ app.get("/", (req, res) => {
   res.sendFile(indexPath, (err) => {
     if (err) {
       console.error("Error sending index.html:", err);
-      res.status(403).send("Server cannot find or access index.html. Path: " + indexPath);
+      res
+        .status(403)
+        .send("Server cannot find or access index.html. Path: " + indexPath);
     }
   });
 });
 
-app.get("/add-user", async (req, res) => {
+app.get("/add-transaction", async (req, res) => {
   try {
-    const user = await mongoose.connection.collection("users").insertOne({
-      name: "Harsh",
-      email: "harsh@test.com",
-      createdAt: new Date()
-    });
-    res.json(user);
+    const transaction = await mongoose.connection
+      .collection("transactions")
+      .insertOne({
+        account: "Axis Bank",
+        amount: -250,
+        category: "Groceries",
+        date: "2000-08-14",
+        description: "Quae odit quia aute ",
+        time: "01:18 PM",
+        createdAt: new Date(),
+      });
+    res.json(transaction);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
