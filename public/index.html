@@ -9,9 +9,7 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -121,37 +119,20 @@
         <div class="flex gap-6">
           <!-- Left Column -->
           <div class="flex-1 flex flex-col gap-6 min-w-0">
-            <div class="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
-              <div
-                class="grid grid-cols-[1.5fr_2fr_1fr_1fr_1fr] gap-4 px-6 py-4 bg-card-alt border-b border-border text-[0.65rem] font-bold text-light uppercase tracking-wider">
-                <div>Date</div>
-                <div>Description</div>
-                <div>Category</div>
-                <div>Account</div>
-                <div class="text-right">Amount</div>
-              </div>
-
-              <div id="transactionData"></div>
-            </div>
-
-            <div
-              class="flex justify-between items-center bg-white px-6 py-4 rounded-xl shadow-sm border border-border text-sm text-muted">
-              <div>Showing <strong class="text-main">1-10</strong> of <strong class="text-main"
-                  id="noOfTransaction">2,480</strong>
-                transactions</div>
-              <div class="flex items-center gap-2">
-                <span class="material-symbols-rounded text-[1.2rem] cursor-pointer hover:text-main">chevron_left</span>
-                <div
-                  class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer transition-colors bg-primary text-white">
-                  1</div>
-                <div
-                  class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer hover:bg-card-alt transition-colors text-main">
-                  2</div>
-                <div
-                  class="w-8 h-8 flex items-center justify-center rounded-md font-semibold cursor-pointer hover:bg-card-alt transition-colors text-main">
-                  3</div>
-                <span class="material-symbols-rounded text-[1.2rem] cursor-pointer hover:text-main">chevron_right</span>
-              </div>
+            <div id="table-wrapper" class="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
+              <table id="transactionTable" class="w-full text-left">
+                <thead>
+                  <tr class="bg-card-alt text-[0.65rem] font-bold text-light uppercase tracking-wider">
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Date</th>
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Description</th>
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Category</th>
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Account</th>
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium text-right bg-[#F2F3FF]/50 text-[#94A3B8]">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="transactionData">
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -352,6 +333,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/umd/simple-datatables.min.js"></script>
   <script src="js/app.js" type="module"></script>
 </body>
 

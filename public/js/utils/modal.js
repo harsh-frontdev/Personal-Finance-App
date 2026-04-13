@@ -36,3 +36,11 @@ export default function initModal(modalId, openBtnId, closeBtnId) {
     }
   });
 }
+
+export function closeModalById(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}

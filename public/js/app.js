@@ -1,5 +1,6 @@
 import updateTransactions from "./utils/transaction.js";
-import initModal from "./utils/modal.js";
+import initModal, { closeModalById } from "./utils/modal.js";
+import { showToast } from "./utils/toast.js";
 import {saveData, getData} from "./data.js"
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -35,9 +36,16 @@ form.addEventListener("submit", async (e) => {
     account: formData.get("account"),
     amount: parseFloat(formData.get("price")),
   });
-  await saveData(newTrans);
+  const response = await saveData(newTrans);
+
+  if (response && response.success) {
+    showToast("Transaction added successfully!", "success");
+  } else {
+    showToast("Failed to add transaction.", "error");
+  }
 
   addTrasactionForm.reset();
+  closeModalById("addTransactionModal");
   await getData();
   updateTransactions();
 });

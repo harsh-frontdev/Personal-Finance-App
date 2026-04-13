@@ -1,17 +1,19 @@
 import { getData } from "../data.js";
 
 export default async function updateTransactions() {
-  const noOfTransaction = document.querySelector("#noOfTransaction");
-
+  
   getData().then((result) => {
-    console.log(result.data);
     const data = result.data;
-
-    // Get Number of Transaction
-    noOfTransaction.textContent = data.length;
+    
+    // Destroy instance before mutating the DOM
+    if (window.transactionDataTable) {
+      window.transactionDataTable.destroy();
+      window.transactionDataTable = null;
+    }
 
     // Load Transaction
     const transactionDataEl = document.getElementById("transactionData");
+    if (!transactionDataEl) return;
     transactionDataEl.innerHTML = "";
     if (data.length > 0) {
       data.forEach((element) => {
@@ -37,46 +39,56 @@ export default async function updateTransactions() {
         }
 
         transactionDataEl.innerHTML += `
-                <div data-id="${element._id}" class="grid grid-cols-[1.5fr_2fr_1fr_1fr_1fr] gap-4 items-center px-6 py-4 border-b border-border hover:bg-slate-50 transition-colors">
-                <div>
+                <tr data-id="${element._id}" class="group hover:bg-slate-50 transition-colors border-b border-border">
+                <td class="px-6 py-4 align-middle">
                     <span class="font-medium text-sm text-main block">${formattedDate}</span>
                     <span class="text-xs text-muted mt-1 block">${element.time}</span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="min-w-0">
-                    <span class="font-bold text-sm text-main block truncate">
-                        ${element.description}
-                    </span>
+                </td>
+                <td class="px-6 py-4 align-middle">
+                    <div class="flex items-center gap-4">
+                        <div class="min-w-0">
+                        <span class="font-bold text-sm text-main block truncate">
+                            ${element.description}
+                        </span>
+                        </div>
                     </div>
-                </div>
-                <div>
+                </td>
+                <td class="px-6 py-4 align-middle">
                     <span class="inline-block px-2.5 py-1 rounded-full text-[0.65rem] font-bold uppercase tracking-wider bg-[#fefce8] text-[#ca8a04]">
                     ${element.category}
                     </span>
-                </div>
-                <div>
+                </td>
+                <td class="px-6 py-4 align-middle">
                     <span class="font-semibold text-sm text-main block truncate">
                     ${element.account}
                     </span>
-                </div>
-                <div class="font-bold text-right text-[1.05rem] ${colorCode}">
+                </td>
+                <td class="px-6 py-4 align-middle font-bold text-right text-[1.05rem] ${colorCode}">
                     ${amountString}
-                </div>
-                </div>
+                </td>
+                </tr>
             `;
       });
-    } else {
-      transactionDataEl.innerHTML += `
-            <div class="flex flex-col items-center justify-center p-12 text-center border-t border-border">
-                <span class="material-symbols-rounded text-4xl text-border mb-4">filter_list_off</span>
-                <div class="font-bold text-main mb-2 font-manrope">No results found for current filters</div>
-                <div class="text-sm text-muted max-w-[300px] mb-6 inline-block">Try adjusting your date range or
-                removing specific category filters to see more activity.</div>
-                <div class="text-sm font-semibold text-primary cursor-pointer hover:underline inline-block">Clear All
-                Filters</div>
-            </div>
-        `;
     }
+
+    // Initialize simple-datatables safely
+    setTimeout(() => {
+      const table = document.getElementById("transactionTable");
+      if (table) {
+        window.transactionDataTable = new simpleDatatables.DataTable(table, {
+          searchable: false,
+          perPageSelect: false,
+          paging: true,
+          fixedHeight: false,
+          pagination: true,
+          sortable: false,
+          labels: {
+            info: "Showing {start}-{end} of {rows} transactions",
+            noRows: "No transactions found"
+          }
+        });
+      }
+    }, 50);
 
     // Load Details Transaction View
     const detailDescEl = document.querySelector("#detail-desc");

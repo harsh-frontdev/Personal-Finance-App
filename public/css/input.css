@@ -5,7 +5,7 @@
   --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-manrope: "Manrope", sans-serif;
   --font-icon-font: "Material Symbols Rounded";
-  
+
   /* ... keep your colors and shadows exactly as they are ... */
   --color-body: #f8f9fc;
   --color-sidebar: #ffffff;
@@ -17,22 +17,33 @@
   --color-muted: #64748b;
   --color-light: #94a3b8;
   --color-hero-label: #a2c6b6;
-  --color-primary: #2B6954;
+  --color-primary: #2b6954;
   --color-primary-hover: #085237;
   --color-accent: #22c55e;
-  --color-danger: #BA1A1A;
+  --color-danger: #ba1a1a;
   --color-border: #e2e8f0;
-  --background-image-hero-gradient: linear-gradient(135deg, #06402b 0%, #032b1c 100%);
+  --background-image-hero-gradient: linear-gradient(
+    135deg,
+    #06402b 0%,
+    #032b1c 100%
+  );
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg:
+    0 10px 25px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
 }
 
 @layer base {
   body {
     @apply font-inter bg-body text-main leading-relaxed flex h-screen overflow-hidden;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     /* Use @apply to ensure it pulls from the @theme block */
     @apply font-manrope;
   }
@@ -52,13 +63,126 @@
   word-wrap: normal;
   direction: ltr;
   vertical-align: middle;
-  
+
   /* CRITICAL: Forces ligatures to work in v4 */
-  font-feature-settings: 'liga';
+  font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
 }
 
 @utility icon-filled {
-  font-variation-settings: 'FILL' 1;
+  font-variation-settings: "FILL" 1;
+}
+
+/* Simple-datatables User Design Overrides */
+.datatable-wrapper .datatable-table > thead > tr > th {
+  vertical-align: bottom;
+}
+
+.datatable-wrapper .datatable-bottom {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background-color: var(--color-white) !important;
+  padding: 1rem 1.5rem !important;
+  font-size: 0.875rem !important;
+  color: var(--color-muted) !important;
+  margin-top: 0 !important;
+  border-top: 1px solid var(--color-border);
+  border-bottom-left-radius: var(--radius-xl);
+  border-bottom-right-radius: var(--radius-xl);
+}
+
+.datatable-wrapper .datatable-info {
+  margin: 0 !important;
+}
+.datatable-top {
+  padding: 0;
+}
+/* Pagination Overrides for Portal Design Mapping */
+/* Container */
+
+/* Auto layout */
+.datatable-wrapper .datatable-pagination-list {
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+  gap: 8px;
+}
+
+.datatable-wrapper .datatable-pagination .datatable-pagination-list-item button{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  width: 32px;
+  height: 34px;
+
+  border-radius: 6px;
+  cursor: pointer;
+}
+.datatable-wrapper
+  .datatable-pagination
+  .datatable-pagination-list-item.datatable-active button{
+  background: #003527;
+  color: #fff;
+}
+
+.datatable-wrapper .datatable-pagination {
+  margin-left: auto;
+}
+.datatable-wrapper .datatable-pagination ul {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important; /* gap-2 */
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.datatable-wrapper .datatable-pagination ul li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.datatable-wrapper .datatable-pagination ul li a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 2rem !important; /* w-8 */
+  height: 2rem !important; /* h-8 */
+  border-radius: 0.375rem !important; /* rounded-md */
+  font-weight: 600 !important; /* font-semibold */
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: all 150ms !important;
+  color: var(--color-main) !important;
+  background-color: transparent !important;
+  padding: 0 0.5rem !important;
+}
+
+/* Hover state for links */
+.datatable-wrapper
+  .datatable-pagination
+  ul
+  li:not(.datatable-active):not(.datatable-ellipsis)
+  a:hover {
+  background-color: var(--color-card-alt) !important;
+}
+
+/* Active state */
+.datatable-wrapper .datatable-pagination ul li.datatable-active a {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+}
+
+/* Ellipsis */
+.datatable-wrapper .datatable-pagination ul li.datatable-ellipsis a {
+  background: none !important;
+  cursor: default !important;
 }

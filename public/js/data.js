@@ -22,7 +22,5 @@ export const saveData = async (formData) => {
   });
 
   const result = await response.json();
-  /* if (result.success) {
-    console.log("Entry Added");
-  } */
+  return result;
 };
