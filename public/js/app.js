@@ -2,7 +2,7 @@ import updateTransactions from "./utils/transaction.js";
 import { initModal, closeModalById, openModalById } from "./utils/modal.js";
 import { showToast } from "./utils/toast.js";
 import { saveData, getData } from "./data.js";
-import { formatDate, formatCurrency } from "./utils/helper.js";
+import {updateDetailSidebar} from "./utils/detailSidebar.js";
 
 let state = {
   transactions : [],
@@ -50,8 +50,8 @@ form.addEventListener("submit", async (e) => {
 
   addTrasactionForm.reset();
   closeModalById("addTransactionModal");
-  await getData();
-  updateTransactions();
+
+  await refreshData();
 });
 
 // Edit Transactions
@@ -61,42 +61,23 @@ editTransactionBtn.addEventListener("click", (e) => {
 });
 
 // History Click Event
-handleTransactionClick();
-function handleTransactionClick() {
-  const transactionTable = document.querySelector("#transactionTable");
-  transactionTable.addEventListener("click", (e) => {
-    
-    const allTr = document.querySelectorAll("#transactionTable tr");
-    allTr.forEach( el => el.classList.remove("bg-slate-50") );
+const transactionTable = document.querySelector("#transactionTable");
+transactionTable.addEventListener("click", (e) => {
+  console.log('asdasdasd');
+  const allTr = document.querySelectorAll("#transactionTable tr");
+  allTr.forEach( el => el.classList.remove("bg-slate-50") );
 
-    let trEl = e.target.closest("tr");
-    if(!trEl) return;
+  let trEl = e.target.closest("tr");
+  if(!trEl) return;
 
-    trEl.classList.add("bg-slate-50");
-    
-    const transactionId = trEl.dataset.id;
-    const selected = state.transactions.find( el => el._id === transactionId);
-    
-    if(selected){
-      state.selectedId = transactionId;
-      updateDetailSidebar(selected);
-    }
-    
-  });
-}
+  trEl.classList.add("bg-slate-50");
+  
+  const transactionId = trEl.dataset.id;
+  const selected = state.transactions.find( el => el._id === transactionId);
+  
+  if(selected){
+    state.selectedId = transactionId;
+    updateDetailSidebar(selected);
+  }
 
-function updateDetailSidebar(transaction){
-  if(!transaction) return;
-
-  // Format Date
-  const formattedDate = formatDate(transaction.date);  
-  // Format Amount
-  const formattedAmount = formatCurrency(transaction.amount);
-  // Set Data in UI
-  document.querySelector("#detail-desc").textContent = transaction.description;
-  document.querySelector("#detail-date").textContent = formattedDate;
-  document.querySelector("#detail-time").textContent = transaction.time;
-  document.querySelector("#detail-category").textContent = transaction.category;
-  document.querySelector("#detail-account").textContent = transaction.account;
-  document.querySelector("#detail-amount").textContent = formattedAmount;
-}
+});
