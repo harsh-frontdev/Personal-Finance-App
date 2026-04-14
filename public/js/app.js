@@ -18,8 +18,8 @@ async function initApp() {
 async function refreshData() {
   const result = await getData();
   if(result && result.success){
-    state.transactions = result.data;
-    updateTransactions(state.transactions);
+    state.transactions = result.data;  
+    updateTransactions(state.transactions);  
   }
 }
 
