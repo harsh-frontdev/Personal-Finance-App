@@ -9,15 +9,15 @@ let state = {
   selectedId: null
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  initModal(
-    "addTransactionModal",
-    "btnOpenAddTransaction",
-    "btnCloseAddTransaction",
-  );
-});
+initApp();
+async function initApp() {
+  initModal("addTransactionModal", "btnOpenAddTransaction", "btnCloseAddTransaction",);
+  await refreshData();
+}
 
-updateTransactions();
+async function refreshData() {
+  updateTransactions();
+}
 
 // Add Transactions
 const form = document.querySelector("#addTrasactionForm");
