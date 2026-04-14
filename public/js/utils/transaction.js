@@ -1,10 +1,10 @@
 import { getData } from "../data.js";
+import { formatDate } from "./helper.js";
 
 export default async function updateTransactions() {
-  
   getData().then((result) => {
     const data = result.data;
-    
+
     // Destroy instance before mutating the DOM
     if (window.transactionDataTable) {
       window.transactionDataTable.destroy();
@@ -17,18 +17,17 @@ export default async function updateTransactions() {
     transactionDataEl.innerHTML = "";
     if (data.length > 0) {
       data.forEach((element) => {
-        const date = new Date(element.date);
-        const formattedDate = date.toLocaleDateString("en-GB", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        });
 
+        const formattedDate = formatDate(element.date);
+        
         let amountString, colorCode, amount;
         if (element.amount > 0) {
           colorCode = "text-primary";
           amount = parseFloat(element.amount);
           amountString = `+ ₹${amount}`;
+        } else if(element.amount == 0) {
+          colorCode = "text-primary";
+          amountString = `₹${element.amount}`;
         } else {
           amount = String(element.amount);
           if (amount.startsWith("-")) {
@@ -84,8 +83,8 @@ export default async function updateTransactions() {
           sortable: false,
           labels: {
             info: "Showing {start}-{end} of {rows} transactions",
-            noRows: "No transactions found"
-          }
+            noRows: "No transactions found",
+          },
         });
       }
     }, 50);

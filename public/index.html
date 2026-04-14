@@ -9,7 +9,9 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -123,11 +125,17 @@
               <table id="transactionTable" class="w-full text-left">
                 <thead>
                   <tr class="bg-card-alt text-[0.65rem] font-bold text-light uppercase tracking-wider">
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Date</th>
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Description</th>
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Category</th>
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Account</th>
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium text-right bg-[#F2F3FF]/50 text-[#94A3B8]">Amount</th>
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Date
+                    </th>
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">
+                      Description</th>
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">
+                      Category</th>
+                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">
+                      Account</th>
+                    <th
+                      class="px-6 py-4 border-b border-border text-xs font-medium text-right bg-[#F2F3FF]/50 text-[#94A3B8]">
+                      Amount</th>
                   </tr>
                 </thead>
                 <tbody id="transactionData">
@@ -144,7 +152,6 @@
               <div
                 class="flex justify-between items-center text-[0.65rem] font-bold text-light tracking-wider uppercase">
                 <span>DETAIL VIEW</span>
-                <span class="material-symbols-rounded text-[1.1rem]">open_in_new</span>
               </div>
 
               <div class="flex flex-col items-center text-center gap-2">
@@ -185,12 +192,19 @@
                   deduction."
                 </div>
               </div>
+              <div class="flex flex-col gap-3">
+                <button id="btnOpenEditTransaction"
+                  class="w-full flex items-center justify-center gap-2 bg-white border border-border rounded-lg py-2.5 text-sm font-semibold text-main cursor-pointer transition-colors hover:bg-slate-50">
+                  <span class="material-symbols-rounded text-[1.1rem]">edit</span>
+                  Edit Transaction
+                </button>
 
-              <button
-                class="w-full flex items-center justify-center gap-2 bg-white border border-border rounded-lg py-2.5 text-sm font-semibold text-main cursor-pointer transition-colors hover:bg-slate-50">
-                <span class="material-symbols-rounded text-[1.1rem]">edit</span>
-                Edit Transaction
-              </button>
+                <button id="btnDeleteTransaction"
+                  class="w-full flex items-center justify-center gap-2 bg-white border border-danger rounded-lg py-2.5 text-sm font-semibold text-danger cursor-pointer transition-colors hover:bg-slate-50">
+                  <span class="material-symbols-rounded text-[1.1rem]">delete</span>
+                  Delete Transaction
+                </button>
+              </div>
             </div>
 
             <!-- Tip Card -->

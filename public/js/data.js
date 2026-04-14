@@ -5,7 +5,6 @@ export const getData = async () => {
       throw new Error(`Response Status: ${response.status}`);
     }
     const result = await response.json();
-    // console.log(result.data);
     return result;
   } catch (error) {
     console.error(error.message);

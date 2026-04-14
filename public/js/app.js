@@ -1,7 +1,13 @@
 import updateTransactions from "./utils/transaction.js";
-import initModal, { closeModalById } from "./utils/modal.js";
+import { initModal, closeModalById, openModalById } from "./utils/modal.js";
 import { showToast } from "./utils/toast.js";
-import {saveData, getData} from "./data.js"
+import { saveData, getData } from "./data.js";
+import { formatDate, formatCurrency } from "./utils/helper.js";
+
+let state = {
+  transactions : [],
+  selectedId: null
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   initModal(
@@ -11,18 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 });
 
-let existingTrans = [];
-function loadTransactions() {
-  existingTrans = JSON.parse(localStorage.getItem("myTransactions")) || [];
-  updateTransactions(existingTrans);
-}
-loadTransactions();
+updateTransactions();
 
 // Add Transactions
 const form = document.querySelector("#addTrasactionForm");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  existingTrans = JSON.parse(localStorage.getItem("myTransactions")) || [];
   const formData = new FormData(addTrasactionForm);
 
   const newTrans = new Object({
@@ -49,3 +49,43 @@ form.addEventListener("submit", async (e) => {
   await getData();
   updateTransactions();
 });
+
+// Edit Transactions
+const editTransactionBtn = document.querySelector("#btnOpenEditTransaction");
+editTransactionBtn.addEventListener("click", (e) => {
+  openModalById("addTransactionModal");
+});
+
+// History Click Event
+handleTransactionClick();
+function handleTransactionClick() {
+  const transactionTable = document.querySelector("#transactionTable");
+  transactionTable.addEventListener("click", (e) => {
+    const allTr = document.querySelectorAll("#transactionTable tr");
+    allTr.forEach((el) => {
+      el.classList.remove("bg-slate-50");
+    });
+    let trEl = e.target.closest("tr");
+    trEl.classList.add("bg-slate-50");
+    if (trEl) {
+      getData().then((result) => {
+        const data = result.data;
+        const filteredData = data.filter((el) => el._id == trEl.dataset.id);
+
+        // Format Date
+        const formattedDate = formatDate(filteredData[0].date);
+        
+        // Format Amount
+        const formattedAmount = formatCurrency(filteredData[0].amount);
+
+        // Set Data in UI
+        document.querySelector("#detail-desc").textContent = filteredData[0].description;
+        document.querySelector("#detail-date").textContent = formattedDate;
+        document.querySelector("#detail-time").textContent = filteredData[0].time;
+        document.querySelector("#detail-category").textContent = filteredData[0].category;
+        document.querySelector("#detail-account").textContent = filteredData[0].account;
+        document.querySelector("#detail-amount").textContent = formattedAmount;
+      });
+    }
+  });
+}

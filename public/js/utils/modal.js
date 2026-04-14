@@ -4,7 +4,7 @@
  * @param {string} openBtnId - The ID of the button that opens the modal.
  * @param {string} closeBtnId - The ID of the button that closes the modal.
  */
-export default function initModal(modalId, openBtnId, closeBtnId) {
+export function initModal(modalId, openBtnId, closeBtnId) {
   const modal = document.getElementById(modalId);
   const btnOpen = document.getElementById(openBtnId);
   const btnClose = document.getElementById(closeBtnId);
@@ -42,5 +42,13 @@ export function closeModalById(modalId) {
   if (modal) {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
+  }
+}
+
+export function openModalById(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
   }
 }
