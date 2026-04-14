@@ -54,12 +54,6 @@ form.addEventListener("submit", async (e) => {
   await refreshData();
 });
 
-// Edit Transactions
-const editTransactionBtn = document.querySelector("#btnOpenEditTransaction");
-editTransactionBtn.addEventListener("click", (e) => {
-  openModalById("addTransactionModal");
-});
-
 // History Click Event
 const transactionTable = document.querySelector("#transactionTable");
 transactionTable.addEventListener("click", (e) => {
@@ -79,4 +73,10 @@ transactionTable.addEventListener("click", (e) => {
     updateDetailSidebar(selected);
   }
 
+});
+
+// Edit Transactions
+const editTransactionBtn = document.querySelector("#btnOpenEditTransaction");
+editTransactionBtn.addEventListener("click", (e) => {
+  openModalById("addTransactionModal");
 });
