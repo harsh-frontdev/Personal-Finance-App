@@ -1,5 +1,5 @@
 {
-  "name": "personal-finance-app",
+  "name": "the-sovereign-ledger",
   "version": "1.0.0",
   "type": "module",
   "main": "server/server.js",
@@ -7,7 +7,7 @@
     "server": "nodemon server/server.js",
     "watch": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/main.css --watch",
     "build": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/main.css",
-    "open": "open-cli http://localhost:5000",
+    "open": "open-cli http://localhost:5001",
     "start": "concurrently \"npm run watch\" \"npm run server\" \"npm run open\""
   },
   "dependencies": {
