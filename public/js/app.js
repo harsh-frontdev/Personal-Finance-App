@@ -72,20 +72,24 @@ function handleTransactionClick() {
         const data = result.data;
         const filteredData = data.filter((el) => el._id == trEl.dataset.id);
 
-        // Format Date
-        const formattedDate = formatDate(filteredData[0].date);
-        
-        // Format Amount
-        const formattedAmount = formatCurrency(filteredData[0].amount);
-
-        // Set Data in UI
-        document.querySelector("#detail-desc").textContent = filteredData[0].description;
-        document.querySelector("#detail-date").textContent = formattedDate;
-        document.querySelector("#detail-time").textContent = filteredData[0].time;
-        document.querySelector("#detail-category").textContent = filteredData[0].category;
-        document.querySelector("#detail-account").textContent = filteredData[0].account;
-        document.querySelector("#detail-amount").textContent = formattedAmount;
+        updateDetailSidebar(filteredData[0]);
       });
     }
   });
+}
+
+function updateDetailSidebar(transaction){
+  if(!transaction) return;
+
+  // Format Date
+  const formattedDate = formatDate(transaction.date);  
+  // Format Amount
+  const formattedAmount = formatCurrency(transaction.amount);
+  // Set Data in UI
+  document.querySelector("#detail-desc").textContent = transaction.description;
+  document.querySelector("#detail-date").textContent = formattedDate;
+  document.querySelector("#detail-time").textContent = transaction.time;
+  document.querySelector("#detail-category").textContent = transaction.category;
+  document.querySelector("#detail-account").textContent = transaction.account;
+  document.querySelector("#detail-amount").textContent = formattedAmount;
 }
