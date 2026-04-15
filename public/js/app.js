@@ -55,9 +55,9 @@ form.addEventListener("submit", async (e) => {
 });
 
 // History Click Event
-const transactionTable = document.querySelector("#transactionTable");
+const transactionTable = document.querySelector("#table-wrapper");
 transactionTable.addEventListener("click", (e) => {
-  const allTr = document.querySelectorAll("#transactionTable tr");
+  const allTr = document.querySelectorAll("#table-wrapper tr");
   allTr.forEach( el => el.classList.remove("bg-slate-50") );
 
   let trEl = e.target.closest("tr");

@@ -73,7 +73,7 @@ export default async function updateTransactions(data) {
   setTimeout(() => {
     const table = document.getElementById("transactionTable");
     if (table) {
-      window.transactionDataTable = new simpleDatatables.DataTable(table, {
+      const datatable = new simpleDatatables.DataTable(table, {
         searchable: false,
         perPageSelect: false,
         paging: true,
@@ -85,6 +85,8 @@ export default async function updateTransactions(data) {
           noRows: "No transactions found",
         },
       });
+
+      window.transactionDataTable = datatable;
     }
   }, 50);
 
