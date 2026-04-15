@@ -54,3 +54,33 @@ export const deleteTransaction = async (req, res) => {
         });
     }
 }
+
+export const updateTransaction = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { account, amount, category, date, description, time } = req.body;
+
+        const transaction = await Transaction.findByIdAndUpdate(
+            id,
+            {
+                account,
+                amount,
+                category,
+                date,
+                description,
+                time
+            },
+            { new: true }
+        );
+
+        res.status(200).json({
+            success: true,
+            data: transaction
+        })
+    } catch(error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });       
+    }
+}

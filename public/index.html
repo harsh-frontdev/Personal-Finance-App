@@ -255,7 +255,7 @@
       <!-- Right Section -->
       <div class="flex-1 p-[2.5rem_3rem] bg-white">
         <form id="addTrasactionForm" class="flex flex-col gap-6 h-full">
-
+          <input type="hidden" id="transactionId" name="transactionId" value="">
           <!-- Amount -->
           <div class="flex flex-col gap-2">
             <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">AMOUNT</label>
@@ -335,7 +335,7 @@
             <div class="flex items-center gap-6">
               <button type="button" id="btnCloseAddTransaction"
                 class="bg-transparent border-none text-[0.9rem] font-semibold text-main cursor-pointer hover:underline">Cancel</button>
-              <button type="submit"
+              <button id="addTransactionBtn" type="submit"
                 class="bg-primary text-white border-none rounded-md px-6 py-3 text-[0.85rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">Add
                 Transaction</button>
             </div>
