@@ -7,8 +7,8 @@
     "server": "nodemon server/server.js",
     "watch": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/main.css --watch",
     "build": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/main.css",
-    "start": "concurrently \"npm run watch\" \"npm run server\" \"npm run open\"",
-    "open": "open-cli http://localhost:5001 -- 'google chrome'"
+    "open": "open-cli http://localhost:5001 -- 'google chrome'",
+    "start": "concurrently \"npm run watch\" \"npm run server\" \"npm run open\""
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.2",
