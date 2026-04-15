@@ -38,3 +38,19 @@ export const getTransaction = async (req, res) => {
             console.error("Error retrieving documents:", error);
     }
 }
+
+export const deleteTransaction = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const transaction = await Transaction.findByIdAndDelete(id);
+        res.status(200).json({
+            success: true,
+            data: transaction
+        });
+    } catch(error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
+}

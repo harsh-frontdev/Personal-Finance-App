@@ -1,7 +1,7 @@
 import updateTransactions from "./utils/transaction.js";
 import { initModal, closeModalById, openModalById } from "./utils/modal.js";
 import { showToast } from "./utils/toast.js";
-import { saveData, getData } from "./data.js";
+import { saveData, getData, deleteData } from "./data.js";
 import {updateDetailSidebar} from "./utils/detailSidebar.js";
 import { formatDateForInput } from "./utils/helper.js";
 
@@ -91,4 +91,22 @@ editTransactionBtn.addEventListener("click", (e) => {
   document.querySelector('#category-radio').querySelector(`input[value="${selected.category}"]`).checked = true;
 
   openModalById("addTransactionModal");
+});
+
+// Delete Transaction
+const deleteTransactionBtn = document.querySelector("#btnDeleteTransaction");
+deleteTransactionBtn.addEventListener("click", async (e) => {
+    const selected = state.transactions.find(el => el._id === state.selectedId);
+    if(selected){
+      console.log(selected);  
+      const response = await deleteData(selected._id);
+      
+      if (response && response.success) {
+        showToast("Transaction deleted successfully!", "success");
+      } else {
+        showToast("Failed to delete transaction.", "error");
+      }
+
+      await refreshData();
+    }
 });
