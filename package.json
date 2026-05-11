@@ -4,24 +4,20 @@
   "type": "module",
   "main": "server/server.js",
   "scripts": {
-    "server": "nodemon server/server.js",
+    "serve": "live-server public --port=5001",
     "watch": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/main.css --watch",
     "build": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/main.css",
     "open": "open-cli http://localhost:5001 -- 'google chrome'",
-    "start": "concurrently \"npm run watch\" \"npm run server\" \"npm run open\""
+    "start": "npm run serve"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.2",
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.1",
-    "express": "^5.2.1",
-    "mongoose": "^9.4.1"
+    "live-server": "^1.2.2"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.2",
     "autoprefixer": "^10.4.27",
     "concurrently": "^9.2.1",
-    "nodemon": "^3.0.0",
     "open-cli": "^9.0.0",
     "postcss": "^8.5.9",
     "tailwindcss": "^4.2.2"
