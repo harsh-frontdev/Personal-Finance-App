@@ -93,7 +93,7 @@ deleteTransactionBtn.addEventListener("click", async (e) => {
   const selected = getSelectedTransaction();
   if (!selected) return showToast("Please select a transaction first", "info");
 
-  const response = await deleteData(selected._id);
+  const response = await deleteData(selected.id);
 
   if (response?.success) {
     showToast("Transaction deleted successfully!", "success");

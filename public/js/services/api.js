@@ -11,8 +11,8 @@ const firebaseConfig = {
   projectId: "the-sovereign-ledger-4d4e3",
   storageBucket: "the-sovereign-ledger-4d4e3.firebasestorage.app",
   messagingSenderId: "375348668049",
-  appId: "1:375348668049:web:eb39612c7e7265848e0130",
-  measurementId: "G-F63GPKYVDH"
+  appId: "1:375348668049:web:89b2656fc24d00908e0130",
+  measurementId: "G-KSN2FFW3YH"
 };
 
 // Initialize Firebase
@@ -21,6 +21,7 @@ const db = getFirestore(app);
 const transactionsCollection = collection(db, "transactions");
 
 export const getData = async () => {
+  getDocs()
     // 1. Fetch documents from Firestore using getDocs(transactionsCollection)
     // 2. Format them to match the expected structure
     // 3. Return { success: true, data: [...] }
