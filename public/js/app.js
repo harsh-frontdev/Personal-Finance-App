@@ -138,3 +138,21 @@ const signOutBtn = document.querySelector("#btnSignOut");
     }
   });
 }
+
+// Real-time Search Functionality
+const searchInput = document.querySelector("#searchTransactions");
+if (searchInput) {
+  searchInput.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    const allTransactions = getTransactions();
+    
+    const filtered = allTransactions.filter(t => 
+      (t.description && t.description.toLowerCase().includes(query)) ||
+      (t.category && t.category.toLowerCase().includes(query)) ||
+      (t.account && t.account.toLowerCase().includes(query)) ||
+      (t.amount && String(t.amount).includes(query))
+    );
+    
+    updateTransactions(filtered);
+  });
+}
