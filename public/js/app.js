@@ -2,16 +2,30 @@ import { setTransactions, setSelectedId, getTransactions, getSelectedTransaction
 import updateTransactions from "./components/transactionTable.js";
 import { initModal, closeModalById, openModalById } from "./components/modal.js";
 import { showToast } from "./components/toast.js";
-import { saveData, getData, deleteData, updateData } from "./services/api.js";
+import { saveData, getData, deleteData, updateData, auth } from "./services/api.js";
 import { updateDetailSidebar } from "./components/detailSidebar.js";
 import { formatDateForInput } from "./utils/helper.js";
 import { getFormData, fillForm } from "./utils/formHandler.js";
 import { setModalMode } from "./utils/uiController.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 initApp();
-async function initApp() {
+function initApp() {
   initModal("addTransactionModal", "btnOpenAddTransaction", "btnCloseAddTransaction");
-  await refreshData();
+  
+  onAuthStateChanged(auth, async (user) => {
+    const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
+    if (!user && !demoUser) {
+      window.location.href = "login.html";
+    } else {
+      // Dynamic profile name in the header
+      const userNameEl = document.querySelector(".text-md.font-bold.text-main.font-manrope");
+      if (userNameEl) {
+        userNameEl.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
+      }
+      await refreshData();
+    }
+  });
 }
 
 async function refreshData() {
@@ -105,3 +119,22 @@ deleteTransactionBtn.addEventListener("click", async (e) => {
   setSelectedId(null);
   updateDetailSidebar(null);
 });
+
+// Sign Out Click Event
+const signOutBtn = document.querySelector("#btnSignOut");
+  if (signOutBtn) {
+  signOutBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      if (localStorage.getItem("sovereign_demo_user")) {
+        localStorage.removeItem("sovereign_demo_user");
+      } else {
+        await signOut(auth);
+      }
+      window.location.href = "login.html";
+    } catch (error) {
+      console.error("Sign out failed: ", error);
+      showToast("Failed to sign out.", "error");
+    }
+  });
+}

@@ -83,11 +83,11 @@
         <p class="text-[1rem] text-muted leading-relaxed font-medium mb-10 w-11/12">Secure access to your private ledger.</p>
 
         <!-- Form Elements -->
-        <form class="flex flex-col gap-6" action="dashboard.html" method="GET">
+        <form class="flex flex-col gap-6" action="#" method="POST">
 
           <div class="flex flex-col gap-2 relative group">
             <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em] group-focus-within:text-primary transition-colors">EMAIL ADDRESS</label>
-            <input type="email" placeholder="name@institution.com" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-medium text-main outline-none w-full placeholder-[#a0aabf] focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
+            <input type="email" id="email" placeholder="name@institution.com" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-medium text-main outline-none w-full placeholder-[#a0aabf] focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
           </div>
 
           <div class="flex flex-col gap-2 relative group mt-1">
@@ -96,7 +96,7 @@
               <a href="#" class="text-[0.7rem] font-bold text-main hover:text-primary transition-colors hover:underline">Forgot Password?</a>
             </div>
             <div class="relative flex items-center w-full">
-              <input type="password" placeholder="••••••••" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-bold tracking-widest text-main outline-none w-full placeholder-[#a0aabf]/70 focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
+              <input type="password" id="password" placeholder="••••••••" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-bold tracking-widest text-main outline-none w-full placeholder-[#a0aabf]/70 focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
               <button type="button" class="absolute right-4 text-muted hover:text-main transition-colors outline-none cursor-pointer flex items-center h-full">
                 <span class="material-symbols-rounded text-lg">visibility</span>
               </button>
@@ -148,6 +148,7 @@
     
   </main>
   
+  <script src="js/login.js" type="module"></script>
 </body>
 
 </html>

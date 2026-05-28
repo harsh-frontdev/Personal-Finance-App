@@ -84,28 +84,28 @@
         <p class="text-[1.1rem] text-muted leading-relaxed font-medium mb-10 w-11/12">Join a community of intentional wealth management.</p>
 
         <!-- Form Elements -->
-        <form class="flex flex-col gap-6" action="dashboard.html" method="GET">
+        <form class="flex flex-col gap-6" action="#" method="POST">
           
           <div class="flex flex-col gap-2 relative group">
             <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em] group-focus-within:text-primary transition-colors">FULL NAME</label>
-            <input type="text" placeholder="Johnathan Doe" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-medium text-main outline-none w-full placeholder-[#a0aabf] focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
+            <input type="text" id="name" placeholder="Johnathan Doe" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-medium text-main outline-none w-full placeholder-[#a0aabf] focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
           </div>
 
           <div class="flex flex-col gap-2 relative group">
             <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em] group-focus-within:text-primary transition-colors">EMAIL ADDRESS</label>
-            <input type="email" placeholder="name@atelier.com" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-medium text-main outline-none w-full placeholder-[#a0aabf] focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
+            <input type="email" id="email" placeholder="name@atelier.com" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-medium text-main outline-none w-full placeholder-[#a0aabf] focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
           </div>
 
           <!-- Two Column Password -->
           <div class="flex gap-4">
             <div class="flex flex-col gap-2 flex-1 relative group">
               <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em] group-focus-within:text-primary transition-colors">PASSWORD</label>
-              <input type="password" placeholder="••••••••" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-bold tracking-widest text-main outline-none w-full placeholder-[#a0aabf]/70 focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
+              <input type="password" id="password" placeholder="••••••••" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-bold tracking-widest text-main outline-none w-full placeholder-[#a0aabf]/70 focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
             </div>
             
             <div class="flex flex-col gap-2 flex-1 relative group">
               <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em] group-focus-within:text-primary transition-colors">CONFIRM PASSWORD</label>
-              <input type="password" placeholder="••••••••" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-bold tracking-widest text-main outline-none w-full placeholder-[#a0aabf]/70 focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
+              <input type="password" id="confirm-password" placeholder="••••••••" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-bold tracking-widest text-main outline-none w-full placeholder-[#a0aabf]/70 focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
             </div>
           </div>
 
@@ -154,6 +154,7 @@
     
   </main>
   
+  <script src="js/register.js" type="module"></script>
 </body>
 
 </html>
