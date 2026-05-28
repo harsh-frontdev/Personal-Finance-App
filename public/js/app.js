@@ -24,6 +24,18 @@ function initApp() {
         userNameEl.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
       }
       await refreshData();
+
+      // Check if we need to auto-open the Add Transaction modal (triggered from other pages)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("add") === "true") {
+        // Clean URL query parameter instantly to keep histories clean
+        window.history.replaceState({}, document.title, window.location.pathname);
+        mainForm.reset();
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelector("#transaction_date").value = today;
+        setModalMode("add");
+        openModalById("addTransactionModal");
+      }
     }
   });
 }
@@ -87,6 +99,11 @@ const addTransactionBtn = document.querySelector("#btnOpenAddTransaction");
 addTransactionBtn.addEventListener("click", (e) => {
   mainForm.reset();
   document.querySelector('#transactionId').value = "";
+  
+  // Set default date to today
+  const today = new Date().toISOString().split('T')[0];
+  document.querySelector("#transaction_date").value = today;
+  
   setModalMode("add");
   openModalById("addTransactionModal");
 });
