@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Sovereign Ledger - Reports & Insights</title>
+  <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .ai-advisor-bg {
+      background-color: #032b1c;
+      background-image: 
+        linear-gradient(135deg, rgba(6, 64, 43, 0.92) 0%, rgba(3, 43, 28, 0.97) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
+    }
+
+    .unusual-activity-bg {
+      background-color: #4b3208;
+      background-image: 
+        linear-gradient(135deg, rgba(92, 62, 10, 0.95) 0%, rgba(75, 50, 8, 0.98) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+    }
+  </style>
+</head>
+
+<body class="font-inter bg-body text-main leading-relaxed flex h-screen overflow-hidden">
+  <div class="flex w-full">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-[300px] bg-sidebar flex flex-col h-full border-r border-border p-[2rem_1.5rem] shrink-0">
+      <div class="sidebar-logo flex flex-col gap-1">
+        <h1 class="text-[1.5rem] font-bold text-primary leading-tight uppercase tracking-wide font-manrope">The Sovereign<br>Ledger</h1>
+        <p class="text-[0.75rem] text-muted font-semibold tracking-wide uppercase">Private Wealth Management</p>
+      </div>
+
+      <nav class="flex flex-col gap-2 mt-8">
+        <a href="dashboard.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">grid_view</span>
+          Dashboard
+        </a>
+        <a href="index.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">receipt_long</span>
+          Transactions
+        </a>
+        <a href="budgets.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">account_balance_wallet</span>
+          Budgets
+        </a>
+        <a href="accounts.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">account_balance</span>
+          Accounts
+        </a>
+        <!-- Reports Link (Active State with indicator on the right) -->
+        <a href="reports.html"
+          class="relative flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-bold text-primary transition-colors bg-card-alt after:content-[''] after:absolute after:top-0 after:right-0 after:h-full after:w-1 after:bg-primary after:rounded-r-lg">
+          <span class="material-symbols-rounded">bar_chart</span>
+          Reports
+        </a>
+        <a href="goals.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">track_changes</span>
+          Goals
+        </a>
+        <a href="settings.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">settings</span>
+          Settings
+        </a>
+        <a href="#" id="btnSignOut"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-danger transition-colors hover:bg-red-50/50 hover:text-danger">
+          <span class="material-symbols-rounded">logout</span>
+          Sign Out
+        </a>
+      </nav>
+
+      <!-- Premium user profile display card at the bottom of sidebar navigation -->
+      <div class="mt-auto pt-4 border-t border-border flex items-center gap-3">
+        <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
+          class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
+        <div>
+          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1">Julian Sterling</div>
+          <div class="text-[0.65rem] uppercase text-muted font-semibold tracking-wide">Premium Member</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col overflow-y-auto">
+
+      <!-- Top Header -->
+      <header
+        class="h-[80px] bg-body/80 backdrop-blur-sm flex items-center justify-between px-8 sticky top-0 z-10 border-b border-border shrink-0">
+        <div>
+          <h2 class="text-2xl font-bold text-main font-manrope leading-tight">Reports & Insights</h2>
+        </div>
+
+        <div class="flex items-center gap-5">
+          <!-- Search Insights bar -->
+          <div class="flex items-center gap-3 bg-[#eef2fc] px-4 py-2 rounded-full w-[280px] border border-transparent focus-within:border-border transition-all">
+            <span class="material-symbols-rounded text-sm text-muted">search</span>
+            <input type="text" placeholder="Search insights..." class="border-none bg-transparent outline-none w-full text-xs text-main placeholder-muted font-medium">
+          </div>
+
+          <!-- Time frame selector -->
+          <button class="flex items-center gap-2 bg-white border border-border rounded-lg px-4 py-2.5 text-xs font-bold text-main cursor-pointer shadow-sm hover:border-slate-300 transition-colors">
+            <span class="material-symbols-rounded text-sm text-muted">calendar_today</span>
+            Last 6 Months
+            <span class="material-symbols-rounded text-xs text-muted">expand_more</span>
+          </button>
+
+          <!-- Notification & Help Tools -->
+          <div class="flex items-center gap-4 text-muted cursor-pointer px-1">
+            <span class="material-symbols-rounded hover:text-primary transition-colors">notifications</span>
+            <span class="material-symbols-rounded hover:text-primary transition-colors">help</span>
+          </div>
+
+          <!-- Add Transaction Button -->
+          <button id="btnOpenAddTransaction" class="flex items-center justify-center gap-2 bg-[#06402b] text-white border-none rounded-lg px-5 py-2.5 text-xs font-semibold cursor-pointer transition-colors hover:bg-[#032b1c] shadow-sm">
+            <span class="material-symbols-rounded text-sm">add_circle</span>
+            Add Transaction
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard Elements Grid -->
+      <div class="p-8 w-full grid grid-cols-12 gap-8">
+        
+        <!-- ================= ROW 1: Net Income Chart & Export Panel ================= -->
+        <!-- Total Net Income chart card -->
+        <div class="col-span-8 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-[0.65rem] tracking-[0.1em] font-bold text-[#64748b] uppercase">Total Net Income</span>
+              <div class="flex items-center gap-2 mt-1">
+                <h3 class="text-4xl font-bold text-main font-manrope tracking-tight leading-none">$42,850.00</h3>
+                <span class="text-[0.7rem] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5 inline-flex items-center gap-0.5 mt-1 font-manrope">
+                  <span class="material-symbols-rounded text-[0.8rem] icon-filled">trending_up</span> 12.4%
+                </span>
+              </div>
+            </div>
+
+            <!-- Glowing SVG trend path -->
+            <div class="w-32 h-12">
+              <svg viewBox="0 0 120 40" class="w-full h-full">
+                <path d="M0,32 Q20,28 40,22 T80,18 T120,4" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"></path>
+                <path d="M0,32 Q20,28 40,22 T80,18 T120,4 L120,40 L0,40 Z" fill="url(#sparklineGrad)" opacity="0.1"></path>
+                <defs>
+                  <linearGradient id="sparklineGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#22c55e"></stop>
+                    <stop offset="100%" stop-color="#22c55e" stop-opacity="0"></stop>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Custom HTML Monthly Bar Chart -->
+          <div class="flex justify-between items-end mt-4 h-44 px-4 w-full relative">
+            
+            <!-- JAN -->
+            <div class="flex flex-col items-center gap-2 flex-1">
+              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
+                <div class="w-full bg-[#06402b] rounded-lg" style="height: 55%"></div>
+              </div>
+              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Jan</span>
+            </div>
+
+            <!-- FEB -->
+            <div class="flex flex-col items-center gap-2 flex-1">
+              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
+                <div class="w-full bg-[#06402b] rounded-lg" style="height: 75%"></div>
+              </div>
+              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Feb</span>
+            </div>
+
+            <!-- MAR -->
+            <div class="flex flex-col items-center gap-2 flex-1">
+              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
+                <div class="w-full bg-[#06402b] rounded-lg" style="height: 45%"></div>
+              </div>
+              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Mar</span>
+            </div>
+
+            <!-- APR -->
+            <div class="flex flex-col items-center gap-2 flex-1">
+              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
+                <div class="w-full bg-[#06402b] rounded-lg" style="height: 85%"></div>
+              </div>
+              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Apr</span>
+            </div>
+
+            <!-- MAY -->
+            <div class="flex flex-col items-center gap-2 flex-1">
+              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
+                <div class="w-full bg-[#06402b] rounded-lg" style="height: 95%"></div>
+              </div>
+              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">May</span>
+            </div>
+
+            <!-- JUN -->
+            <div class="flex flex-col items-center gap-2 flex-1">
+              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
+                <div class="w-full bg-[#06402b] rounded-lg" style="height: 65%"></div>
+              </div>
+              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Jun</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Export Data card -->
+        <div class="col-span-4 bg-[#f0f3ff] rounded-2xl p-6 border border-transparent shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="text-xs font-bold text-[#64748b] uppercase tracking-wider mb-5">Export Data</h3>
+            
+            <div class="flex flex-col gap-3">
+              <!-- Export CSV -->
+              <button class="w-full bg-white border border-border hover:border-slate-300 rounded-xl p-4 flex items-center justify-between shadow-sm cursor-pointer transition-all active:scale-[0.98]">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <span class="material-symbols-rounded">table_view</span>
+                  </div>
+                  <span class="text-xs font-bold text-main">Export as CSV</span>
+                </div>
+                <span class="material-symbols-rounded text-sm text-muted hover:text-main">download</span>
+              </button>
+
+              <!-- Download PDF -->
+              <button class="w-full bg-white border border-border hover:border-slate-300 rounded-xl p-4 flex items-center justify-between shadow-sm cursor-pointer transition-all active:scale-[0.98]">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-10 h-10 rounded-lg bg-red-50 text-red-600 flex items-center justify-center">
+                    <span class="material-symbols-rounded">picture_as_pdf</span>
+                  </div>
+                  <span class="text-xs font-bold text-main">Download PDF Report</span>
+                </div>
+                <span class="material-symbols-rounded text-sm text-muted hover:text-main">download</span>
+              </button>
+
+              <!-- Download Excel -->
+              <button class="w-full bg-white border border-border hover:border-slate-300 rounded-xl p-4 flex items-center justify-between shadow-sm cursor-pointer transition-all active:scale-[0.98]">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <span class="material-symbols-rounded">grid_on</span>
+                  </div>
+                  <span class="text-xs font-bold text-main">Excel Spreadsheet (.xls)</span>
+                </div>
+                <span class="material-symbols-rounded text-sm text-muted hover:text-main">download</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="text-center mt-5">
+            <span class="text-[0.625rem] text-muted font-medium italic leading-relaxed block">Reports generated in compliance with standard accounting practices.</span>
+          </div>
+        </div>
+
+        <!-- ================= ROW 2: AI Advisor & Unusual Activity ================= -->
+        <!-- AI Financial Advisor card -->
+        <div class="col-span-8 ai-advisor-bg text-white p-8 rounded-2xl shadow-md flex flex-col justify-between relative overflow-hidden h-[330px]">
+          <!-- Sparkle decorations -->
+          <div class="absolute -right-8 -top-8 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl"></div>
+          
+          <div class="flex items-center gap-2 z-10">
+            <div class="bg-white/10 border border-white/10 rounded-full px-3 py-1 flex items-center gap-1.5 text-[0.6rem] font-bold text-emerald-300 uppercase tracking-widest leading-none">
+              <span class="material-symbols-rounded text-xs text-emerald-300">auto_awesome</span> AI Financial Advisor
+            </div>
+          </div>
+
+          <div class="z-10 mt-6 pr-4">
+            <h2 class="text-3xl font-normal leading-[1.3] text-white font-manrope pr-8">You could save $200 by reducing dining out next month.</h2>
+            <p class="text-[0.875rem] text-[#a2c6b6] leading-relaxed mt-4 font-medium max-w-[580px]">
+              Based on your last 3 months of activity, your restaurant spending is 14% higher than your peer group. Diverting this to your "Real Estate" goal would reach the target 2 months earlier.
+            </p>
+          </div>
+
+          <div class="flex gap-4 mt-8 z-10">
+            <button class="bg-white text-[#032b1c] px-6 py-3 rounded-lg font-bold text-xs cursor-pointer hover:bg-slate-50 transition-colors shadow-sm active:scale-[0.98]">
+              Apply Strategy
+            </button>
+            <button class="bg-transparent text-white border border-white/20 px-6 py-3 rounded-lg font-bold text-xs cursor-pointer hover:bg-white/5 transition-colors active:scale-[0.98]">
+              Dismiss
+            </button>
+          </div>
+        </div>
+
+        <!-- Unusual Activity card -->
+        <div class="col-span-4 unusual-activity-bg text-white p-6 rounded-2xl shadow-md flex flex-col justify-between h-[330px]">
+          <div class="flex flex-col gap-3">
+            <div class="w-10 h-10 rounded-lg bg-white/10 text-yellow-500 flex items-center justify-center shadow-inner mt-1">
+              <span class="material-symbols-rounded text-xl icon-filled text-[#fbbf24]">bolt</span>
+            </div>
+            <h3 class="text-lg font-bold text-white font-manrope mt-2 leading-none">Unusual Activity</h3>
+            <p class="text-xs text-[#d8c5a2] leading-relaxed mt-2 font-medium">We noticed a recurring subscription price increase of $15.99 for "CloudStorage Pro".</p>
+          </div>
+
+          <div class="mt-6 pb-1">
+            <a href="index.html" class="text-xs font-bold text-[#fbbf24] hover:text-[#fcd34d] hover:underline flex items-center gap-1.5 cursor-pointer">
+              Review Transaction <span class="material-symbols-rounded text-sm">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ================= ROW 3: Spending Velocity, Interest Accrued, Top Category ================= -->
+        <!-- Spending Velocity Circular Gauge card -->
+        <div class="col-span-4 bg-white rounded-2xl p-6 shadow-sm border border-border flex flex-col justify-between h-[300px]">
+          <div class="flex justify-between items-center w-full">
+            <span class="text-[0.625rem] font-bold text-muted uppercase tracking-wider">Spending Velocity</span>
+            <span class="material-symbols-rounded text-emerald-600 text-sm icon-filled">check_circle</span>
+          </div>
+
+          <div class="my-2">
+            <h4 class="text-xl font-bold font-manrope text-main leading-tight">Down 4.2%</h4>
+          </div>
+
+          <!-- Circular gauge svg -->
+          <div class="w-28 h-28 mx-auto relative flex items-center justify-center">
+            <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
+              <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f1f5f9" stroke-width="8"></circle>
+              <!-- 72% calculated circum: 2*PI*40 = 251.2 * (1 - 0.72) = 70.33 offset -->
+              <circle cx="50" cy="50" r="40" fill="transparent" stroke="#0f766e" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="70.33" stroke-linecap="round"></circle>
+            </svg>
+            <div class="absolute flex flex-col items-center justify-center text-center">
+              <span class="text-lg font-bold text-main leading-none">72%</span>
+            </div>
+          </div>
+
+          <div class="text-center mt-2">
+            <span class="text-[0.65rem] text-muted italic font-medium leading-relaxed block max-w-[220px] mx-auto">You are currently under your budget threshold for the week.</span>
+          </div>
+        </div>
+
+        <!-- Interest Accrued bright sky-blue card -->
+        <div class="col-span-4 bg-[#3b82f6] text-white p-6 rounded-2xl shadow-md flex flex-col justify-between h-[300px]">
+          <div class="flex flex-col gap-2 mt-1">
+            <div class="w-10 h-10 rounded-lg bg-white/15 text-white flex items-center justify-center shadow-inner">
+              <span class="material-symbols-rounded text-lg text-white">account_balance</span>
+            </div>
+            
+            <span class="text-[0.625rem] font-bold text-[#bfdbfe] uppercase tracking-wider block mt-3">Interest Accrued</span>
+            <h3 class="text-3xl font-bold text-white font-manrope mt-2 leading-none">$1,204.45</h3>
+          </div>
+
+          <div class="pb-1 mt-6">
+            <span class="text-[0.65rem] text-[#bfdbfe] font-semibold tracking-wide">Estimated for Q3 2023</span>
+          </div>
+        </div>
+
+        <!-- Top Spending Category progress card -->
+        <div class="col-span-4 bg-white rounded-2xl p-6 shadow-sm border border-border flex flex-col justify-between h-[300px]">
+          <div>
+            <span class="text-[0.625rem] font-bold text-muted uppercase tracking-wider block">Top Spending Category</span>
+            
+            <div class="flex items-center gap-4 mt-6">
+              <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+                <span class="material-symbols-rounded">shopping_bag</span>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm text-main leading-snug">Retail & Luxury</h4>
+                <p class="text-xs text-muted mt-1 font-semibold">$8,420 spent this month</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress indicator bar at the bottom -->
+          <div class="mt-8 pb-1">
+            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div class="bg-[#0f766e] h-full rounded-full" style="width: 65%"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Add Transaction Modal Markup -->
+  <div id="addTransactionModal"
+    class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
+    <div class="flex w-[900px] h-[560px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
+
+      <!-- Left Section -->
+      <div class="bg-primary text-white w-[320px] p-[3rem_2.5rem] flex flex-col justify-between">
+        <div>
+          <span class="text-[0.65rem] tracking-[0.1em] uppercase text-[#a2c6b6] font-bold mb-6 inline-block">LEDGER ENTRY</span>
+          <h2 class="text-4xl font-normal leading-[1.25] mb-4 font-manrope">Record a<br>new<br>Transaction</h2>
+          <p class="text-[0.85rem] text-[#d1fae5] leading-relaxed">Every cent is a seed in the garden of your future. Categorize with intent.</p>
+        </div>
+        <div class="mt-8">
+          <div class="flex items-center gap-1.5 text-[0.75rem] font-bold text-[#a2c6b6] mb-1">
+            <span class="material-symbols-rounded text-[1rem]">verified_user</span>
+            <strong>ENCRYPTED</strong>
+          </div>
+          <div class="text-[0.65rem] text-[#6ee7b7]/70">SOVEREIGN-KEY: 0x442...AF1</div>
+        </div>
+      </div>
+
+      <!-- Right Section -->
+      <div class="flex-1 p-[2.5rem_3rem] bg-white">
+        <form id="addTrasactionForm" class="flex flex-col gap-6 h-full">
+          <input type="hidden" id="transactionId" name="transactionId" value="">
+          
+          <!-- Amount -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">AMOUNT</label>
+            <div class="flex items-baseline gap-2">
+              <span class="text-2xl text-main font-medium">₹</span>
+              <input id="transaction_price" name="price" type="text" placeholder="0.00"
+                class="border-none text-5xl font-semibold text-main outline-none w-full bg-transparent placeholder-[#e0e7ff]"
+                value="0.00" required>
+            </div>
+          </div>
+
+          <!-- Date & Account Row -->
+          <div class="flex gap-6">
+            <div class="flex flex-col gap-2 flex-1">
+              <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">DATE</label>
+              <input id="transaction_date" name="date-time" type="date"
+                class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400"
+                placeholder="mm/dd/yyyy, --:-" required>
+            </div>
+            <div class="flex flex-col gap-2 flex-1">
+              <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">ACCOUNT</label>
+              <select id="transaction_account" name="account"
+                class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 cursor-pointer"
+                required>
+                <option>SBI Bank</option>
+                <option>AXIS Bank</option>
+                <option>IDBI Bank</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">CATEGORY</label>
+            <div class="flex gap-3" id="category-radio">
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Groceries" class="peer hidden" checked required>
+                <div
+                  class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Groceries
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Dining" class="peer hidden" required>
+                <div
+                  class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Dining
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Transport" class="peer hidden" required>
+                <div
+                  class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Transport
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Rent" class="peer hidden" required>
+                <div
+                  class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Rent
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">DESCRIPTION / NOTES</label>
+            <textarea id="transaction_desc" name="desc"
+              class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 resize-none h-[60px]"
+              placeholder="e.g. Weekly supplies from Artisan Market"></textarea>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="flex justify-end items-center mt-auto pt-4">
+            <div class="flex items-center gap-6">
+              <button type="button" id="btnCloseAddTransaction"
+                class="bg-transparent border-none text-[0.9rem] font-semibold text-main cursor-pointer hover:underline">Cancel</button>
+              <button id="addTransactionBtn" type="submit"
+                class="bg-primary text-white border-none rounded-md px-6 py-3 text-[0.85rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">Add Transaction</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Authentication session script handler -->
+  <script type="module">
+    import { auth, saveData } from "./js/services/api.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { initModal } from "./js/components/modal.js";
+    import { getFormData } from "./js/utils/formHandler.js";
+
+    // Enforce dashboard router security
+    onAuthStateChanged(auth, (user) => {
+      const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
+      if (!user && !demoUser) {
+        window.location.href = "login.html";
+      } else {
+        // Populate custom profile name in the header and sidebar card
+        const names = document.querySelectorAll(".userNameDisplay");
+        names.forEach(el => {
+          el.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
+        });
+
+        // Initialize Add Transaction Modal locally on the reports page
+        initModal("addTransactionModal", "btnOpenAddTransaction", "btnCloseAddTransaction");
+
+        // Set default date to today when button is clicked
+        const addBtn = document.querySelector("#btnOpenAddTransaction");
+        if (addBtn) {
+          addBtn.addEventListener("click", () => {
+            const form = document.querySelector("#addTrasactionForm");
+            if (form) {
+              form.reset();
+              const today = new Date().toISOString().split('T')[0];
+              const dateInput = form.querySelector("#transaction_date");
+              if (dateInput) {
+                dateInput.value = today;
+              }
+            }
+          });
+        }
+
+        // Handle Add Transaction Form Submit
+        const mainForm = document.querySelector("#addTrasactionForm");
+        if (mainForm) {
+          mainForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const transObject = getFormData(mainForm);
+            const response = await saveData(transObject);
+            if (response?.success) {
+              // Redirect to main ledger page to view the new transaction
+              window.location.href = "index.html";
+            } else {
+              alert("Failed to add transaction. Please try again.");
+            }
+          });
+        }
+      }
+    });
+
+    // Sign out handler
+    const signOutBtn = document.querySelector("#btnSignOut");
+    if (signOutBtn) {
+      signOutBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          if (localStorage.getItem("sovereign_demo_user")) {
+            localStorage.removeItem("sovereign_demo_user");
+          } else {
+            await signOut(auth);
+          }
+          window.location.href = "login.html";
+        } catch (error) {
+          console.error("Sign out failed: ", error);
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

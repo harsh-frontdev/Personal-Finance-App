@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Sovereign Ledger - Settings & Preferences</title>
+  <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .settings-security-bg {
+      background-color: #032b1c;
+      background-image: 
+        linear-gradient(135deg, rgba(6, 64, 43, 0.94) 0%, rgba(3, 43, 28, 0.98) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
+    }
+
+    /* Premium Custom iOS-style Switch Toggles */
+    .ios-switch {
+      position: relative;
+      inline-size: 2.75rem;
+      block-size: 1.5rem;
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+    }
+    .ios-switch::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 1.25rem;
+      height: 1.25rem;
+      background-color: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ios-switch-checkbox:checked + .ios-switch {
+      background-color: #06402b;
+    }
+    .ios-switch-checkbox:checked + .ios-switch::after {
+      transform: translateX(1.25rem);
+    }
+
+    .ios-switch-checkbox:checked + .ios-switch-gold {
+      background-color: #fbbf24;
+    }
+
+    .ios-switch-checkbox:checked + .ios-switch-emerald {
+      background-color: #10b981;
+    }
+  </style>
+</head>
+
+<body class="font-inter bg-body text-main leading-relaxed flex h-screen overflow-hidden">
+  <div class="flex w-full">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-[300px] bg-sidebar flex flex-col h-full border-r border-border p-[2rem_1.5rem] shrink-0">
+      <div class="sidebar-logo flex flex-col gap-1">
+        <h1 class="text-[1.5rem] font-bold text-primary leading-tight uppercase tracking-wide font-manrope">The Sovereign<br>Ledger</h1>
+        <p class="text-[0.75rem] text-muted font-semibold tracking-wide uppercase">Private Wealth Management</p>
+      </div>
+
+      <nav class="flex flex-col gap-2 mt-8">
+        <a href="dashboard.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">grid_view</span>
+          Dashboard
+        </a>
+        <a href="index.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">receipt_long</span>
+          Transactions
+        </a>
+        <a href="budgets.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">account_balance_wallet</span>
+          Budgets
+        </a>
+        <a href="accounts.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">account_balance</span>
+          Accounts
+        </a>
+        <a href="reports.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">bar_chart</span>
+          Reports
+        </a>
+        <a href="goals.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+          <span class="material-symbols-rounded">track_changes</span>
+          Goals
+        </a>
+        <!-- Settings Active -->
+        <a href="settings.html"
+          class="relative flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-bold text-primary transition-colors bg-card-alt after:content-[''] after:absolute after:top-0 after:right-0 after:h-full after:w-1 after:bg-primary after:rounded-r-lg">
+          <span class="material-symbols-rounded">settings</span>
+          Settings
+        </a>
+        <a href="#" id="btnSignOut"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-danger transition-colors hover:bg-red-50/50 hover:text-danger">
+          <span class="material-symbols-rounded">logout</span>
+          Sign Out
+        </a>
+      </nav>
+
+      <!-- Premium user profile display card at the bottom of sidebar navigation -->
+      <div class="mt-auto pt-4 border-t border-border flex items-center gap-3">
+        <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
+          class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
+        <div>
+          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1">Julian Sterling</div>
+          <div class="text-[0.65rem] uppercase text-muted font-semibold tracking-wide">Premium Member</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col overflow-y-auto">
+
+      <!-- Top Header -->
+      <header
+        class="h-[80px] bg-body/80 backdrop-blur-sm flex items-center justify-between px-8 sticky top-0 z-10 border-b border-border shrink-0">
+        <div>
+          <h2 class="text-2xl font-bold text-main font-manrope leading-tight">Settings</h2>
+        </div>
+
+        <div class="flex items-center gap-5">
+          <!-- Search bar -->
+          <div class="flex items-center gap-3 bg-[#eef2fc] px-4 py-2 rounded-full w-[280px] border border-transparent focus-within:border-border transition-all">
+            <span class="material-symbols-rounded text-sm text-muted">search</span>
+            <input type="text" placeholder="Search settings..."
+              class="border-none bg-transparent outline-none w-full text-xs text-main placeholder-muted font-medium">
+          </div>
+
+          <!-- Notification & Help Tools -->
+          <div class="flex items-center gap-4 text-muted cursor-pointer px-1">
+            <span class="material-symbols-rounded hover:text-primary transition-colors">notifications</span>
+            <span class="material-symbols-rounded hover:text-primary transition-colors">help</span>
+          </div>
+
+          <!-- Add Transaction Button -->
+          <button id="btnOpenAddTransaction" class="flex items-center justify-center gap-2 bg-[#06402b] text-white border-none rounded-lg px-5 py-2.5 text-xs font-semibold cursor-pointer transition-colors hover:bg-[#032b1c] shadow-sm">
+            <span class="material-symbols-rounded text-sm">add_circle</span>
+            Add Transaction
+          </button>
+        </div>
+      </header>
+
+      <!-- Settings Page Grid -->
+      <div class="p-8 w-full flex flex-col gap-8">
+
+        <!-- Header Titles -->
+        <div>
+          <div class="text-xs font-bold text-muted uppercase tracking-wider block mb-1">ACCOUNT WORKSPACE</div>
+          <p class="text-xs text-muted mt-0.5 font-semibold">Refine your personal financial workspace.</p>
+        </div>
+
+        <!-- ================= ROW 1: Profile Details & Security ================= -->
+        <div class="grid grid-cols-12 gap-8">
+          
+          <!-- Profile Details Card (Left - 8 Cols) -->
+          <div class="col-span-8 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
+            
+            <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+              <!-- Avatar Stack & Details -->
+              <div class="flex items-center gap-5">
+                <div class="relative">
+                  <img src="https://i.pravatar.cc/150?img=11" alt="Alexander Vance"
+                    class="w-16 h-16 rounded-full border-2 border-white shadow-sm object-cover">
+                  <!-- Edit Pencil Overlay -->
+                  <button class="absolute bottom-0 right-0 w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer border border-white hover:bg-primary-hover shadow-sm active:scale-90">
+                    <span class="material-symbols-rounded text-xs">edit</span>
+                  </button>
+                </div>
+                
+                <div>
+                  <h4 class="text-xl font-bold text-main font-manrope userNameDisplay">Alexander Vance</h4>
+                  <p class="text-xs text-muted font-medium mt-1">Private Wealth Client &bull; Member since 2021</p>
+                </div>
+              </div>
+
+              <!-- Save Changes -->
+              <button class="bg-[#06402b] hover:bg-[#032b1c] text-white border-none rounded-lg px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors shadow-sm active:scale-95">
+                Save Changes
+              </button>
+            </div>
+
+            <!-- Profile Forms Inputs -->
+            <div class="grid grid-cols-2 gap-6">
+              
+              <!-- Display Name -->
+              <div class="flex flex-col gap-2">
+                <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Display Name</label>
+                <input type="text" value="Alexander Vance" id="settings_displayName"
+                  class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors shadow-sm">
+              </div>
+
+              <!-- Email Address -->
+              <div class="flex flex-col gap-2">
+                <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Email Address</label>
+                <input type="email" value="alexander.v@vancecap.com" id="settings_emailAddress"
+                  class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors shadow-sm">
+              </div>
+
+              <!-- Phone Number -->
+              <div class="flex flex-col gap-2">
+                <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Phone Number</label>
+                <input type="text" value="+1 (555) 902-1400"
+                  class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors shadow-sm">
+              </div>
+
+              <!-- Primary Currency -->
+              <div class="flex flex-col gap-2">
+                <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Primary Currency</label>
+                <div class="relative">
+                  <select class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors appearance-none cursor-pointer shadow-sm">
+                    <option>USD - United States Dollar</option>
+                    <option>INR - Indian Rupee</option>
+                    <option>EUR - Euro</option>
+                    <option>GBP - British Pound</option>
+                  </select>
+                  <span class="material-symbols-rounded absolute right-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none text-md">expand_more</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Security Panel Card (Right - 4 Cols) -->
+          <div class="col-span-4 settings-security-bg text-white p-8 rounded-2xl shadow-md flex flex-col justify-between h-[340px] relative overflow-hidden">
+            <div class="flex flex-col gap-3">
+              <div class="w-12 h-12 rounded-xl bg-white/10 text-emerald-300 flex items-center justify-center shrink-0 shadow-inner">
+                <span class="material-symbols-rounded text-2xl text-emerald-300">verified_user</span>
+              </div>
+              <h3 class="text-xl font-bold text-white font-manrope mt-2">Security</h3>
+              <p class="text-xs text-[#a2c6b6] leading-relaxed font-semibold">
+                Maintain the fortress. Update your credentials and biometric preferences here.
+              </p>
+            </div>
+
+            <div class="flex flex-col gap-5 mt-4">
+              <!-- Password Button -->
+              <button class="w-full flex justify-between items-center bg-white/10 hover:bg-white/15 text-white border-none rounded-lg p-4 text-xs font-bold cursor-pointer transition-colors active:scale-98">
+                <span>Update Password</span>
+                <span class="material-symbols-rounded text-sm">arrow_forward</span>
+              </button>
+
+              <!-- Biometric Toggle Row -->
+              <div class="flex justify-between items-center bg-white/5 border border-white/10 rounded-lg p-4">
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-xs font-bold text-white">Biometric Login</span>
+                  <span class="text-[0.6rem] text-[#a2c6b6] font-semibold">Use FaceID or Fingerprint</span>
+                </div>
+                <!-- Custom iOS-style toggle checkbox -->
+                <label class="relative flex items-center">
+                  <input type="checkbox" class="ios-switch-checkbox sr-only" id="toggle_biometrics" checked>
+                  <div class="ios-switch ios-switch-emerald"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= ROW 2: Notifications & Preferences ================= -->
+        <div class="grid grid-cols-12 gap-8">
+          
+          <!-- Notifications (Left - 6 Cols) -->
+          <div class="col-span-6 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-white text-emerald-800 flex items-center justify-center shadow-sm">
+                <span class="material-symbols-rounded text-xl">notifications</span>
+              </div>
+              <h3 class="text-lg font-bold text-main font-manrope">Notifications</h3>
+            </div>
+
+            <!-- Alerts Toggle list -->
+            <div class="flex flex-col gap-5">
+              
+              <!-- Toggle 1 -->
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="text-xs font-bold text-main">Large Transactions</h4>
+                  <p class="text-[0.65rem] text-muted mt-0.5 font-semibold">Alert me for spends over $1,000</p>
+                </div>
+                <label class="relative flex items-center">
+                  <input type="checkbox" class="ios-switch-checkbox sr-only" id="toggle_large_trans" checked>
+                  <div class="ios-switch"></div>
+                </label>
+              </div>
+
+              <!-- Toggle 2 -->
+              <div class="flex justify-between items-center border-t border-slate-100/60 pt-4">
+                <div>
+                  <h4 class="text-xs font-bold text-main">Weekly Reports</h4>
+                  <p class="text-[0.65rem] text-muted mt-0.5 font-semibold">Sunday morning spending digests</p>
+                </div>
+                <label class="relative flex items-center">
+                  <input type="checkbox" class="ios-switch-checkbox sr-only" id="toggle_weekly_rep" checked>
+                  <div class="ios-switch"></div>
+                </label>
+              </div>
+
+              <!-- Toggle 3 -->
+              <div class="flex justify-between items-center border-t border-slate-100/60 pt-4">
+                <div>
+                  <h4 class="text-xs font-bold text-main">Budget Alerts</h4>
+                  <p class="text-[0.65rem] text-muted mt-0.5 font-semibold">Notify when category reaches 80%</p>
+                </div>
+                <label class="relative flex items-center">
+                  <input type="checkbox" class="ios-switch-checkbox sr-only" id="toggle_budget_al">
+                  <div class="ios-switch"></div>
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Preferences Navigation (Right - 6 Cols) -->
+          <div class="col-span-6 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-white text-emerald-800 flex items-center justify-center shadow-sm">
+                <span class="material-symbols-rounded text-xl font-bold">tune</span>
+              </div>
+              <h3 class="text-lg font-bold text-main font-manrope">Preferences</h3>
+            </div>
+
+            <!-- List elements -->
+            <div class="flex flex-col gap-4">
+              
+              <!-- Item 1 -->
+              <div class="bg-white border border-slate-100 rounded-xl p-4 flex justify-between items-center hover:bg-slate-50 hover:border-slate-200 transition-colors cursor-pointer shadow-sm group">
+                <div class="flex items-center gap-3.5">
+                  <span class="material-symbols-rounded text-muted group-hover:text-primary transition-colors text-md">translate</span>
+                  <div class="flex flex-col">
+                    <span class="text-xs font-bold text-main leading-tight">Language</span>
+                    <span class="text-[0.625rem] text-muted font-medium mt-0.5">English (United States)</span>
+                  </div>
+                </div>
+                <span class="material-symbols-rounded text-muted text-sm transition-transform group-hover:translate-x-0.5">arrow_forward_ios</span>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="bg-white border border-slate-100 rounded-xl p-4 flex justify-between items-center hover:bg-slate-50 hover:border-slate-200 transition-colors cursor-pointer shadow-sm group">
+                <div class="flex items-center gap-3.5">
+                  <span class="material-symbols-rounded text-muted group-hover:text-primary transition-colors text-md">dark_mode</span>
+                  <div class="flex flex-col">
+                    <span class="text-xs font-bold text-main leading-tight">Appearance</span>
+                    <span class="text-[0.625rem] text-muted font-medium mt-0.5">Light Mode (System Default)</span>
+                  </div>
+                </div>
+                <span class="material-symbols-rounded text-muted text-sm transition-transform group-hover:translate-x-0.5">arrow_forward_ios</span>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="bg-white border border-slate-100 rounded-xl p-4 flex justify-between items-center hover:bg-slate-50 hover:border-slate-200 transition-colors cursor-pointer shadow-sm group">
+                <div class="flex items-center gap-3.5">
+                  <span class="material-symbols-rounded text-muted group-hover:text-primary transition-colors text-md">lock</span>
+                  <div class="flex flex-col">
+                    <span class="text-xs font-bold text-main leading-tight">Data & Privacy</span>
+                    <span class="text-[0.625rem] text-muted font-medium mt-0.5">Manage exports and history</span>
+                  </div>
+                </div>
+                <span class="material-symbols-rounded text-muted text-sm transition-transform group-hover:translate-x-0.5">arrow_forward_ios</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= ROW 3: Deactivate Workspace Banner ================= -->
+        <div class="bg-[#fef2f2] border border-[#fee2e2] rounded-2xl p-6 flex justify-between items-center mt-4">
+          <div class="flex flex-col gap-1.5">
+            <h4 class="text-md font-bold text-[#ba1a1a] leading-none">Deactivate Workspace</h4>
+            <p class="text-xs text-[#92400e] font-semibold max-w-[650px] leading-relaxed">
+              Temporarily disable your access to The Sovereign Ledger. Your data will be preserved but synchronization will stop.
+            </p>
+          </div>
+          
+          <button class="bg-transparent text-[#ba1a1a] border border-[#fecaca] hover:bg-[#fee2e2] rounded-lg px-5 py-2.5 font-bold text-xs cursor-pointer transition-colors active:scale-95">
+            Manage Account Access
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Add Transaction Modal (Included for complete app synchronicity) -->
+  <div id="addTransactionModal"
+    class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
+    <div class="flex w-[900px] h-[560px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
+
+      <!-- Left Section -->
+      <div class="bg-primary text-white w-[320px] p-[3rem_2.5rem] flex flex-col justify-between">
+        <div>
+          <span class="text-[0.65rem] tracking-[0.1em] uppercase text-[#a2c6b6] font-bold mb-6 inline-block">LEDGER ENTRY</span>
+          <h2 class="text-4xl font-normal leading-[1.25] mb-4 font-manrope">Record a<br>new<br>Transaction</h2>
+          <p class="text-[0.85rem] text-[#d1fae5] leading-relaxed">Every cent is a seed in the garden of your future. Categorize with intent.</p>
+        </div>
+        <div class="mt-8">
+          <div class="flex items-center gap-1.5 text-[0.75rem] font-bold text-[#a2c6b6] mb-1">
+            <span class="material-symbols-rounded text-[1rem]">verified_user</span>
+            <strong>ENCRYPTED</strong>
+          </div>
+          <div class="text-[0.65rem] text-[#6ee7b7]/70">SOVEREIGN-KEY: 0x442...AF1</div>
+        </div>
+      </div>
+
+      <!-- Right Section -->
+      <div class="flex-1 p-[2.5rem_3rem] bg-white">
+        <form id="addTrasactionForm" class="flex flex-col gap-6 h-full">
+          <input type="hidden" id="transactionId" name="transactionId" value="">
+          
+          <!-- Amount -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">AMOUNT</label>
+            <div class="flex items-baseline gap-2">
+              <span class="text-2xl text-main font-medium">₹</span>
+              <input id="transaction_price" name="price" type="text" placeholder="0.00"
+                class="border-none text-5xl font-semibold text-main outline-none w-full bg-transparent placeholder-[#e0e7ff]"
+                value="0.00" required>
+            </div>
+          </div>
+
+          <!-- Date & Account Row -->
+          <div class="flex gap-6">
+            <div class="flex flex-col gap-2 flex-1">
+              <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">DATE</label>
+              <input id="transaction_date" name="date-time" type="date"
+                class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400"
+                placeholder="mm/dd/yyyy, --:-" required>
+            </div>
+            <div class="flex flex-col gap-2 flex-1">
+              <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">ACCOUNT</label>
+              <select id="transaction_account" name="account"
+                class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 cursor-pointer"
+                required>
+                <option>SBI Bank</option>
+                <option>AXIS Bank</option>
+                <option>IDBI Bank</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">CATEGORY</label>
+            <div class="flex gap-3" id="category-radio">
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Groceries" class="peer hidden" checked required>
+                <div
+                  class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Groceries
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Dining" class="peer hidden" required>
+                <div
+                  class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Dining
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Transport" class="peer hidden" required>
+                <div
+                  class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Transport
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="category" value="Rent" class="peer hidden" required>
+                <div
+                  class="h-full bg-slate-50 border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 transition-all hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white peer-checked:hover:border-primary">
+                  Rent
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">DESCRIPTION / NOTES</label>
+            <textarea id="transaction_desc" name="desc"
+              class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 resize-none h-[60px]"
+              placeholder="e.g. Weekly supplies from Artisan Market"></textarea>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="flex justify-end items-center mt-auto pt-4">
+            <div class="flex items-center gap-6">
+              <button type="button" id="btnCloseAddTransaction"
+                class="bg-transparent border-none text-[0.9rem] font-semibold text-main cursor-pointer hover:underline">Cancel</button>
+              <button id="addTransactionBtn" type="submit"
+                class="bg-primary text-white border-none rounded-md px-6 py-3 text-[0.85rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">Add Transaction</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Authentication session script handler -->
+  <script type="module">
+    import { auth, saveData } from "./js/services/api.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { initModal } from "./js/components/modal.js";
+    import { getFormData } from "./js/utils/formHandler.js";
+
+    // Enforce dashboard router security
+    onAuthStateChanged(auth, (user) => {
+      const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
+      if (!user && !demoUser) {
+        window.location.href = "login.html";
+      } else {
+        // Populate custom profile name in the header, input form, and card
+        const names = document.querySelectorAll(".userNameDisplay");
+        names.forEach(el => {
+          el.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
+        });
+
+        // Pre-fill Display Name and Email input values based on active session
+        const nameInput = document.querySelector("#settings_displayName");
+        if (nameInput) {
+          nameInput.value = user ? (user.displayName || user.email.split('@')[0]) : demoUser.displayName;
+        }
+        
+        const emailInput = document.querySelector("#settings_emailAddress");
+        if (emailInput) {
+          emailInput.value = user ? user.email : "alexander.v@vancecap.com";
+        }
+
+        // Initialize Add Transaction Modal locally if needed (linked inside app)
+        initModal("addTransactionModal", "btnOpenAddTransaction", "btnCloseAddTransaction");
+
+        // Set default date to today when button is clicked (in case triggered)
+        const addBtn = document.querySelector("#btnOpenAddTransaction");
+        if (addBtn) {
+          addBtn.addEventListener("click", () => {
+            const form = document.querySelector("#addTrasactionForm");
+            if (form) {
+              form.reset();
+              const today = new Date().toISOString().split('T')[0];
+              const dateInput = form.querySelector("#transaction_date");
+              if (dateInput) {
+                dateInput.value = today;
+              }
+            }
+          });
+        }
+
+        // Handle Add Transaction Form Submit
+        const mainForm = document.querySelector("#addTrasactionForm");
+        if (mainForm) {
+          mainForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const transObject = getFormData(mainForm);
+            const response = await saveData(transObject);
+            if (response?.success) {
+              // Redirect to main ledger page to view the new transaction
+              window.location.href = "index.html";
+            } else {
+              alert("Failed to add transaction. Please try again.");
+            }
+          });
+        }
+      }
+    });
+
+    // Sign out handler
+    const signOutBtn = document.querySelector("#btnSignOut");
+    if (signOutBtn) {
+      signOutBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          if (localStorage.getItem("sovereign_demo_user")) {
+            localStorage.removeItem("sovereign_demo_user");
+          } else {
+            await signOut(auth);
+          }
+          window.location.href = "login.html";
+        } catch (error) {
+          console.error("Sign out failed: ", error);
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

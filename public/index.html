@@ -20,10 +20,9 @@
 
     <!-- Sidebar -->
     <aside class="w-[300px] bg-sidebar flex flex-col h-full border-r border-border p-[2rem_1.5rem] shrink-0">
-      <div class="sidebar-logo">
-        <h1 class="text-[1.5rem] font-bold text-primary leading-tight mb-2 uppercase tracking-wide font-manrope">The
-          Sovereign<br>Ledger</h1>
-        <p class="text-[0.75rem] text-muted font-medium tracking-wide uppercase">Private Wealth Management</p>
+      <div class="sidebar-logo flex flex-col gap-1">
+        <h1 class="text-[1.5rem] font-bold text-primary leading-tight uppercase tracking-wide font-manrope">The Sovereign<br>Ledger</h1>
+        <p class="text-[0.75rem] text-muted font-semibold tracking-wide uppercase">Private Wealth Management</p>
       </div>
 
       <nav class="flex flex-col gap-2 mt-8">
@@ -32,32 +31,33 @@
           <span class="material-symbols-rounded">grid_view</span>
           Dashboard
         </a>
+        <!-- Transactions Link (Active State with indicator on the right) -->
         <a href="index.html"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold transition-colors bg-primary text-white hover:bg-primary-hover hover:text-white">
+          class="relative flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-bold text-primary transition-colors bg-card-alt after:content-[''] after:absolute after:top-0 after:right-0 after:h-full after:w-1 after:bg-primary after:rounded-r-lg">
           <span class="material-symbols-rounded">receipt_long</span>
           Transactions
         </a>
-        <a href="#"
+        <a href="budgets.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">account_balance_wallet</span>
           Budgets
         </a>
-        <a href="#"
+        <a href="accounts.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">account_balance</span>
           Accounts
         </a>
-        <a href="#"
+        <a href="reports.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">bar_chart</span>
           Reports
         </a>
-        <a href="#"
+        <a href="goals.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">track_changes</span>
           Goals
         </a>
-        <a href="#"
+        <a href="settings.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">settings</span>
           Settings
@@ -69,12 +69,14 @@
         </a>
       </nav>
 
-      <div class="mt-auto pt-4 border-t border-border">
-        <button id="btnOpenAddTransaction"
-          class="w-full flex items-center justify-center gap-2 bg-primary text-white border-none rounded-lg py-3 text-[0.9rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">
-          <span class="material-symbols-rounded">add_circle</span>
-          Add Transaction
-        </button>
+      <!-- Premium user profile display card at the bottom of sidebar navigation -->
+      <div class="mt-auto pt-4 border-t border-border flex items-center gap-3">
+        <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
+          class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
+        <div>
+          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1">Julian Sterling</div>
+          <div class="text-[0.65rem] uppercase text-muted font-semibold tracking-wide">Premium Member</div>
+        </div>
       </div>
     </aside>
 
@@ -84,28 +86,29 @@
       <!-- Top Header -->
       <header
         class="h-[80px] bg-body/80 backdrop-blur-sm flex items-center justify-between px-8 sticky top-0 z-10 border-b border-border shrink-0">
-        <div class="flex items-center gap-3 bg-white px-4 py-2.5 rounded-full shadow-sm w-[400px] border border-border">
-          <span class="material-symbols-rounded text-muted">search</span>
-          <input type="text" id="searchTransactions" placeholder="Search transactions..."
-            class="border-none bg-transparent outline-none w-full text-sm text-main placeholder-muted">
+        <div>
+          <h2 class="text-2xl font-bold text-main font-manrope leading-tight">Transaction History</h2>
         </div>
 
-        <div class="flex items-center gap-6">
-          <div class="flex items-center gap-4 text-muted cursor-pointer">
+        <div class="flex items-center gap-5">
+          <!-- Search transactions bar -->
+          <div class="flex items-center gap-3 bg-[#eef2fc] px-4 py-2 rounded-full w-[280px] border border-transparent focus-within:border-border transition-all">
+            <span class="material-symbols-rounded text-sm text-muted">search</span>
+            <input type="text" id="searchTransactions" placeholder="Search transactions..."
+              class="border-none bg-transparent outline-none w-full text-xs text-main placeholder-muted font-medium">
+          </div>
+
+          <!-- Notification & Help Tools -->
+          <div class="flex items-center gap-4 text-muted cursor-pointer px-1">
             <span class="material-symbols-rounded hover:text-primary transition-colors">notifications</span>
             <span class="material-symbols-rounded hover:text-primary transition-colors">help</span>
           </div>
-          <div class="flex items-center gap-4">
-            <div class="text-right">
-              <div class="text-md font-bold text-main font-manrope">Julian Sterling</div>
-              <div class="text-[0.65rem] uppercase">Premium Member</div>
-            </div>
-            <div class="avatar">
-              <!-- Placeholder for user avatar -->
-              <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
-                class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
-            </div>
-          </div>
+
+          <!-- Add Transaction Button -->
+          <button id="btnOpenAddTransaction" class="flex items-center justify-center gap-2 bg-[#06402b] text-white border-none rounded-lg px-5 py-2.5 text-xs font-semibold cursor-pointer transition-colors hover:bg-[#032b1c] shadow-sm">
+            <span class="material-symbols-rounded text-sm">add_circle</span>
+            Add Transaction
+          </button>
         </div>
       </header>
 
@@ -113,8 +116,8 @@
       <div class="p-8 mx-auto w-full">
         <div class="text-sm text-muted mb-6">Ledger &rsaquo; <strong class="text-main">All Transactions</strong></div>
 
-        <div class="flex justify-between items-center mb-8">
-          <h1 class="text-4xl text-primary font-bold tracking-tight m-0 font-manrope">Transaction History</h1>
+        <div class="flex justify-between items-center mb-6">
+          <div class="text-xs font-bold text-muted uppercase tracking-wider">ALL PRIVATE TRANSACTIONS</div>
           <div class="flex gap-3">
             <button
               class="flex items-center gap-2 bg-white border border-border rounded-lg px-4 py-2 text-sm font-semibold text-main cursor-pointer shadow-sm hover:border-light transition-colors">Period:
