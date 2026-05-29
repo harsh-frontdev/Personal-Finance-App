@@ -18,11 +18,11 @@ function initApp() {
     if (!user && !demoUser) {
       window.location.href = "login.html";
     } else {
-      // Dynamic profile name in the header
-      const userNameEl = document.querySelector(".text-md.font-bold.text-main.font-manrope");
-      if (userNameEl) {
-        userNameEl.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
-      }
+      // Dynamic profile name in the header & sidebar
+      const names = document.querySelectorAll(".userNameDisplay");
+      names.forEach(el => {
+        el.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
+      });
       await refreshData();
 
       // Check if we need to auto-open the Add Transaction modal (triggered from other pages)
