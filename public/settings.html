@@ -197,7 +197,7 @@
               </div>
 
               <!-- Save Changes -->
-              <button class="bg-[#06402b] hover:bg-[#032b1c] text-white border-none rounded-lg px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors shadow-sm active:scale-95">
+              <button id="btnSaveChanges" class="bg-[#06402b] hover:bg-[#032b1c] text-white border-none rounded-lg px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors shadow-sm active:scale-95">
                 Save Changes
               </button>
             </div>
@@ -222,7 +222,7 @@
               <!-- Phone Number -->
               <div class="flex flex-col gap-2">
                 <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Phone Number</label>
-                <input type="text" value="+1 (555) 902-1400"
+                <input type="text" value="+91 98765 43210" id="settings_phoneNumber"
                   class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors shadow-sm">
               </div>
 
@@ -230,9 +230,9 @@
               <div class="flex flex-col gap-2">
                 <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Primary Currency</label>
                 <div class="relative">
-                  <select class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors appearance-none cursor-pointer shadow-sm">
+                  <select id="settings_currency" class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors appearance-none cursor-pointer shadow-sm">
                     <option>USD - United States Dollar</option>
-                    <option>INR - Indian Rupee</option>
+                    <option selected>INR - Indian Rupee</option>
                     <option>EUR - Euro</option>
                     <option>GBP - British Pound</option>
                   </select>
@@ -286,7 +286,7 @@
               <div class="flex justify-between items-center">
                 <div>
                   <h4 class="text-xs font-bold text-main">Large Transactions</h4>
-                  <p class="text-[0.65rem] text-muted mt-0.5 font-semibold">Alert me for spends over $1,000</p>
+                  <p class="text-[0.65rem] text-muted mt-0.5 font-semibold">Alert me for spends over ₹50,000</p>
                 </div>
                 <label class="relative flex items-center">
                   <input type="checkbox" class="ios-switch-checkbox sr-only" id="toggle_large_trans" checked>
@@ -443,9 +443,13 @@
               <select id="transaction_account" name="account"
                 class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 cursor-pointer"
                 required>
-                <option>SBI Bank</option>
-                <option>AXIS Bank</option>
-                <option>IDBI Bank</option>
+                <option>HDFC Bank Savings</option>
+                <option>ICICI Bank FD</option>
+                <option>SBI NPS (Tier-1)</option>
+                <option>Zerodha Mutual Funds</option>
+                <option>Groww Portfolio</option>
+                <option>AMEX India Card</option>
+                <option>OneCard</option>
               </select>
             </div>
           </div>
@@ -591,7 +595,7 @@
   <!-- Authentication session script handler -->
   <script type="module">
     import { auth, saveData } from "./js/services/api.js";
-    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { onAuthStateChanged, signOut, updateProfile, updateEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
 
@@ -616,6 +620,22 @@
         const emailInput = document.querySelector("#settings_emailAddress");
         if (emailInput) {
           emailInput.value = user ? user.email : "alexander.v@vancecap.com";
+        }
+
+        // Restore custom preferences from localStorage (sovereign_settings) if present
+        const phoneInput = document.getElementById("settings_phoneNumber");
+        const currencySelect = document.getElementById("settings_currency");
+        const toggleLargeTrans = document.getElementById("toggle_large_trans");
+        const toggleWeeklyRep = document.getElementById("toggle_weekly_rep");
+        const toggleBudgetAl = document.getElementById("toggle_budget_al");
+
+        const savedSettings = JSON.parse(localStorage.getItem("sovereign_settings"));
+        if (savedSettings) {
+          if (phoneInput && savedSettings.phoneNumber) phoneInput.value = savedSettings.phoneNumber;
+          if (currencySelect && savedSettings.currency) currencySelect.value = savedSettings.currency;
+          if (toggleLargeTrans) toggleLargeTrans.checked = savedSettings.toggleLargeTrans;
+          if (toggleWeeklyRep) toggleWeeklyRep.checked = savedSettings.toggleWeeklyRep;
+          if (toggleBudgetAl) toggleBudgetAl.checked = savedSettings.toggleBudgetAl;
         }
 
         // Initialize Add Transaction Modal locally if needed (linked inside app)
@@ -653,6 +673,58 @@
           });
         }
 
+        // Wire up Save Changes button
+        const btnSaveChanges = document.getElementById("btnSaveChanges");
+        if (btnSaveChanges) {
+          btnSaveChanges.addEventListener("click", async () => {
+            const newName = nameInput.value.trim();
+            const newEmail = emailInput.value.trim();
+            const newPhone = phoneInput.value.trim();
+            const newCurrency = currencySelect.value;
+
+            if (!newName) {
+              alert("Display name cannot be empty.");
+              return;
+            }
+
+            try {
+              // 1. Sync with Firebase if logged in, otherwise local
+              if (user) {
+                await updateProfile(auth.currentUser, { displayName: newName });
+                if (newEmail && newEmail !== user.email) {
+                  await updateEmail(auth.currentUser, newEmail);
+                }
+              } else {
+                // Demo User
+                const updatedDemoUser = { ...demoUser, displayName: newName };
+                localStorage.setItem("sovereign_demo_user", JSON.stringify(updatedDemoUser));
+              }
+
+              // 2. Persist other settings
+              const settingsToSave = {
+                phoneNumber: newPhone,
+                currency: newCurrency,
+                toggleLargeTrans: toggleLargeTrans ? toggleLargeTrans.checked : true,
+                toggleWeeklyRep: toggleWeeklyRep ? toggleWeeklyRep.checked : true,
+                toggleBudgetAl: toggleBudgetAl ? toggleBudgetAl.checked : false
+              };
+              localStorage.setItem("sovereign_settings", JSON.stringify(settingsToSave));
+
+              // 3. Instant UI updates for userNameDisplays
+              const allNames = document.querySelectorAll(".userNameDisplay");
+              allNames.forEach(el => {
+                el.textContent = newName;
+              });
+
+              // 4. Custom notification
+              alert("Workspace preferences saved successfully!");
+            } catch (err) {
+              console.error(err);
+              alert("Failed to save changes: " + err.message);
+            }
+          });
+        }
+
         // Initialize Update Password Modal triggers
         const updatePasswordModal = document.getElementById("updatePasswordModal");
         const btnOpenUpdatePassword = document.getElementById("btnOpenUpdatePassword");
@@ -685,7 +757,7 @@
         // Handle Update Password Form Submit
         const updatePasswordForm = document.getElementById("updatePasswordForm");
         if (updatePasswordForm) {
-          updatePasswordForm.addEventListener("submit", (e) => {
+          updatePasswordForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             const newVal = document.getElementById("new_password").value;
             const confirmVal = document.getElementById("confirm_password").value;
@@ -695,8 +767,16 @@
               return;
             }
 
-            alert("Password updated successfully!");
-            closeUpdatePassword();
+            try {
+              if (user) {
+                await updatePassword(auth.currentUser, newVal);
+              }
+              alert("Password updated successfully!");
+              closeUpdatePassword();
+            } catch (err) {
+              console.error(err);
+              alert("Failed to update password: " + err.message);
+            }
           });
         }
       }

@@ -143,17 +143,17 @@
             </div>
 
             <div class="my-auto z-10 mt-2">
-              <h2 class="text-[3rem] font-bold text-white tracking-tight leading-none font-manrope">$1,248,592.00</h2>
+              <h2 class="text-[3rem] font-bold text-white tracking-tight leading-none font-manrope">₹1,24,85,920.00</h2>
             </div>
 
             <div class="flex gap-16 border-t border-white/10 pt-4 z-10">
               <div>
                 <span class="text-[0.6rem] font-bold tracking-[0.05em] text-[#a2c6b6] uppercase block mb-1">MONTHLY INCOME</span>
-                <span class="text-xl font-bold text-white font-manrope">+$24,300</span>
+                <span class="text-xl font-bold text-white font-manrope">+₹2,43,000</span>
               </div>
               <div>
                 <span class="text-[0.6rem] font-bold tracking-[0.05em] text-[#a2c6b6] uppercase block mb-1">MONTHLY EXPENSES</span>
-                <span class="text-xl font-bold text-white font-manrope">-$12,840</span>
+                <span class="text-xl font-bold text-white font-manrope">-₹1,28,400</span>
               </div>
             </div>
           </div>
@@ -185,8 +185,8 @@
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="font-bold text-sm text-danger block">-$1,420.00</span>
-                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">AMEX BLACK</span>
+                  <span class="font-bold text-sm text-danger block">-₹1,420.00</span>
+                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">AMEX India</span>
                 </div>
               </div>
 
@@ -202,8 +202,8 @@
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="font-bold text-sm text-danger block">-$15,800.00</span>
-                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">TRANSFER</span>
+                  <span class="font-bold text-sm text-danger block">-₹15,800.00</span>
+                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">ICICI Bank FD</span>
                 </div>
               </div>
 
@@ -219,8 +219,8 @@
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="font-bold text-sm text-primary block">+$8,450.00</span>
-                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">INVESTMENT</span>
+                  <span class="font-bold text-sm text-primary block">+₹8,450.00</span>
+                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">Groww Portfolio</span>
                 </div>
               </div>
 
@@ -236,8 +236,8 @@
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="font-bold text-sm text-danger block">-$2,100.00</span>
-                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">CHECKING</span>
+                  <span class="font-bold text-sm text-danger block">-₹2,100.00</span>
+                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">HDFC Bank Savings</span>
                 </div>
               </div>
 
@@ -314,7 +314,7 @@
               <!-- Center Text inside the Donut -->
               <div class="absolute flex flex-col items-center justify-center text-center">
                 <span class="text-[0.6rem] text-muted font-semibold uppercase tracking-wider block">TOTAL SPENT</span>
-                <span class="text-2xl font-bold text-main block mt-1 font-manrope leading-none">$32.4k</span>
+                <span class="text-2xl font-bold text-main block mt-1 font-manrope leading-none">₹32.4k</span>
               </div>
             </div>
 
@@ -446,13 +446,13 @@
         // Populate Net Worth panel
         const netWorthValEl = document.querySelector(".networth-bg h2");
         if (netWorthValEl) {
-          netWorthValEl.textContent = "$" + currentNetWorth.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          netWorthValEl.textContent = "₹" + currentNetWorth.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
         
         const statsValues = document.querySelectorAll(".networth-bg span.font-manrope");
         if (statsValues.length >= 2) {
-          statsValues[0].textContent = "+$" + incomeSum.toLocaleString("en-US", { maximumFractionDigits: 0 });
-          statsValues[1].textContent = "-$" + expenseSum.toLocaleString("en-US", { maximumFractionDigits: 0 });
+          statsValues[0].textContent = "+₹" + incomeSum.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+          statsValues[1].textContent = "-₹" + expenseSum.toLocaleString("en-IN", { maximumFractionDigits: 0 });
         }
 
         // 2. Sort transactions by date and time (descending)
@@ -580,9 +580,13 @@
               <select id="transaction_account" name="account"
                 class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium placeholder-slate-400 cursor-pointer"
                 required>
-                <option>SBI Bank</option>
-                <option>AXIS Bank</option>
-                <option>IDBI Bank</option>
+                <option>HDFC Bank Savings</option>
+                <option>ICICI Bank FD</option>
+                <option>SBI NPS (Tier-1)</option>
+                <option>Zerodha Mutual Funds</option>
+                <option>Groww Portfolio</option>
+                <option>AMEX India Card</option>
+                <option>OneCard</option>
               </select>
             </div>
           </div>

@@ -54,7 +54,7 @@ export const getData = async () => {
           time: "10:15 AM",
           description: "Organic Produce & Fine Cheese (Artisan Market)",
           category: "Groceries",
-          account: "SBI Bank",
+          account: "HDFC Bank Savings",
           amount: -3450.00
         },
         {
@@ -63,7 +63,7 @@ export const getData = async () => {
           time: "08:45 PM",
           description: "Fine Dining (The Sterling Room)",
           category: "Dining",
-          account: "AXIS Bank",
+          account: "AMEX India Card",
           amount: -8200.00
         },
         {
@@ -72,7 +72,7 @@ export const getData = async () => {
           time: "06:30 AM",
           description: "Premium Chauffeur Service (Airport Transfer)",
           category: "Transport",
-          account: "IDBI Bank",
+          account: "HDFC Bank Savings",
           amount: -2500.00
         },
         {
@@ -81,7 +81,7 @@ export const getData = async () => {
           time: "11:00 AM",
           description: "Quarterly Rental Income (Sterling Tower)",
           category: "Rent",
-          account: "AXIS Bank",
+          account: "HDFC Bank Savings",
           amount: 125000.00
         }
       ];
