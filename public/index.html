@@ -3,13 +3,13 @@
 
 <head>
   <script>
-    if (window.location.pathname === "/") {
-      window.location.href = "login.html";
+    if (localStorage.getItem("sovereign_theme") === "dark") {
+      document.documentElement.classList.add("dark");
     }
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Sovereign Ledger - Transactions</title>
+  <title>The Sovereign Ledger - Private Wealth Dashboard</title>
   <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
@@ -18,27 +18,35 @@
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
+  <style>
+    /* Premium custom diagonal separation gradient for the Net Worth Card */
+    .networth-bg {
+      background-color: #032b1c;
+      background-image: 
+        linear-gradient(135deg, rgba(6, 64, 43, 0.9) 0%, rgba(3, 43, 28, 0.95) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
+    }
+  </style>
 </head>
 
 <body class="font-inter bg-body text-main leading-relaxed flex h-screen overflow-hidden">
   <div class="flex w-full">
 
-    <!-- Sidebar -->
+    <!-- Sidebar Navigation -->
     <aside class="w-[300px] bg-sidebar flex flex-col h-full border-r border-border p-[2rem_1.5rem] shrink-0">
-      <div class="sidebar-logo flex flex-col gap-1">
-        <h1 class="text-[1.5rem] font-bold text-primary leading-tight uppercase tracking-wide font-manrope">The Sovereign<br>Ledger</h1>
-        <p class="text-[0.75rem] text-muted font-semibold tracking-wide uppercase">Private Wealth Management</p>
+      <div class="sidebar-logo flex items-center">
+        <img src="assets/logo.png" alt="The Sovereign Ledger Logo" class="w-full h-auto object-contain">
       </div>
 
       <nav class="flex flex-col gap-2 mt-8">
-        <a href="dashboard.html"
-          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
+        <!-- Dashboard Link (Active State with indicator on the right) -->
+        <a href="index.html"
+          class="relative flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-bold text-primary transition-colors bg-card-alt after:content-[''] after:absolute after:top-0 after:right-0 after:h-full after:w-1 after:bg-primary after:rounded-r-lg">
           <span class="material-symbols-rounded">grid_view</span>
           Dashboard
         </a>
-        <!-- Transactions Link (Active State with indicator on the right) -->
-        <a href="index.html"
-          class="relative flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-bold text-primary transition-colors bg-card-alt after:content-[''] after:absolute after:top-0 after:right-0 after:h-full after:w-1 after:bg-primary after:rounded-r-lg">
+        <a href="transaction.html"
+          class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">receipt_long</span>
           Transactions
         </a>
@@ -85,21 +93,21 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
+    <!-- Main Content Area -->
     <main class="flex-1 flex flex-col overflow-y-auto">
 
       <!-- Top Header -->
       <header
         class="h-[80px] bg-body/80 backdrop-blur-sm flex items-center justify-between px-8 sticky top-0 z-10 border-b border-border shrink-0">
         <div>
-          <h2 class="text-2xl font-bold text-main font-manrope leading-tight">Transaction History</h2>
+          <h2 class="text-2xl font-bold text-main font-manrope leading-tight">Private Wealth Dashboard</h2>
         </div>
 
         <div class="flex items-center gap-5">
-          <!-- Search transactions bar -->
+          <!-- Search bar -->
           <div class="flex items-center gap-3 bg-[#eef2fc] px-4 py-2 rounded-full w-[280px] border border-transparent focus-within:border-border transition-all">
             <span class="material-symbols-rounded text-sm text-muted">search</span>
-            <input type="text" id="searchTransactions" placeholder="Search transactions..."
+            <input type="text" placeholder="Search workspace..."
               class="border-none bg-transparent outline-none w-full text-xs text-main placeholder-muted font-medium">
           </div>
 
@@ -117,144 +125,596 @@
         </div>
       </header>
 
-      <!-- Transaction History View -->
-      <div class="p-8 mx-auto w-full">
-        <div class="text-sm text-muted mb-6">Ledger &rsaquo; <strong class="text-main">All Transactions</strong></div>
+      <!-- Dashboard Elements Grid -->
+      <div class="p-8 w-full grid grid-cols-12 gap-8">
+        
+        <!-- ================= LEFT COLUMN ================= -->
+        <div class="col-span-7 flex flex-col gap-8">
+          
+          <!-- TOTAL NET WORTH CARD -->
+          <div class="networth-bg text-white p-8 rounded-2xl shadow-md flex flex-col justify-between relative overflow-hidden h-[240px]">
+            <!-- Subtle lighting effect -->
+            <div class="absolute -right-16 -top-16 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
+            
+            <div class="flex justify-between items-start z-10">
+              <div>
+                <span class="text-[0.65rem] tracking-[0.1em] font-bold text-[#a2c6b6] uppercase">TOTAL NET WORTH</span>
+              </div>
+              <!-- Premium Up-Trend Box Indicator -->
+              <div class="w-10 h-10 rounded-lg bg-[#0d5f3a] text-white flex items-center justify-center shadow-inner">
+                <span class="material-symbols-rounded text-[1.5rem]">trending_up</span>
+              </div>
+            </div>
 
-        <div class="flex justify-between items-center mb-6">
-          <div class="text-xs font-bold text-muted uppercase tracking-wider">ALL PRIVATE TRANSACTIONS</div>
-          <div class="flex gap-3">
-            <button
-              class="flex items-center gap-2 bg-white border border-border rounded-lg px-4 py-2 text-sm font-semibold text-main cursor-pointer shadow-sm hover:border-light transition-colors">Period:
-              <span class="text-main">Last 30 Days</span> <span
-                class="material-symbols-rounded text-[1.2rem]">expand_more</span></button>
+            <div class="my-auto z-10 mt-2">
+              <h2 class="text-[3rem] font-bold text-white tracking-tight leading-none font-manrope">₹1,24,85,920.00</h2>
+            </div>
+
+            <div class="flex gap-16 border-t border-white/10 pt-4 z-10">
+              <div>
+                <span class="text-[0.6rem] font-bold tracking-[0.05em] text-[#a2c6b6] uppercase block mb-1">MONTHLY INCOME</span>
+                <span class="text-xl font-bold text-white font-manrope">+₹2,43,000</span>
+              </div>
+              <div>
+                <span class="text-[0.6rem] font-bold tracking-[0.05em] text-[#a2c6b6] uppercase block mb-1">MONTHLY EXPENSES</span>
+                <span class="text-xl font-bold text-white font-manrope">-₹1,28,400</span>
+              </div>
+            </div>
           </div>
+
+          <!-- RECENT TRANSACTIONS CARD -->
+          <div class="bg-white rounded-2xl p-8 shadow-sm border border-border flex flex-col gap-6">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-2xl font-bold text-main font-manrope">Recent Transactions</h3>
+                <p class="text-xs text-muted mt-1 font-medium">Managed movements across all private accounts.</p>
+              </div>
+              <a href="transaction.html" class="text-sm font-bold text-primary hover:text-primary-hover flex items-center gap-1">
+                Full Ledger <span class="material-symbols-rounded text-sm">arrow_forward</span>
+              </a>
+            </div>
+
+            <!-- Transactions list -->
+            <div id="recentTransactionsList" class="flex flex-col gap-5 mt-2">
+              
+              <!-- Item 1: Restaurant -->
+              <div class="flex items-center justify-between pb-4 border-b border-slate-50 last:border-none last:pb-0">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                    <span class="material-symbols-rounded">restaurant</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-sm text-main">The Gild Restaurant</h4>
+                    <p class="text-xs text-muted mt-0.5">Private Dining &bull; Oct 24</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-sm text-danger block">-₹1,420.00</span>
+                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">AMEX India</span>
+                </div>
+              </div>
+
+              <!-- Item 2: Aviation -->
+              <div class="flex items-center justify-between pb-4 border-b border-slate-50 last:border-none last:pb-0">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <span class="material-symbols-rounded">flight</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-sm text-main">NetJets Aviation</h4>
+                    <p class="text-xs text-muted mt-0.5">Charter Services &bull; Oct 22</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-sm text-danger block">-₹15,800.00</span>
+                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">ICICI Bank FD</span>
+                </div>
+              </div>
+
+              <!-- Item 3: Payout -->
+              <div class="flex items-center justify-between pb-4 border-b border-slate-50 last:border-none last:pb-0">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <span class="material-symbols-rounded">account_balance</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-sm text-main">Dividend Payout</h4>
+                    <p class="text-xs text-muted mt-0.5">Equity Portfolio &bull; Oct 20</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-sm text-primary block">+₹8,450.00</span>
+                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">Groww Portfolio</span>
+                </div>
+              </div>
+
+              <!-- Item 4: Estate Care -->
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-slate-50 text-slate-600 flex items-center justify-center">
+                    <span class="material-symbols-rounded">work</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-sm text-main">Heritage Estate Care</h4>
+                    <p class="text-xs text-muted mt-0.5">Maintenance &bull; Oct 18</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-sm text-danger block">-₹2,100.00</span>
+                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">HDFC Bank Savings</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
         </div>
 
-        <div class="flex gap-6">
-          <!-- Left Column -->
-          <div class="flex-1 flex flex-col gap-6 min-w-0">
-            <div id="table-wrapper" class="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
-              <table id="transactionTable" class="w-full text-left">
-                <thead>
-                  <tr class="bg-card-alt text-[0.65rem] font-bold text-light uppercase tracking-wider">
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">Date
-                    </th>
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">
-                      Description</th>
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">
-                      Category</th>
-                    <th class="px-6 py-4 border-b border-border text-xs font-medium bg-[#F2F3FF]/50 text-[#94A3B8]">
-                      Account</th>
-                    <th
-                      class="px-6 py-4 border-b border-border text-xs font-medium text-right bg-[#F2F3FF]/50 text-[#94A3B8]">
-                      Amount</th>
-                  </tr>
-                </thead>
-                <tbody id="transactionData">
-                </tbody>
-              </table>
+        <!-- ================= RIGHT COLUMN ================= -->
+        <div class="col-span-5 flex flex-col gap-8">
+          
+          <!-- TOP BUDGETS CARD -->
+          <div class="bg-[#f0f3ff] rounded-2xl p-6 border border-transparent shadow-sm flex flex-col gap-6">
+            <div class="flex justify-between items-center">
+              <h3 class="text-[1.1rem] font-bold text-main font-manrope">Top Budgets</h3>
+              <span class="text-[0.65rem] font-bold text-[#64748b] uppercase tracking-[0.1em]">ACTIVE</span>
+            </div>
+
+            <!-- Budgets list -->
+            <div id="dashboardBudgetsList" class="flex flex-col gap-5">
+              
+              <!-- Item 1: Real Estate -->
+              <div>
+                <div class="flex justify-between text-xs font-semibold text-main">
+                  <span>Real Estate Maintenance</span>
+                  <span>72%</span>
+                </div>
+                <div class="w-full h-2 bg-[#dbe2f9] rounded-full mt-2 overflow-hidden">
+                  <div class="bg-[#2b6954] h-full rounded-full" style="width: 72%"></div>
+                </div>
+              </div>
+
+              <!-- Item 2: Luxury Lifestyle -->
+              <div>
+                <div class="flex justify-between text-xs font-semibold text-main">
+                  <span>Luxury Lifestyle</span>
+                  <span>45%</span>
+                </div>
+                <div class="w-full h-2 bg-[#dbe2f9] rounded-full mt-2 overflow-hidden">
+                  <div class="bg-[#3b82f6] h-full rounded-full" style="width: 45%"></div>
+                </div>
+              </div>
+
+              <!-- Item 3: Travel -->
+              <div>
+                <div class="flex justify-between text-xs font-semibold text-main">
+                  <span>Global Travel</span>
+                  <span>89%</span>
+                </div>
+                <div class="w-full h-2 bg-[#dbe2f9] rounded-full mt-2 overflow-hidden">
+                  <div class="bg-[#ba1a1a] h-full rounded-full" style="width: 89%"></div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <!-- Right Column -->
-          <div class="w-[330px] flex flex-col gap-6 shrink-0">
-
-            <!-- Detail Card -->
-            <div class="bg-white rounded-xl shadow-sm border border-border p-6 flex flex-col gap-6">
-              <div
-                class="flex justify-between items-center text-[0.65rem] font-bold text-light tracking-wider uppercase">
-                <span>DETAIL VIEW</span>
-              </div>
-
-              <div class="flex flex-col items-center text-center gap-2">
-                <div id="detail-icon-container"
-                  class="w-16 h-16 rounded-full bg-[#eff6ff] text-[#3b82f6] flex items-center justify-center text-3xl mb-2 transition-colors duration-300">
-                  <span id="detail-icon" class="material-symbols-rounded text-[2rem]">bookmark</span>
-                </div>
-                <div id="detail-desc" class="font-bold text-[1.1rem] text-main font-manrope">Apple Store Regent St</div>
-                <div class="text-[0.75rem] font-medium text-muted"><span id="detail-date">Oct 24, 2023</span> &bull;
-                  <span id="detail-time">14:32 PM</span>
-                </div>
-              </div>
-
-              <div class="flex flex-col border-t border-border pt-4 gap-3">
-                <div class="flex justify-between items-center text-sm">
-                  <span class="text-muted font-medium">Status</span>
-                  <span
-                    class="font-semibold text-main text-right text-[#16a34a] flex items-center gap-1 before:content-[''] before:block before:w-1.5 before:h-1.5 before:rounded-full before:bg-[#16a34a]">Cleared</span>
-                </div>
-                <div class="flex justify-between items-center text-sm">
-                  <span class="text-muted font-medium">Category</span>
-                  <span id="detail-category" class="font-semibold text-main text-right">Apple Retail UK</span>
-                </div>
-                <div class="flex justify-between items-center text-sm">
-                  <span class="text-muted font-medium">Account</span>
-                  <span id="detail-account" class="font-semibold text-main text-right">Apple Pay (**** 9921)</span>
-                </div>
-                <div class="flex justify-between items-center text-sm">
-                  <span class="text-muted font-medium">Amount</span>
-                  <span id="detail-amount" class="font-semibold text-main text-right">₹216.50</span>
-                </div>
-              </div>
-
-              <div class="bg-[#fffbeb] rounded-lg p-4 border border-[#fef3c7]">
-                <div class="text-[0.65rem] font-bold text-[#b45309] uppercase tracking-wider mb-2">INTERNAL NOTE</div>
-                <div class="text-sm text-[#92400e] italic leading-relaxed">
-                  "Purchase of new iPad Pro for quarterly design review. Eligible for capital expenditure tax
-                  deduction."
-                </div>
-              </div>
-              <div class="flex flex-col gap-3">
-                <button id="btnOpenEditTransaction"
-                  class="w-full flex items-center justify-center gap-2 bg-white border border-border rounded-lg py-2.5 text-sm font-semibold text-main cursor-pointer transition-colors hover:bg-slate-50">
-                  <span class="material-symbols-rounded text-[1.1rem]">edit</span>
-                  Edit Transaction
-                </button>
-
-                <button id="btnDeleteTransaction"
-                  class="w-full flex items-center justify-center gap-2 bg-white border border-danger rounded-lg py-2.5 text-sm font-semibold text-danger cursor-pointer transition-colors hover:bg-slate-50">
-                  <span class="material-symbols-rounded text-[1.1rem]">delete</span>
-                  Delete Transaction
-                </button>
+          <!-- ALLOCATION BY CATEGORY CARD -->
+          <div class="bg-[#f0f3ff] rounded-2xl p-6 border border-transparent shadow-sm flex flex-col gap-6">
+            <h3 class="text-[1.1rem] font-bold text-main font-manrope text-center">Allocation by Category</h3>
+            
+            <!-- High-Fidelity SVG Donut Chart -->
+            <div class="w-48 h-48 mx-auto relative mt-2 flex items-center justify-center" id="dashboardDonutContainer">
+              <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
+                <!-- Background segment -->
+                <circle cx="50" cy="50" r="40" fill="transparent" stroke="#dbe2f9" stroke-width="8"></circle>
+                <!-- Segment 1: Investments (45%) -->
+                <circle cx="50" cy="50" r="40" fill="transparent" stroke="#06402b" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="0"></circle>
+                <!-- Segment 2: Travel (25%) -->
+                <circle cx="50" cy="50" r="40" fill="transparent" stroke="#3b82f6" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="-113.0"></circle>
+                <!-- Segment 3: Maintenance (30%) -->
+                <circle cx="50" cy="50" r="40" fill="transparent" stroke="#10b981" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="-175.8"></circle>
+              </svg>
+              <!-- Center Text inside the Donut -->
+              <div class="absolute flex flex-col items-center justify-center text-center">
+                <span class="text-[0.6rem] text-muted font-semibold uppercase tracking-wider block">TOTAL SPENT</span>
+                <span class="text-2xl font-bold text-main block mt-1 font-manrope leading-none">₹32.4k</span>
               </div>
             </div>
 
-            <!-- Tip Card -->
-            <div class="bg-tip rounded-xl p-6 text-white flex flex-col gap-3 shadow-md">
-              <div class="flex items-start gap-3">
-                <span class="material-symbols-rounded text-[#a2c6b6] text-[1.2rem]">lightbulb</span>
-                <div class="font-bold text-sm leading-tight text-white font-manrope">Unusual spending in "Shopping" this
-                  month.</div>
+            <!-- Chart Legends -->
+            <div class="flex flex-col gap-2.5 mt-2" id="dashboardChartLegends">
+              <div class="flex items-center justify-between text-xs font-semibold text-main">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#06402b]"></span>
+                  <span>Investments</span>
+                </div>
+                <span>45%</span>
               </div>
-              <div class="text-[0.8rem] text-[#a2c6b6] leading-relaxed">
-                You've spent 24% more than your average monthly budget in this category.
+              <div class="flex items-center justify-between text-xs font-semibold text-main">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#3b82f6]"></span>
+                  <span>Travel</span>
+                </div>
+                <span>25%</span>
               </div>
-              <div
-                class="mt-2 text-[0.65rem] font-bold tracking-wider text-[#6ee7b7] cursor-pointer hover:underline uppercase inline-block">
-                VIEW BUDGET ANALYSIS</div>
+              <div class="flex items-center justify-between text-xs font-semibold text-main">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-[#10b981]"></span>
+                  <span>Maintenance</span>
+                </div>
+                <span>30%</span>
+              </div>
             </div>
-
           </div>
+
+          <!-- ADVISOR TIP CARD -->
+          <div class="bg-[#032b1c] rounded-2xl p-6 shadow-md flex items-start gap-4 text-white">
+            <div class="w-12 h-12 rounded-xl bg-[#094732] text-white flex items-center justify-center shrink-0 shadow-inner">
+              <span class="material-symbols-rounded text-xl text-[#6ee7b7] icon-filled">lightbulb</span>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-white mb-1.5 font-manrope">Advisor Tip</h4>
+              <p id="dashboardAdvisorTipText" class="text-xs text-[#a2c6b6] leading-relaxed font-medium">Consider rebalancing your equity portfolio to capture higher yields in emerging markets.</p>
+            </div>
+          </div>
+
         </div>
+
       </div>
 
     </main>
   </div>
 
+  <!-- Authentication session script handler -->
+  <script type="module">
+    import { auth, getData, saveData } from "./js/services/api.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { formatDate, formatCurrency } from "./js/utils/helper.js";
+    import { initModal } from "./js/components/modal.js";
+    import { getFormData } from "./js/utils/formHandler.js";
+
+    // Enforce dashboard router security
+    onAuthStateChanged(auth, async (user) => {
+      const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
+      if (!user && !demoUser) {
+        window.location.href = "login.html";
+      } else {
+        // Populate custom profile name in the header
+        const names = document.querySelectorAll(".userNameDisplay");
+        names.forEach(el => {
+          el.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
+        });
+
+        // Initialize Add Transaction Modal locally on the dashboard page
+        initModal("addTransactionModal", "btnOpenAddTransaction", "btnCloseAddTransaction");
+
+        // Set default date to today when button is clicked
+        const addBtn = document.querySelector("#btnOpenAddTransaction");
+        if (addBtn) {
+          addBtn.addEventListener("click", () => {
+            const form = document.querySelector("#addTrasactionForm");
+            if (form) {
+              form.reset();
+              const today = new Date().toISOString().split('T')[0];
+              const dateInput = form.querySelector("#transaction_date");
+              if (dateInput) {
+                dateInput.value = today;
+              }
+            }
+          });
+        }
+
+        // Handle Add Transaction Form Submit
+        const mainForm = document.querySelector("#addTrasactionForm");
+        if (mainForm) {
+          mainForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const transObject = getFormData(mainForm);
+            const response = await saveData(transObject);
+            if (response?.success) {
+              // Redirect to main ledger page to view the new transaction
+              window.location.href = "transaction.html";
+            } else {
+              alert("Failed to add transaction. Please try again.");
+            }
+          });
+        }
+
+        // Fetch user transactions dynamically from Firestore
+        await loadDynamicDashboardData();
+      }
+    });
+
+    async function loadDynamicDashboardData() {
+      const res = await getData();
+      if (res && res.success) {
+        const allTrans = res.data;
+
+        // 1. Calculate stats dynamically
+        let incomeSum = 0;
+        let expenseSum = 0;
+        
+        // Category aggregation for budgets and donut allocations
+        const categorySpends = {
+          Rent: 0,
+          Dining: 0,
+          Groceries: 0,
+          Transport: 0
+        };
+
+        allTrans.forEach(t => {
+          const amt = parseFloat(t.amount) || 0;
+          if (amt > 0) {
+            incomeSum += amt;
+          } else {
+            expenseSum += Math.abs(amt);
+            const cat = t.category;
+            if (categorySpends.hasOwnProperty(cat)) {
+              categorySpends[cat] += Math.abs(amt);
+            }
+          }
+        });
+
+        // Set base net worth at 1.2M and adjust based on transactions
+        const baseNetWorth = 1200000;
+        const currentNetWorth = baseNetWorth + (incomeSum - expenseSum);
+
+        // Populate Net Worth panel
+        const netWorthValEl = document.querySelector(".networth-bg h2");
+        if (netWorthValEl) {
+          netWorthValEl.textContent = "₹" + currentNetWorth.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        
+        const statsValues = document.querySelectorAll(".networth-bg span.font-manrope");
+        if (statsValues.length >= 2) {
+          statsValues[0].textContent = "+₹" + incomeSum.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+          statsValues[1].textContent = "-₹" + expenseSum.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+        }
+
+        // 2. Populate Budgets dynamically
+        const budgetLimits = {
+          Rent: { limit: 45000, name: "Real Estate Maintenance", colorClass: "bg-primary" },
+          Dining: { limit: 5000, name: "Dining & Hospitality", colorClass: "bg-amber-600" },
+          Groceries: { limit: 8000, name: "Groceries & Essentials", colorClass: "bg-emerald-600" },
+          Transport: { limit: 3000, name: "Transport & Travel", colorClass: "bg-indigo-600" }
+        };
+
+        const budgetsListEl = document.querySelector("#dashboardBudgetsList");
+        if (budgetsListEl) {
+          budgetsListEl.innerHTML = "";
+          const orderedCategories = ["Rent", "Dining", "Groceries", "Transport"];
+          orderedCategories.forEach(cat => {
+            const spent = categorySpends[cat] || 0;
+            const limit = budgetLimits[cat].limit;
+            const name = budgetLimits[cat].name;
+            const percentage = Math.min(100, Math.round((spent / limit) * 100));
+            
+            let barColor = budgetLimits[cat].colorClass;
+            if (spent > limit) {
+              barColor = "bg-danger";
+            }
+            
+            budgetsListEl.innerHTML += `
+              <div>
+                <div class="flex justify-between text-xs font-semibold text-main">
+                  <span>${name}</span>
+                  <span>${percentage}%</span>
+                </div>
+                <div class="w-full h-2 bg-[#dbe2f9] rounded-full mt-2 overflow-hidden">
+                  <div class="${barColor} h-full rounded-full" style="width: ${percentage}%"></div>
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        // 3. Populate Donut Chart dynamically
+        let totalExpenseSum = 0;
+        for (const cat in categorySpends) {
+          totalExpenseSum += categorySpends[cat];
+        }
+
+        const colors = {
+          Rent: "#06402b",
+          Dining: "#3b82f6",
+          Groceries: "#10b981",
+          Transport: "#a855f7"
+        };
+
+        const donutContainer = document.querySelector("#dashboardDonutContainer");
+        const legendsContainer = document.querySelector("#dashboardChartLegends");
+        
+        if (donutContainer && legendsContainer) {
+          donutContainer.innerHTML = "";
+          legendsContainer.innerHTML = "";
+          
+          if (totalExpenseSum === 0) {
+            donutContainer.innerHTML = `
+              <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
+                <circle cx="50" cy="50" r="40" fill="transparent" stroke="#dbe2f9" stroke-width="8"></circle>
+              </svg>
+              <div class="absolute flex flex-col items-center justify-center text-center">
+                <span class="text-[0.55rem] text-muted font-semibold uppercase tracking-wider block">NO SPEND</span>
+                <span class="text-xl font-bold text-main block mt-1 font-manrope leading-none">₹0</span>
+              </div>
+            `;
+            legendsContainer.innerHTML = `<p class="text-xs text-muted text-center italic py-2 w-full">No expenses recorded yet.</p>`;
+          } else {
+            let svgContent = `<svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">`;
+            svgContent += `<circle cx="50" cy="50" r="40" fill="transparent" stroke="#dbe2f9" stroke-width="8"></circle>`;
+            
+            let cumulativeOffset = 0;
+            const legendItems = [];
+            
+            for (const cat in categorySpends) {
+              const spent = categorySpends[cat];
+              if (spent > 0) {
+                const pct = (spent / totalExpenseSum) * 100;
+                const length = 251.2 * (spent / totalExpenseSum);
+                const strokeOffset = -cumulativeOffset;
+                
+                svgContent += `
+                  <circle cx="50" cy="50" r="40" fill="transparent" 
+                    stroke="${colors[cat]}" stroke-width="8" 
+                    stroke-dasharray="${length} ${251.2 - length}" 
+                    stroke-dashoffset="${strokeOffset}">
+                  </circle>
+                `;
+                
+                cumulativeOffset += length;
+                
+                legendItems.push({
+                  name: cat,
+                  pct: Math.round(pct),
+                  color: colors[cat]
+                });
+              }
+            }
+            
+            svgContent += `</svg>`;
+            
+            let spentText = "₹" + totalExpenseSum.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+            if (totalExpenseSum >= 1000) {
+              spentText = "₹" + (totalExpenseSum / 1000).toFixed(1) + "k";
+            }
+            
+            donutContainer.innerHTML = svgContent + `
+              <div class="absolute flex flex-col items-center justify-center text-center">
+                <span class="text-[0.55rem] text-muted font-semibold uppercase tracking-wider block">TOTAL SPENT</span>
+                <span class="text-xl font-bold text-main block mt-1 font-manrope leading-none">${spentText}</span>
+              </div>
+            `;
+            
+            legendItems.forEach(item => {
+              legendsContainer.innerHTML += `
+                <div class="flex items-center justify-between text-xs font-semibold text-main">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${item.color}"></span>
+                    <span>${item.name}</span>
+                  </div>
+                  <span>${item.pct}%</span>
+                </div>
+              `;
+            });
+          }
+        }
+
+        // 4. Populate Advisor Tip dynamically
+        const tipTextEl = document.querySelector("#dashboardAdvisorTipText");
+        if (tipTextEl) {
+          if (totalExpenseSum === 0) {
+            tipTextEl.textContent = "Seeding ledger accounts to begin private asset orchestrated insights. Try adding a new transaction!";
+          } else {
+            let maxCat = "Rent";
+            let maxSpent = 0;
+            for (const cat in categorySpends) {
+              if (categorySpends[cat] > maxSpent) {
+                maxSpent = categorySpends[cat];
+                maxCat = cat;
+              }
+            }
+            
+            if (maxCat === "Rent" && maxSpent > 0.5 * totalExpenseSum) {
+              tipTextEl.textContent = "Rent dominates your allocations. Consider optimizing your liquid assets toward higher-yielding sovereign FDs.";
+            } else if (maxCat === "Dining" && maxSpent > 0.25 * totalExpenseSum) {
+              tipTextEl.textContent = "High spend in Dining detected. Intentional wealth builders typically lock dining allocations below 15% of net cash flow.";
+            } else if (maxCat === "Groceries") {
+              tipTextEl.textContent = "Groceries & Essentials are your primary allocation. Excellent control and structural spending discipline!";
+            } else if (maxCat === "Transport") {
+              tipTextEl.textContent = "Transport & Travel expenses are elevated this month. Consider tracking fuel or transit costs for potential offsets.";
+            } else {
+              tipTextEl.textContent = "Your asset narrative and private capital allocations are beautifully distributed. Outstanding balance!";
+            }
+          }
+        }
+
+        // 5. Sort transactions by date and time (descending)
+        const sortedTrans = allTrans.sort((a, b) => {
+          const dateA = new Date(`${a.date} ${a.time || ""}`);
+          const dateB = new Date(`${b.date} ${b.time || ""}`);
+          return dateB - dateA;
+        });
+
+        // 6. Slice top 5 recent transactions
+        const recentTrans = sortedTrans.slice(0, 5);
+
+        // 7. Render transactions dynamically in the feed
+        const listEl = document.querySelector("#recentTransactionsList");
+        if (listEl) {
+          listEl.innerHTML = "";
+
+          if (recentTrans.length === 0) {
+            listEl.innerHTML = `<p class="text-sm text-muted italic text-center py-6 w-full">No recent transactions found.</p>`;
+          } else {
+            const iconMap = {
+              Groceries: { icon: "shopping_basket", bg: "bg-emerald-50", text: "text-emerald-600" },
+              Dining: { icon: "restaurant", bg: "bg-amber-50", text: "text-amber-600" },
+              Transport: { icon: "directions_car", bg: "bg-indigo-50", text: "text-indigo-600" },
+              Rent: { icon: "home", bg: "bg-purple-50", text: "text-purple-600" }
+            };
+            const defaultIcon = { icon: "bookmark", bg: "bg-blue-50", text: "text-blue-600" };
+
+            recentTrans.forEach(t => {
+              const style = iconMap[t.category] || defaultIcon;
+              const formattedDate = formatDate(t.date);
+              
+              let amountClass = t.amount > 0 ? "text-primary" : "text-danger";
+              let amountText = formatCurrency(t.amount);
+
+              listEl.innerHTML += `
+                <div class="flex items-center justify-between pb-4 border-b border-slate-50 last:border-none last:pb-0">
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl ${style.bg} ${style.text} flex items-center justify-center">
+                      <span class="material-symbols-rounded">${style.icon}</span>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-sm text-main">${t.description}</h4>
+                      <p class="text-xs text-muted mt-0.5">${t.category} &bull; ${formattedDate}</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <span class="font-bold text-sm ${amountClass} block">${amountText}</span>
+                    <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">${t.account}</span>
+                  </div>
+                </div>
+              `;
+            });
+          }
+        }
+      }
+    }
+
+    // Sign out handler
+    const signOutBtn = document.querySelector("#btnSignOut");
+    if (signOutBtn) {
+      signOutBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+          if (localStorage.getItem("sovereign_demo_user")) {
+            localStorage.removeItem("sovereign_demo_user");
+          } else {
+            await signOut(auth);
+          }
+          window.location.href = "login.html";
+        } catch (error) {
+          console.error("Sign out failed: ", error);
+        }
+      });
+    }
+  </script>
+
   <!-- Add Transaction Modal -->
   <div id="addTransactionModal"
     class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
-    <div class="flex w-[900px] h-[560px] bg-white rounded-xl overflow-hidden shadow-2xl">
+    <div class="flex w-[900px] h-[560px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
 
       <!-- Left Section -->
       <div class="bg-primary text-white w-[320px] p-[3rem_2.5rem] flex flex-col justify-between">
         <div>
-          <span class="text-[0.65rem] tracking-[0.1em] uppercase text-[#a2c6b6] font-bold mb-6 inline-block">LEDGER
-            ENTRY</span>
+          <span class="text-[0.65rem] tracking-[0.1em] uppercase text-[#a2c6b6] font-bold mb-6 inline-block">LEDGER ENTRY</span>
           <h2 class="text-4xl font-normal leading-[1.25] mb-4 font-manrope">Record a<br>new<br>Transaction</h2>
-          <p class="text-[0.85rem] text-[#d1fae5] leading-relaxed">Every cent is a seed in the garden of your future.
-            Categorize with intent.</p>
+          <p class="text-[0.85rem] text-[#d1fae5] leading-relaxed">Every cent is a seed in the garden of your future. Categorize with intent.</p>
         </div>
         <div class="mt-8">
           <div class="flex items-center gap-1.5 text-[0.75rem] font-bold text-[#a2c6b6] mb-1">
@@ -269,6 +729,7 @@
       <div class="flex-1 p-[2.5rem_3rem] bg-white">
         <form id="addTrasactionForm" class="flex flex-col gap-6 h-full">
           <input type="hidden" id="transactionId" name="transactionId" value="">
+          
           <!-- Amount -->
           <div class="flex flex-col gap-2">
             <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">AMOUNT</label>
@@ -353,8 +814,7 @@
               <button type="button" id="btnCloseAddTransaction"
                 class="bg-transparent border-none text-[0.9rem] font-semibold text-main cursor-pointer hover:underline">Cancel</button>
               <button id="addTransactionBtn" type="submit"
-                class="bg-primary text-white border-none rounded-md px-6 py-3 text-[0.85rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">Add
-                Transaction</button>
+                class="bg-primary text-white border-none rounded-md px-6 py-3 text-[0.85rem] font-semibold cursor-pointer transition-colors hover:bg-primary-hover">Add Transaction</button>
             </div>
           </div>
 
@@ -363,9 +823,7 @@
 
     </div>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/umd/simple-datatables.min.js"></script>
-  <script src="js/app.js" type="module"></script>
+  <script type="module" src="js/components/globalSearch.js"></script>
 </body>
 
 </html>

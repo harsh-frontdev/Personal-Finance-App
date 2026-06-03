@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <script>
+    if (localStorage.getItem("sovereign_theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Sovereign Ledger - Budgets & Allocations</title>
@@ -35,18 +40,17 @@
 
     <!-- Sidebar Navigation -->
     <aside class="w-[300px] bg-sidebar flex flex-col h-full border-r border-border p-[2rem_1.5rem] shrink-0">
-      <div class="sidebar-logo flex flex-col gap-1">
-        <h1 class="text-[1.5rem] font-bold text-primary leading-tight uppercase tracking-wide font-manrope">The Sovereign<br>Ledger</h1>
-        <p class="text-[0.75rem] text-muted font-semibold tracking-wide uppercase">Private Wealth Management</p>
+      <div class="sidebar-logo flex items-center">
+        <img src="assets/logo.png" alt="The Sovereign Ledger Logo" class="w-full h-auto object-contain">
       </div>
 
       <nav class="flex flex-col gap-2 mt-8">
-        <a href="dashboard.html"
+        <a href="index.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">grid_view</span>
           Dashboard
         </a>
-        <a href="index.html"
+        <a href="transaction.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">receipt_long</span>
           Transactions
@@ -109,7 +113,7 @@
           <!-- Search budgets bar -->
           <div class="flex items-center gap-3 bg-[#eef2fc] px-4 py-2 rounded-full w-[280px] border border-transparent focus-within:border-border transition-all">
             <span class="material-symbols-rounded text-sm text-muted">search</span>
-            <input type="text" placeholder="Search budgets..." class="border-none bg-transparent outline-none w-full text-xs text-main placeholder-muted font-medium">
+            <input type="text" placeholder="Search workspace..." class="border-none bg-transparent outline-none w-full text-xs text-main placeholder-muted font-medium">
           </div>
 
           <!-- Notification & Help Tools -->
@@ -130,16 +134,17 @@
       <div class="p-8 w-full grid grid-cols-12 gap-8">
         
         <!-- ================= ROW 1: Overall Budget & Active Summary ================= -->
+        <!-- ================= ROW 1: Overall Budget & Active Summary ================= -->
         <!-- Overall Budget Usage card -->
         <div class="col-span-8 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm grid grid-cols-12 gap-6 items-center">
           <div class="col-span-7 flex flex-col gap-6">
             <div>
               <span class="text-[0.65rem] tracking-[0.1em] font-bold text-[#64748b] uppercase">Overall Monthly Budget</span>
-              <h3 class="text-3xl font-bold text-main font-manrope tracking-tight leading-tight mt-1">₹18,450.00 <span class="text-lg text-muted font-medium font-inter">/ ₹25,000.00</span></h3>
+              <h3 id="overallBudgetTitle" class="text-3xl font-bold text-main font-manrope tracking-tight leading-tight mt-1">₹18,450.00 <span class="text-lg text-muted font-medium font-inter">/ ₹25,000.00</span></h3>
             </div>
 
             <!-- Custom Category progress bars -->
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-4" id="overallCategoryBarsList">
               <div>
                 <div class="flex justify-between text-[0.7rem] font-bold text-main">
                   <span>Groceries & Provisions</span>
@@ -167,26 +172,26 @@
               <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
                 <circle cx="50" cy="50" r="40" fill="transparent" stroke="#dbe2f9" stroke-width="8"></circle>
                 <!-- 73.8% calculation: 251.2 * (1 - 0.738) = 65.8 offset -->
-                <circle cx="50" cy="50" r="40" fill="transparent" stroke="#06402b" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="65.8" stroke-linecap="round"></circle>
+                <circle id="overallCircularGaugeCircle" cx="50" cy="50" r="40" fill="transparent" stroke="#06402b" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="65.8" stroke-linecap="round"></circle>
               </svg>
               <div class="absolute flex flex-col items-center justify-center text-center">
                 <span class="text-[0.55rem] text-muted font-bold uppercase tracking-wider block">TOTAL SPENT</span>
-                <span class="text-xl font-bold text-main font-manrope leading-none mt-1">73.8%</span>
+                <span id="overallCircularGaugeText" class="text-xl font-bold text-main font-manrope leading-none mt-1">73.8%</span>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Active Budgets Card -->
-        <div class="col-span-4 budgets-hero-bg text-white p-6 rounded-2xl shadow-md flex flex-col justify-between h-[230px]">
+        <div class="col-span-4 budgets-hero-bg text-white p-6 rounded-2xl shadow-md flex flex-col justify-between h-full">
           <div class="flex flex-col gap-2">
             <div class="bg-white/10 border border-white/10 rounded-full px-3 py-1 flex items-center gap-1.5 text-[0.6rem] font-bold text-emerald-300 uppercase tracking-widest leading-none w-fit">
               <span class="material-symbols-rounded text-xs text-emerald-300">verified_user</span> Private Allocations
             </div>
-            <h3 class="text-2xl font-bold text-white font-manrope mt-3 leading-tight">3 Active Budgets</h3>
+            <h3 id="activeBudgetsTitle" class="text-2xl font-bold text-white font-manrope mt-3 leading-tight">4 Active Budgets</h3>
           </div>
 
-          <div class="flex flex-col gap-2.5 mt-4">
+          <div class="flex flex-col gap-2.5 mt-4" id="activeBudgetsList">
             <div class="flex justify-between items-center text-[0.7rem] font-bold text-[#a2c6b6]">
               <span>Real Estate Maintenance</span>
               <span class="text-white">72% used</span>
@@ -200,7 +205,7 @@
 
         <!-- ================= ROW 2: Category Budgets Grid ================= -->
         <!-- Groceries Budget -->
-        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]">
+        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]" id="budgetCard_Groceries">
           <div class="flex flex-col gap-3">
             <div class="flex items-center justify-between">
               <span class="text-[0.625rem] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">Groceries</span>
@@ -220,7 +225,7 @@
         </div>
 
         <!-- Dining Budget -->
-        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]">
+        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]" id="budgetCard_Dining">
           <div class="flex flex-col gap-3">
             <div class="flex items-center justify-between">
               <span class="text-[0.625rem] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">Dining Out</span>
@@ -240,7 +245,7 @@
         </div>
 
         <!-- Transport Budget -->
-        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]">
+        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]" id="budgetCard_Transport">
           <div class="flex flex-col gap-3">
             <div class="flex items-center justify-between">
               <span class="text-[0.625rem] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">Transport</span>
@@ -260,7 +265,7 @@
         </div>
 
         <!-- Rent Budget -->
-        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]">
+        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]" id="budgetCard_Rent">
           <div class="flex flex-col gap-3">
             <div class="flex items-center justify-between">
               <span class="text-[0.625rem] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">Rent & Bills</span>
@@ -268,14 +273,14 @@
                 <span class="material-symbols-rounded text-base">home</span>
               </div>
             </div>
-            <h4 class="text-lg font-bold text-main font-manrope leading-tight mt-1">₹6,250 <span class="text-xs text-muted font-medium font-inter">/ ₹9,000</span></h4>
+            <h4 class="text-lg font-bold text-main font-manrope leading-tight mt-1">₹6,250 <span class="text-xs text-muted font-medium font-inter">/ ₹45,000</span></h4>
           </div>
 
           <div>
             <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
               <div class="bg-purple-600 h-full rounded-full" style="width: 69.4%"></div>
             </div>
-            <span class="text-[0.65rem] text-muted font-semibold mt-2.5 block text-right">Remaining: ₹2,750</span>
+            <span class="text-[0.65rem] text-muted font-semibold mt-2.5 block text-right">Remaining: ₹38,750</span>
           </div>
         </div>
 
@@ -288,7 +293,7 @@
           <div class="flex flex-col justify-between h-full">
             <div>
               <h4 class="text-lg font-bold text-white mb-2 font-manrope leading-none">Smart Allocation Alert</h4>
-              <p class="text-[0.875rem] text-[#d8c5a2] leading-relaxed font-semibold max-w-[580px] mt-3">
+              <p id="advisorAlertText" class="text-[0.875rem] text-[#d8c5a2] leading-relaxed font-semibold max-w-[580px] mt-3">
                 Based on your current dining spending pace, you will exceed your dining budget by ₹450 in 6 days. Consider scaling back or reallocating from your Transport budget.
               </p>
             </div>
@@ -308,22 +313,22 @@
         <div class="col-span-4 bg-[#f0f3ff] rounded-2xl p-6 border border-transparent shadow-sm flex flex-col justify-between h-[230px]">
           <div class="flex justify-between items-center w-full">
             <span class="text-[0.625rem] font-bold text-[#64748b] uppercase tracking-wider block">Savings Target</span>
-            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-manrope">62% Match</span>
+            <span id="savingsRateMatchBadge" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-manrope">62% Match</span>
           </div>
 
           <div class="w-24 h-24 mx-auto relative flex items-center justify-center my-2">
             <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
               <circle cx="50" cy="50" r="40" fill="transparent" stroke="#dbe2f9" stroke-width="8"></circle>
               <!-- 62% calculation: 251.2 * (1 - 0.62) = 95.4 offset -->
-              <circle cx="50" cy="50" r="40" fill="transparent" stroke="#0f766e" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="95.4" stroke-linecap="round"></circle>
+              <circle id="savingsRateGaugeCircle" cx="50" cy="50" r="40" fill="transparent" stroke="#0f766e" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="95.4" stroke-linecap="round"></circle>
             </svg>
             <div class="absolute flex flex-col items-center justify-center text-center">
-              <span class="text-base font-bold text-main font-manrope leading-none">62%</span>
+              <span id="savingsRateGaugeText" class="text-base font-bold text-main font-manrope leading-none">62%</span>
             </div>
           </div>
 
           <div class="text-center">
-            <span class="text-[0.65rem] text-muted font-semibold tracking-wide">₹9,300 saved of ₹15,000 goal</span>
+            <span id="savingsRateFooterText" class="text-[0.65rem] text-muted font-semibold tracking-wide">₹9,300 saved of ₹15,000 goal</span>
           </div>
         </div>
 
@@ -454,13 +459,13 @@
 
   <!-- Authentication session script handler -->
   <script type="module">
-    import { auth, saveData } from "./js/services/api.js";
+    import { auth, getData, saveData } from "./js/services/api.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
 
     // Enforce dashboard router security
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
       if (!user && !demoUser) {
         window.location.href = "login.html";
@@ -499,14 +504,240 @@
             const response = await saveData(transObject);
             if (response?.success) {
               // Redirect to main ledger page to view the new transaction
-              window.location.href = "index.html";
+              window.location.href = "transaction.html";
             } else {
               alert("Failed to add transaction. Please try again.");
             }
           });
         }
+
+        // Load dynamic budget parameters from real-time database transactions
+        await loadDynamicBudgetsData();
       }
     });
+
+    async function loadDynamicBudgetsData() {
+      const res = await getData();
+      if (res && res.success) {
+        const allTrans = res.data;
+
+        // 1. Calculate category spends dynamically from transaction records
+        const categorySpends = {
+          Rent: 0,
+          Dining: 0,
+          Groceries: 0,
+          Transport: 0
+        };
+
+        let incomeSum = 0;
+        let expenseSum = 0;
+
+        allTrans.forEach(t => {
+          const amt = parseFloat(t.amount) || 0;
+          if (amt > 0) {
+            incomeSum += amt;
+          } else {
+            const val = Math.abs(amt);
+            expenseSum += val;
+            const cat = t.category;
+            if (categorySpends.hasOwnProperty(cat)) {
+              categorySpends[cat] += val;
+            }
+          }
+        });
+
+        // 2. Budget limits definition matching global standards
+        const budgetLimits = {
+          Rent: { limit: 45000, name: "Real Estate Maintenance", colorClass: "bg-purple-600" },
+          Dining: { limit: 5000, name: "Dining & Hospitality", colorClass: "bg-amber-600" },
+          Groceries: { limit: 8000, name: "Groceries & Essentials", colorClass: "bg-emerald-600" },
+          Transport: { limit: 3000, name: "Transport & Travel", colorClass: "bg-indigo-600" }
+        };
+
+        // 3. Update Category Budgets Grid in Row 2
+        const categories = ["Groceries", "Dining", "Transport", "Rent"];
+        categories.forEach(cat => {
+          const spent = categorySpends[cat] || 0;
+          const limit = budgetLimits[cat].limit;
+          const remaining = Math.max(0, limit - spent);
+          const percentage = Math.min(100, Math.round((spent / limit) * 100));
+
+          const cardEl = document.getElementById(`budgetCard_${cat}`);
+          if (cardEl) {
+            // Update Spent / Limit text
+            const textEl = cardEl.querySelector("h4");
+            if (textEl) {
+              textEl.innerHTML = `₹${spent.toLocaleString("en-IN", { maximumFractionDigits: 0 })} <span class="text-xs text-muted font-medium font-inter">/ ₹${limit.toLocaleString("en-IN", { maximumFractionDigits: 0 })}</span>`;
+            }
+
+            // Update Progress bar fill and percentage
+            const barFill = cardEl.querySelector(".h-full");
+            if (barFill) {
+              barFill.style.width = `${percentage}%`;
+              // If exceeded, make the bar red!
+              if (spent > limit) {
+                barFill.className = "bg-danger h-full rounded-full";
+              } else {
+                barFill.className = `${budgetLimits[cat].colorClass} h-full rounded-full`;
+              }
+            }
+
+            // Update Remaining text
+            const remainingEl = cardEl.querySelector("span.text-right");
+            if (remainingEl) {
+              if (spent > limit) {
+                remainingEl.textContent = `Exceeded: ₹${Math.abs(limit - spent).toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
+                remainingEl.className = "text-[0.65rem] text-danger font-bold mt-2.5 block text-right";
+              } else {
+                remainingEl.textContent = `Remaining: ₹${remaining.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
+                remainingEl.className = "text-[0.65rem] text-muted font-semibold mt-2.5 block text-right";
+              }
+            }
+          }
+        });
+
+        // 4. Update Overall Monthly Budget card aggregates
+        let overallSpent = 0;
+        let overallLimit = 0;
+        for (const cat in budgetLimits) {
+          overallSpent += categorySpends[cat];
+          overallLimit += budgetLimits[cat].limit;
+        }
+
+        const overallBudgetTitleEl = document.getElementById("overallBudgetTitle");
+        if (overallBudgetTitleEl) {
+          overallBudgetTitleEl.innerHTML = `₹${overallSpent.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span class="text-lg text-muted font-medium font-inter">/ ₹${overallLimit.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
+        }
+
+        // 5. Update overall progress circle gauge and percentage text
+        const overallRatio = Math.min(1, overallSpent / overallLimit);
+        const overallPercentage = Math.round(overallRatio * 100);
+        const dashOffset = 251.2 * (1 - overallRatio);
+
+        const circleGauge = document.getElementById("overallCircularGaugeCircle");
+        if (circleGauge) {
+          circleGauge.setAttribute("stroke-dashoffset", dashOffset);
+          if (overallSpent > overallLimit) {
+            circleGauge.setAttribute("stroke", "#ba1a1a"); // Critical red
+          } else {
+            circleGauge.setAttribute("stroke", "#06402b"); // Vibrant emerald primary
+          }
+        }
+
+        const circleText = document.getElementById("overallCircularGaugeText");
+        if (circleText) {
+          circleText.textContent = `${overallPercentage}%`;
+        }
+
+        // 6. Update overall category list inside the overall card
+        const overallCategoryBarsListEl = document.getElementById("overallCategoryBarsList");
+        if (overallCategoryBarsListEl) {
+          overallCategoryBarsListEl.innerHTML = "";
+          categories.forEach(cat => {
+            const spent = categorySpends[cat] || 0;
+            const limit = budgetLimits[cat].limit;
+            const percentage = Math.min(100, Math.round((spent / limit) * 100));
+            const colorClass = spent > limit ? "bg-danger" : budgetLimits[cat].colorClass;
+            const labelName = cat === "Rent" ? "Real Estate Maintenance" : (cat === "Dining" ? "Dining & Hospitality" : (cat === "Groceries" ? "Groceries & Provisions" : "Transport & Travel"));
+            
+            overallCategoryBarsListEl.innerHTML += `
+              <div>
+                <div class="flex justify-between text-[0.7rem] font-bold text-main">
+                  <span>${labelName}</span>
+                  <span>${percentage}%</span>
+                </div>
+                <div class="w-full h-1.5 bg-[#dbe2f9] rounded-full mt-1.5 overflow-hidden">
+                  <div class="${colorClass} h-full rounded-full" style="width: ${percentage}%"></div>
+                </div>
+              </div>
+            `;
+          });
+        }
+
+        // 7. Update Active Budgets Card (Private Allocations)
+        const sortedCats = Object.keys(budgetLimits).map(cat => {
+          return {
+            cat,
+            name: cat === "Rent" ? "Real Estate Maintenance" : (cat === "Dining" ? "Dining & Hospitality" : (cat === "Groceries" ? "Groceries & Provisions" : "Transport & Travel")),
+            percentage: Math.round(((categorySpends[cat] || 0) / budgetLimits[cat].limit) * 100)
+          };
+        }).sort((a, b) => b.percentage - a.percentage);
+
+        const activeBudgetsTitleEl = document.getElementById("activeBudgetsTitle");
+        if (activeBudgetsTitleEl) {
+          const activeCount = Object.values(categorySpends).filter(v => v > 0).length;
+          activeBudgetsTitleEl.textContent = `${activeCount} Active Budget${activeCount === 1 ? "" : "s"}`;
+        }
+
+        const activeBudgetsListEl = document.getElementById("activeBudgetsList");
+        if (activeBudgetsListEl) {
+          activeBudgetsListEl.innerHTML = "";
+          sortedCats.forEach(item => {
+            activeBudgetsListEl.innerHTML += `
+              <div class="flex justify-between items-center text-[0.7rem] font-bold text-[#a2c6b6]">
+                <span>${item.name}</span>
+                <span class="text-white">${item.percentage}% used</span>
+              </div>
+            `;
+          });
+        }
+
+        // 8. Update AI Advisor Smart Allocation alert text contextually
+        const advisorAlertTextEl = document.getElementById("advisorAlertText");
+        if (advisorAlertTextEl) {
+          let adviceGiven = false;
+          for (const item of sortedCats) {
+            if (item.percentage > 100) {
+              const spent = categorySpends[item.cat];
+              const limit = budgetLimits[item.cat].limit;
+              const over = spent - limit;
+              advisorAlertTextEl.textContent = `CRITICAL ALERT: Your ${item.name} has exceeded its monthly limit by ₹${over.toLocaleString("en-IN", { maximumFractionDigits: 0 })}. Consider adjusting allocations immediately or suspending luxury spends.`;
+              adviceGiven = true;
+              break;
+            }
+          }
+
+          if (!adviceGiven) {
+            const highest = sortedCats[0];
+            if (highest && highest.percentage > 75) {
+              const spent = categorySpends[highest.cat];
+              const limit = budgetLimits[highest.cat].limit;
+              const remaining = limit - spent;
+              advisorAlertTextEl.textContent = `Based on your current ${highest.cat.toLowerCase()} spending velocity, you are at ${highest.percentage}% of your capacity. Only ₹${remaining.toLocaleString("en-IN", { maximumFractionDigits: 0 })} remains. Reallocate from stable accounts if necessary.`;
+            } else {
+              advisorAlertTextEl.textContent = `Your allocations are in exceptional standing! Spends are well within their protective barriers, and your monthly savings target is matching projections. Keep up the high standard.`;
+            }
+          }
+        }
+
+        // 9. Update Savings Target Gauge Card dynamically
+        const savingsTarget = 15000;
+        const netSavings = Math.max(0, incomeSum - expenseSum);
+        const savingsPercentage = Math.min(100, Math.round((netSavings / savingsTarget) * 100));
+        const savingsRatio = Math.min(1, netSavings / savingsTarget);
+        const savingsOffset = 251.2 * (1 - savingsRatio);
+
+        const savingsRateMatchBadgeEl = document.getElementById("savingsRateMatchBadge");
+        if (savingsRateMatchBadgeEl) {
+          savingsRateMatchBadgeEl.textContent = `${savingsPercentage}% Match`;
+        }
+
+        const savingsRateGaugeCircleEl = document.getElementById("savingsRateGaugeCircle");
+        if (savingsRateGaugeCircleEl) {
+          savingsRateGaugeCircleEl.setAttribute("stroke-dashoffset", savingsOffset);
+        }
+
+        const savingsRateGaugeTextEl = document.getElementById("savingsRateGaugeText");
+        if (savingsRateGaugeTextEl) {
+          savingsRateGaugeTextEl.textContent = `${savingsPercentage}%`;
+        }
+
+        const savingsRateFooterTextEl = document.getElementById("savingsRateFooterText");
+        if (savingsRateFooterTextEl) {
+          savingsRateFooterTextEl.textContent = `₹${netSavings.toLocaleString("en-IN", { maximumFractionDigits: 0 })} saved of ₹15,000 goal`;
+        }
+      }
+    }
 
     // Sign out handler
     const signOutBtn = document.querySelector("#btnSignOut");
@@ -526,6 +757,7 @@
       });
     }
   </script>
+  <script type="module" src="js/components/globalSearch.js"></script>
 </body>
 
 </html>

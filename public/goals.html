@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <script>
+    if (localStorage.getItem("sovereign_theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Sovereign Ledger - Goals & Capital Initiatives</title>
@@ -38,18 +43,17 @@
 
     <!-- Sidebar Navigation -->
     <aside class="w-[300px] bg-sidebar flex flex-col h-full border-r border-border p-[2rem_1.5rem] shrink-0">
-      <div class="sidebar-logo flex flex-col gap-1">
-        <h1 class="text-[1.5rem] font-bold text-primary leading-tight uppercase tracking-wide font-manrope">The Sovereign<br>Ledger</h1>
-        <p class="text-[0.75rem] text-muted font-semibold tracking-wide uppercase">Private Wealth Management</p>
+      <div class="sidebar-logo flex items-center">
+        <img src="assets/logo.png" alt="The Sovereign Ledger Logo" class="w-full h-auto object-contain">
       </div>
 
       <nav class="flex flex-col gap-2 mt-8">
-        <a href="dashboard.html"
+        <a href="index.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">grid_view</span>
           Dashboard
         </a>
-        <a href="index.html"
+        <a href="transaction.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">receipt_long</span>
           Transactions
@@ -112,7 +116,7 @@
           <!-- Search bar -->
           <div class="flex items-center gap-3 bg-[#eef2fc] px-4 py-2 rounded-full w-[280px] border border-transparent focus-within:border-border transition-all">
             <span class="material-symbols-rounded text-sm text-muted">search</span>
-            <input type="text" placeholder="Search goals..."
+            <input type="text" placeholder="Search workspace..."
               class="border-none bg-transparent outline-none w-full text-xs text-main placeholder-muted font-medium">
           </div>
 
@@ -593,7 +597,7 @@
             const response = await saveData(transObject);
             if (response?.success) {
               // Redirect to main ledger page to view the new transaction
-              window.location.href = "index.html";
+              window.location.href = "transaction.html";
             } else {
               alert("Failed to add transaction. Please try again.");
             }
@@ -620,6 +624,7 @@
       });
     }
   </script>
+  <script type="module" src="js/components/globalSearch.js"></script>
 </body>
 
 </html>

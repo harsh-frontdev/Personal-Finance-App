@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <script>
+    if (localStorage.getItem("sovereign_theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Sovereign Ledger - Settings & Preferences</title>
@@ -71,18 +76,17 @@
 
     <!-- Sidebar Navigation -->
     <aside class="w-[300px] bg-sidebar flex flex-col h-full border-r border-border p-[2rem_1.5rem] shrink-0">
-      <div class="sidebar-logo flex flex-col gap-1">
-        <h1 class="text-[1.5rem] font-bold text-primary leading-tight uppercase tracking-wide font-manrope">The Sovereign<br>Ledger</h1>
-        <p class="text-[0.75rem] text-muted font-semibold tracking-wide uppercase">Private Wealth Management</p>
+      <div class="sidebar-logo flex items-center">
+        <img src="assets/logo.png" alt="The Sovereign Ledger Logo" class="w-full h-auto object-contain">
       </div>
 
       <nav class="flex flex-col gap-2 mt-8">
-        <a href="dashboard.html"
+        <a href="index.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">grid_view</span>
           Dashboard
         </a>
-        <a href="index.html"
+        <a href="transaction.html"
           class="flex items-center gap-4 px-4 py-3 rounded-lg text-[0.9rem] font-semibold text-muted transition-colors hover:bg-card-alt hover:text-primary">
           <span class="material-symbols-rounded">receipt_long</span>
           Transactions
@@ -145,7 +149,7 @@
           <!-- Search bar -->
           <div class="flex items-center gap-3 bg-[#eef2fc] px-4 py-2 rounded-full w-[280px] border border-transparent focus-within:border-border transition-all">
             <span class="material-symbols-rounded text-sm text-muted">search</span>
-            <input type="text" placeholder="Search settings..."
+            <input type="text" placeholder="Search workspace..."
               class="border-none bg-transparent outline-none w-full text-xs text-main placeholder-muted font-medium">
           </div>
 
@@ -598,6 +602,7 @@
     import { onAuthStateChanged, signOut, updateProfile, updateEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
+    import { showToast } from "./js/components/toast.js";
 
     // Enforce dashboard router security
     onAuthStateChanged(auth, (user) => {
@@ -666,9 +671,9 @@
             const response = await saveData(transObject);
             if (response?.success) {
               // Redirect to main ledger page to view the new transaction
-              window.location.href = "index.html";
+              window.location.href = "transaction.html";
             } else {
-              alert("Failed to add transaction. Please try again.");
+              showToast("Failed to add transaction. Please try again.", "error");
             }
           });
         }
@@ -683,7 +688,7 @@
             const newCurrency = currencySelect.value;
 
             if (!newName) {
-              alert("Display name cannot be empty.");
+              showToast("Display name cannot be empty.", "error");
               return;
             }
 
@@ -717,10 +722,10 @@
               });
 
               // 4. Custom notification
-              alert("Workspace preferences saved successfully!");
+              showToast("Workspace preferences saved successfully!", "success");
             } catch (err) {
               console.error(err);
-              alert("Failed to save changes: " + err.message);
+              showToast("Failed to save changes: " + err.message, "error");
             }
           });
         }
@@ -763,7 +768,7 @@
             const confirmVal = document.getElementById("confirm_password").value;
 
             if (newVal !== confirmVal) {
-              alert("New passwords do not match!");
+              showToast("New passwords do not match!", "error");
               return;
             }
 
@@ -771,11 +776,11 @@
               if (user) {
                 await updatePassword(auth.currentUser, newVal);
               }
-              alert("Password updated successfully!");
+              showToast("Password updated successfully!", "success");
               closeUpdatePassword();
             } catch (err) {
               console.error(err);
-              alert("Failed to update password: " + err.message);
+              showToast("Failed to update password: " + err.message, "error");
             }
           });
         }
@@ -800,6 +805,7 @@
       });
     }
   </script>
+  <script type="module" src="js/components/globalSearch.js"></script>
 </body>
 
 </html>

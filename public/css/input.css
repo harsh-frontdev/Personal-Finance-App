@@ -186,3 +186,473 @@
   background: none !important;
   cursor: default !important;
 }
+
+/* Premium Custom iOS-style Switch Toggles */
+.ios-switch {
+  position: relative;
+  inline-size: 2.75rem;
+  block-size: 1.5rem;
+  background-color: #cbd5e1;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+.ios-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ios-switch-checkbox:checked + .ios-switch {
+  background-color: #06402b !important;
+}
+.ios-switch-checkbox:checked + .ios-switch::after {
+  transform: translateX(1.25rem) !important;
+}
+
+/* Sovereign Ledger Premium Dark Mode Custom Stylesheet Overrides */
+html.dark {
+  --color-body: #060c09 !important;
+  --color-sidebar: #0b120f !important;
+  --color-card-alt: #101a15 !important;
+  --color-main: #f1f5f9 !important;
+  --color-muted: #94a3b8 !important;
+  --color-light: #64748b !important;
+  --color-primary: #10b981 !important;
+  --color-primary-hover: #34d399 !important;
+  --color-border: #182420 !important;
+}
+
+html.dark body {
+  background-color: var(--color-body) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .bg-white {
+  background-color: var(--color-sidebar) !important;
+}
+
+html.dark .bg-\[\#f0f3ff\] {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .bg-\[\#f0f3fa\] {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .bg-\[\#f8f9fc\] {
+  background-color: var(--color-body) !important;
+}
+
+html.dark .bg-\[\#eef2fc\] {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .text-main {
+  color: var(--color-main) !important;
+}
+
+html.dark .text-muted {
+  color: var(--color-muted) !important;
+}
+
+html.dark .border-border {
+  border-color: var(--color-border) !important;
+}
+
+html.dark .border-slate-100 {
+  border-color: var(--color-border) !important;
+}
+
+html.dark .border-slate-50 {
+  border-color: var(--color-border) !important;
+}
+
+html.dark input, html.dark select, html.dark textarea {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark table, html.dark td, html.dark th {
+  color: var(--color-main) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark #toast-container > div {
+  background-color: var(--color-sidebar) !important;
+  color: var(--color-main) !important;
+  border-color: var(--color-border) !important;
+}
+
+/* Modals dark mode overrides */
+html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div {
+  background-color: var(--color-sidebar) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark #addTransactionModal form, html.dark #updatePasswordModal form {
+  color: var(--color-main) !important;
+}
+
+html.dark #addTransactionModal input, html.dark #addTransactionModal select, html.dark #addTransactionModal textarea,
+html.dark #updatePasswordModal input, html.dark #updatePasswordModal select, html.dark #updatePasswordModal textarea {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots {
+  background-color: #032b1c !important;
+}
+
+/* Fix simple-datatables elements in dark mode */
+html.dark .datatable-wrapper {
+  color: var(--color-main) !important;
+}
+
+html.dark .datatable-table {
+  color: var(--color-main) !important;
+}
+
+html.dark .datatable-pagination a {
+  color: var(--color-main) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+html.dark .datatable-selector {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .datatable-input {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .ios-switch-checkbox:checked + .ios-switch {
+  background-color: #10b981 !important;
+}
+
+/* Custom premium overrides to eliminate any remaining white backgrounds in dark mode */
+html.dark header {
+  background: rgba(11, 18, 15, 0.8) !important;
+  border-bottom-color: var(--color-border) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+html.dark .card, html.dark .tx-table, html.dark .pagination {
+  background-color: var(--color-sidebar) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .datatable-bottom, html.dark .datatable-wrapper {
+  background-color: var(--color-sidebar) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .filter-btn, html.dark .note-box, html.dark .tx-icon-box {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark .tx-row-item:hover, html.dark tr:hover {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .modal-container, html.dark .modal-right {
+  background-color: var(--color-sidebar) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .cat-btn {
+  background-color: var(--color-card-alt) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .cat-btn.active {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+}
+
+html.dark .period-btn {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .detail-card {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .note-box {
+  background-color: var(--color-body) !important;
+}
+
+html.dark .btn-receipt {
+  color: var(--color-main) !important;
+}
+
+/* Sidebar logo styling - set width of the logo to full width of container */
+.sidebar-logo {
+  width: 100% !important;
+}
+
+.sidebar-logo img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* Invert brand logo image to crisp white in dark mode */
+html.dark aside .sidebar-logo img {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Custom premium overrides to eliminate any remaining light gray colors in dark mode */
+html.dark .form-input {
+  background-color: var(--color-body) !important;
+  color: var(--color-main) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark .search-bar {
+  background-color: var(--color-card-alt) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark .tx-icon {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark .avatar {
+  background-color: var(--color-card-alt) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark .bg-slate-50, html.dark .bg-slate-100 {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .bg-slate-200, html.dark .bg-slate-300 {
+  background-color: var(--color-border) !important;
+}
+
+/* Fix dynamic table pagination button background in dark mode */
+html.dark .datatable-wrapper .datatable-pagination .datatable-pagination-list-item button {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-main) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+html.dark .datatable-wrapper .datatable-pagination .datatable-pagination-list-item.datatable-active button {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* Custom premium overrides to eliminate any remaining lavender-blue #F2F3FF / #f0f3ff backgrounds in dark mode */
+html.dark .bg-\[\#f2f3ff\] {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .bg-\[\#F2F3FF\] {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .bg-\[\#F2F3FF\]\/50 {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .bg-\[\#f0f3ff\] {
+  background-color: var(--color-card-alt) !important;
+}
+
+html.dark .bg-\[\#f0f3fa\] {
+  background-color: var(--color-card-alt) !important;
+}
+
+/* Fix Apply Strategy button contrast inside advisor card in dark mode */
+html.dark .bg-white.text-\[\#032b1c\] {
+  background-color: #ffffff !important;
+  color: #032b1c !important;
+}
+
+html.dark .bg-white.text-\[\#032b1c\]:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* Progress bars, active chart fills, and SVG gauge tracks in dark mode */
+html.dark .bg-\[\#dbe2f9\] {
+  background-color: var(--color-border) !important;
+}
+
+html.dark svg circle[stroke="#dbe2f9"] {
+  stroke: var(--color-border) !important;
+}
+
+/* Active green bar/progress fills in dark mode to ensure dynamic, prestigious high contrast */
+html.dark .bg-\[\#06402b\] {
+  background-color: var(--color-primary) !important;
+}
+
+html.dark .bg-\[\#2b6954\] {
+  background-color: var(--color-primary) !important;
+}
+
+html.dark svg circle[stroke="#06402b"] {
+  stroke: var(--color-primary) !important;
+}
+
+html.dark svg circle[stroke="#2b6954"] {
+  stroke: var(--color-primary) !important;
+}
+
+/* Premium scrollbar styling for the notification dropdown list */
+#notifItemsList {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(100, 116, 139, 0.2) transparent !important;
+}
+
+#notifItemsList::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+#notifItemsList::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+#notifItemsList::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.2) !important;
+  border-radius: 99px !important;
+}
+
+#notifItemsList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.4) !important;
+}
+
+/* Dark Mode compatibility styles for notification dropdown */
+html.dark #notificationDropdownContainer {
+  background-color: var(--color-sidebar) !important;
+  color: var(--color-main) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark #notificationDropdownContainer .border-b,
+html.dark #notificationDropdownContainer .border-t {
+  border-color: var(--color-border) !important;
+}
+
+html.dark #notificationDropdownContainer .border-slate-100 {
+  border-color: var(--color-border) !important;
+}
+
+html.dark #notificationDropdownContainer .text-main {
+  color: var(--color-main) !important;
+}
+
+html.dark #notificationDropdownContainer .text-muted {
+  color: var(--color-muted) !important;
+}
+
+html.dark #notificationDropdownContainer .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  color: #34d399 !important;
+}
+
+html.dark #notificationDropdownContainer .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  color: #f87171 !important;
+}
+
+html.dark #notificationDropdownContainer .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: #60a5fa !important;
+}
+
+html.dark #notifItemsList {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent !important;
+}
+
+html.dark #notifItemsList::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark #notifItemsList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Premium scrollbar styling for the global search dropdown */
+#global-search-dropdown {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(100, 116, 139, 0.2) transparent !important;
+}
+
+#global-search-dropdown::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+#global-search-dropdown::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+#global-search-dropdown::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 116, 139, 0.2) !important;
+  border-radius: 99px !important;
+}
+
+#global-search-dropdown::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.4) !important;
+}
+
+html.dark #global-search-dropdown {
+  background-color: rgba(11, 18, 15, 0.95) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-main) !important;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent !important;
+}
+
+html.dark #global-search-dropdown::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html.dark #global-search-dropdown::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Dark mode compatibility rules for global search inner items */
+html.dark #global-search-dropdown a {
+  background-color: var(--color-sidebar) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-main) !important;
+}
+
+html.dark #global-search-dropdown a:hover {
+  background-color: var(--color-card-alt) !important;
+  color: var(--color-primary) !important;
+}
+
+html.dark #global-search-dropdown a:hover span {
+  color: var(--color-primary) !important;
+}
+
+html.dark #global-search-dropdown .bg-amber-50 {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+  color: #fbbf24 !important;
+}
+
+html.dark #global-search-dropdown .border-slate-100\/50 {
+  border-color: var(--color-border) !important;
+}
+
+
+

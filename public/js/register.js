@@ -32,14 +32,14 @@ form.addEventListener("submit", async (e) => {
     });
     
     alert("Registration successful! Welcome to the Sovereign Ledger.");
-    window.location.href = "dashboard.html";
+    window.location.href = "index.html";
   } catch (error) {
     console.error("Registration failed: ", error);
     if (error.code === "auth/configuration-not-found") {
       const useDemo = confirm("Firebase Authentication is not enabled for this project yet.\n\nWould you like to run in Demo/Local Storage mode for testing?");
       if (useDemo) {
         localStorage.setItem("sovereign_demo_user", JSON.stringify({ email, displayName: name }));
-        window.location.href = "dashboard.html";
+        window.location.href = "index.html";
         return;
       }
     }
