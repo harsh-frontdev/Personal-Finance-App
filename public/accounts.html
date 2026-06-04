@@ -220,11 +220,11 @@
 
         </div>
 
-        <!-- ================= ROW 2: Portfolio Atelier section ================= -->
+        <!-- ================= ROW 2: Sovereign Accounts section ================= -->
         <div>
           <div class="flex justify-between items-center mb-6">
             <div>
-              <h3 class="text-2xl font-bold text-main font-manrope">Portfolio Atelier</h3>
+              <h3 class="text-2xl font-bold text-main font-manrope">Sovereign Accounts</h3>
             </div>
             
             <button id="btnOpenLinkCard" class="bg-[#e0e7ff] hover:bg-[#c7d2fe] text-indigo-900 border-none rounded-lg px-5 py-2.5 text-xs font-bold cursor-pointer transition-colors flex items-center gap-1.5 shadow-sm active:scale-95">
@@ -832,13 +832,87 @@
 
   <!-- Authentication session script handler -->
   <script type="module">
-    import { auth, saveData } from "./js/services/api.js";
+    import { auth, saveData, getData } from "./js/services/api.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
 
+    // Accounts metadata definitions (pre-loaded with default mock positions)
+    const accountsData = {
+      chase: {
+        title: "HDFC Bank Savings",
+        price: "₹8,42,031.11",
+        subPrice: "AVAILABLE: ₹8,20,000.00",
+        interest: "3.00%",
+        limit: "₹2,50,000",
+        billing: "Monthly",
+        overdraft: "Protected",
+        icon: "account_balance"
+      },
+      ally: {
+        title: "ICICI Bank Fixed Deposit",
+        price: "₹15,78,999.91",
+        subPrice: "AVAILABLE: ₹15,78,999.91",
+        interest: "7.10% (APY)",
+        limit: "No Limit",
+        billing: "Monthly",
+        overdraft: "Protected",
+        icon: "savings"
+      },
+      fidelity: {
+        title: "SBI NPS Tier-1",
+        price: "₹64,28,000.00",
+        subPrice: "AVAILABLE: ₹64,28,000.00 (Vested)",
+        interest: "N/A (Market Variable)",
+        limit: "₹50,000 (Contribution)",
+        billing: "Every Payroll",
+        overdraft: "N/A",
+        icon: "trending_up"
+      },
+      vanguard: {
+        title: "Zerodha Mutual Funds (Coin)",
+        price: "₹42,50,000.00",
+        subPrice: "AVAILABLE: ₹41,50,000.00",
+        interest: "N/A (Market Variable)",
+        limit: "No Limit",
+        billing: "Continuous",
+        overdraft: "N/A",
+        icon: "query_stats"
+      },
+      coinbase: {
+        title: "Groww Equities Portfolio",
+        price: "₹11,86,872.00",
+        subPrice: "AVAILABLE: ₹11,86,872.00",
+        interest: "N/A (Market Variable)",
+        limit: "₹5,00,000 (Withdrawal)",
+        billing: "Instant",
+        overdraft: "N/A",
+        icon: "trending_up"
+      },
+      amex: {
+        title: "AMEX India Platinum Card",
+        price: "₹84,501.20",
+        subPrice: "AVAILABLE: ₹10,00,000 (Credit)",
+        interest: "24.99% (APR)",
+        limit: "No Preset Limit",
+        billing: "Every 14th",
+        overdraft: "N/A",
+        icon: "credit_card"
+      },
+      applecard: {
+        title: "OneCard (Federal Bank Powered)",
+        price: "₹40,000.30",
+        subPrice: "AVAILABLE: ₹2,00,000 (Credit)",
+        interest: "19.24% (APR)",
+        limit: "No Limit",
+        billing: "Last Day of Month",
+        overdraft: "N/A",
+        icon: "credit_card"
+      }
+    };
+
     // Enforce dashboard router security
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
       if (!user && !demoUser) {
         window.location.href = "login.html";
@@ -897,8 +971,172 @@
 
         // Initialize Sliding Account Details Drawer Logic
         setupDetailsDrawer();
+
+        // Load dynamic accounts data calculations
+        await loadDynamicAccountsData();
       }
     });
+
+    async function loadDynamicAccountsData() {
+      const res = await getData();
+      if (!res || !res.success) return;
+      
+      const allTrans = res.data;
+
+      // Base balances definitions
+      const baseBalances = {
+        "HDFC Bank Savings": 842031.11,
+        "ICICI Bank FD": 1578999.91,
+        "SBI NPS (Tier-1)": 6428000.00,
+        "Zerodha Mutual Funds": 4250000.00,
+        "Groww Portfolio": 1186872.00,
+        "AMEX India Card": 84501.20,
+        "OneCard": 40000.30
+      };
+
+      // Sum transaction amounts per account
+      const accountChanges = {
+        "HDFC Bank Savings": 0,
+        "ICICI Bank FD": 0,
+        "SBI NPS (Tier-1)": 0,
+        "Zerodha Mutual Funds": 0,
+        "Groww Portfolio": 0,
+        "AMEX India Card": 0,
+        "OneCard": 0
+      };
+
+      // Calculate 30-day velocity
+      let spend30Day = 0;
+      let invest30Day = 0;
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      allTrans.forEach(t => {
+        const amt = parseFloat(t.amount) || 0;
+        const acc = t.account;
+        
+        // Accumulate balances
+        if (accountChanges.hasOwnProperty(acc)) {
+          accountChanges[acc] += amt;
+        }
+
+        // Velocity tracking (last 30 days)
+        const tDate = new Date(t.date);
+        if (tDate >= thirtyDaysAgo) {
+          if (amt < 0) {
+            spend30Day += Math.abs(amt);
+          } else {
+            if (acc === "SBI NPS (Tier-1)" || acc === "Zerodha Mutual Funds" || acc === "Groww Portfolio") {
+              invest30Day += amt;
+            }
+          }
+        }
+      });
+
+      // Calculate exact dynamic balances
+      const currentBalances = {
+        "HDFC Bank Savings": baseBalances["HDFC Bank Savings"] + accountChanges["HDFC Bank Savings"],
+        "ICICI Bank FD": baseBalances["ICICI Bank FD"] + accountChanges["ICICI Bank FD"],
+        "SBI NPS (Tier-1)": baseBalances["SBI NPS (Tier-1)"] + accountChanges["SBI NPS (Tier-1)"],
+        "Zerodha Mutual Funds": baseBalances["Zerodha Mutual Funds"] + accountChanges["Zerodha Mutual Funds"],
+        "Groww Portfolio": baseBalances["Groww Portfolio"] + accountChanges["Groww Portfolio"],
+        "AMEX India Card": baseBalances["AMEX India Card"] - accountChanges["AMEX India Card"],
+        "OneCard": baseBalances["OneCard"] - accountChanges["OneCard"]
+      };
+
+      // Update cards in DOM
+      const hdfcCard = document.querySelector('[data-account-id="chase"]');
+      if (hdfcCard) {
+        const valEl = hdfcCard.querySelector('span.text-2xl');
+        if (valEl) valEl.textContent = "₹" + currentBalances["HDFC Bank Savings"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      const iciciCard = document.querySelector('[data-account-id="ally"]');
+      if (iciciCard) {
+        const valEl = iciciCard.querySelector('span.text-2xl');
+        if (valEl) valEl.textContent = "₹" + currentBalances["ICICI Bank FD"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      const sbiCard = document.querySelector('[data-account-id="fidelity"]');
+      if (sbiCard) {
+        const valEl = sbiCard.querySelector('span.text-2xl');
+        if (valEl) valEl.textContent = "₹" + currentBalances["SBI NPS (Tier-1)"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      const zerodhaCard = document.querySelector('[data-account-id="vanguard"]');
+      if (zerodhaCard) {
+        const valEl = zerodhaCard.querySelector('span.text-2xl');
+        if (valEl) valEl.textContent = "₹" + currentBalances["Zerodha Mutual Funds"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      const growwCard = document.querySelector('[data-account-id="coinbase"]');
+      if (growwCard) {
+        const valEl = growwCard.querySelector('span.text-2xl');
+        if (valEl) valEl.textContent = "₹" + currentBalances["Groww Portfolio"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      const amexCard = document.querySelector('[data-account-id="amex"]');
+      if (amexCard) {
+        const valEl = amexCard.querySelector('span.text-2xl');
+        if (valEl) valEl.textContent = "₹" + currentBalances["AMEX India Card"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      const onecardCard = document.querySelector('[data-account-id="applecard"]');
+      if (onecardCard) {
+        const valEl = onecardCard.querySelector('span.text-2xl');
+        if (valEl) valEl.textContent = "₹" + currentBalances["OneCard"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      // Aggregates
+      const liquidCash = currentBalances["HDFC Bank Savings"] + currentBalances["ICICI Bank FD"];
+      const totalDebt = currentBalances["AMEX India Card"] + currentBalances["OneCard"];
+      const totalInvested = currentBalances["SBI NPS (Tier-1)"] + currentBalances["Zerodha Mutual Funds"] + currentBalances["Groww Portfolio"];
+      const netWorth = liquidCash + totalInvested - totalDebt;
+
+      // Update Net Worth Panel
+      const nwTitle = document.querySelector(".networth-hero-bg h2");
+      if (nwTitle) nwTitle.textContent = "₹" + netWorth.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      const nwStats = document.querySelectorAll(".networth-hero-bg span.font-manrope");
+      if (nwStats.length >= 2) {
+        nwStats[0].textContent = "₹" + liquidCash.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+        nwStats[1].textContent = "₹" + totalDebt.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+      }
+
+      // Update 30-Day Velocity
+      const velocitySpans = document.querySelectorAll(".col-span-4 .font-semibold");
+      if (velocitySpans.length >= 2) {
+        velocitySpans[0].textContent = "+₹" + invest30Day.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        velocitySpans[1].textContent = "-₹" + spend30Day.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        
+        const velocityBars = document.querySelectorAll(".col-span-4 .h-full");
+        if (velocityBars.length >= 2) {
+          const investPct = Math.min(100, Math.max(15, Math.round((invest30Day / 200000) * 100)));
+          const spendPct = Math.min(100, Math.max(15, Math.round((spend30Day / 100000) * 100)));
+          velocityBars[0].style.width = `${investPct}%`;
+          velocityBars[1].style.width = `${spendPct}%`;
+        }
+      }
+
+      // Dynamic drawer details metadata updates
+      accountsData.chase.price = "₹" + currentBalances["HDFC Bank Savings"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      accountsData.chase.subPrice = "AVAILABLE: ₹" + (currentBalances["HDFC Bank Savings"] - 22031).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      
+      accountsData.ally.price = "₹" + currentBalances["ICICI Bank FD"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      accountsData.ally.subPrice = "AVAILABLE: ₹" + currentBalances["ICICI Bank FD"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      accountsData.fidelity.price = "₹" + currentBalances["SBI NPS (Tier-1)"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      accountsData.fidelity.subPrice = "AVAILABLE: ₹" + currentBalances["SBI NPS (Tier-1)"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " (Vested)";
+
+      accountsData.vanguard.price = "₹" + currentBalances["Zerodha Mutual Funds"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      accountsData.vanguard.subPrice = "AVAILABLE: ₹" + (currentBalances["Zerodha Mutual Funds"] - 100000).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      accountsData.coinbase.price = "₹" + currentBalances["Groww Portfolio"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      accountsData.coinbase.subPrice = "AVAILABLE: ₹" + currentBalances["Groww Portfolio"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      accountsData.amex.price = "₹" + currentBalances["AMEX India Card"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      accountsData.applecard.price = "₹" + currentBalances["OneCard"].toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
 
     function setupDetailsDrawer() {
       const drawer = document.getElementById("accountDetailsDrawer");
@@ -913,80 +1151,6 @@
       const drawerLimit = document.getElementById("drawerLimit");
       const drawerBilling = document.getElementById("drawerBilling");
       const drawerOverdraft = document.getElementById("drawerOverdraft");
-
-      // Accounts metadata definitions (pre-loaded with default mock positions)
-      const accountsData = {
-        chase: {
-          title: "HDFC Bank Savings",
-          price: "₹8,42,031.11",
-          subPrice: "AVAILABLE: ₹8,20,000.00",
-          interest: "3.00%",
-          limit: "₹2,50,000",
-          billing: "Monthly",
-          overdraft: "Protected",
-          icon: "account_balance"
-        },
-        ally: {
-          title: "ICICI Bank Fixed Deposit",
-          price: "₹15,78,999.91",
-          subPrice: "AVAILABLE: ₹15,78,999.91",
-          interest: "7.10% (APY)",
-          limit: "No Limit",
-          billing: "Monthly",
-          overdraft: "Protected",
-          icon: "savings"
-        },
-        fidelity: {
-          title: "SBI NPS Tier-1",
-          price: "₹64,28,000.00",
-          subPrice: "AVAILABLE: ₹64,28,000.00 (Vested)",
-          interest: "N/A (Market Variable)",
-          limit: "₹50,000 (Contribution)",
-          billing: "Every Payroll",
-          overdraft: "N/A",
-          icon: "trending_up"
-        },
-        vanguard: {
-          title: "Zerodha Mutual Funds (Coin)",
-          price: "₹42,50,000.00",
-          subPrice: "AVAILABLE: ₹41,50,000.00",
-          interest: "N/A (Market Variable)",
-          limit: "No Limit",
-          billing: "Continuous",
-          overdraft: "N/A",
-          icon: "query_stats"
-        },
-        coinbase: {
-          title: "Groww Equities Portfolio",
-          price: "₹11,86,872.00",
-          subPrice: "AVAILABLE: ₹11,86,872.00",
-          interest: "N/A (Market Variable)",
-          limit: "₹5,00,000 (Withdrawal)",
-          billing: "Instant",
-          overdraft: "N/A",
-          icon: "trending_up"
-        },
-        amex: {
-          title: "AMEX India Platinum Card",
-          price: "₹84,501.20",
-          subPrice: "AVAILABLE: ₹10,00,000 (Credit)",
-          interest: "24.99% (APR)",
-          limit: "No Preset Limit",
-          billing: "Every 14th",
-          overdraft: "N/A",
-          icon: "credit_card"
-        },
-        applecard: {
-          title: "OneCard (Federal Bank Powered)",
-          price: "₹40,000.30",
-          subPrice: "AVAILABLE: ₹2,00,000 (Credit)",
-          interest: "19.24% (APR)",
-          limit: "No Limit",
-          billing: "Last Day of Month",
-          overdraft: "N/A",
-          icon: "credit_card"
-        }
-      };
 
       // Delegated Body Click Listener (handles both static and dynamically appended cards!)
       document.body.addEventListener("click", (e) => {

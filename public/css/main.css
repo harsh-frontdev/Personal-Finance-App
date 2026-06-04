@@ -3000,6 +3000,10 @@ html.dark #global-search-dropdown .bg-amber-50 {
 html.dark #global-search-dropdown .border-slate-100\/50 {
   border-color: var(--color-border) !important;
 }
+a, a:hover, button, button:hover, .underline, .hover\:underline, .clear-filters, .tip-link {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+}
 @property --tw-translate-x {
   syntax: "*";
   inherits: false;

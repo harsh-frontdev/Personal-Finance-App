@@ -147,7 +147,7 @@
             <div>
               <span class="text-[0.65rem] tracking-[0.1em] font-bold text-[#64748b] uppercase">Total Net Income</span>
               <div class="flex items-center gap-2 mt-1">
-                <h3 class="text-4xl font-bold text-main font-manrope tracking-tight leading-none">₹42,850.00</h3>
+                <h3 id="reportsNetIncomeText" class="text-4xl font-bold text-main font-manrope tracking-tight leading-none">₹42,850.00</h3>
                 <span class="text-[0.7rem] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5 inline-flex items-center gap-0.5 mt-1 font-manrope">
                   <span class="material-symbols-rounded text-[0.8rem] icon-filled">trending_up</span> 12.4%
                 </span>
@@ -282,8 +282,8 @@
           </div>
 
           <div class="z-10 mt-6 pr-4">
-            <h2 class="text-3xl font-normal leading-[1.3] text-white font-manrope pr-8">You could save ₹200 by reducing dining out next month.</h2>
-            <p class="text-[0.875rem] text-[#a2c6b6] leading-relaxed mt-4 font-medium max-w-[580px]">
+            <h2 id="reportsAdvisorTitle" class="text-3xl font-normal leading-[1.3] text-white font-manrope pr-8">You could save ₹200 by reducing dining out next month.</h2>
+            <p id="reportsAdvisorText" class="text-[0.875rem] text-[#a2c6b6] leading-relaxed mt-4 font-medium max-w-[580px]">
               Based on your last 3 months of activity, your restaurant spending is 14% higher than your peer group. Diverting this to your "Real Estate" goal would reach the target 2 months earlier.
             </p>
           </div>
@@ -305,7 +305,7 @@
               <span class="material-symbols-rounded text-xl icon-filled text-[#fbbf24]">bolt</span>
             </div>
             <h3 class="text-lg font-bold text-white font-manrope mt-2 leading-none">Unusual Activity</h3>
-            <p class="text-xs text-[#d8c5a2] leading-relaxed mt-2 font-medium">We noticed a recurring subscription price increase of ₹1,200.00 for "CloudStorage Pro".</p>
+            <p id="reportsUnusualActivityText" class="text-xs text-[#d8c5a2] leading-relaxed mt-2 font-medium">We noticed a recurring subscription price increase of ₹1,200.00 for "CloudStorage Pro".</p>
           </div>
 
           <div class="mt-6 pb-1">
@@ -324,7 +324,7 @@
           </div>
 
           <div class="my-2">
-            <h4 class="text-xl font-bold font-manrope text-main leading-tight">Down 4.2%</h4>
+            <h4 id="reportsVelocityTitle" class="text-xl font-bold font-manrope text-main leading-tight">Down 4.2%</h4>
           </div>
 
           <!-- Circular gauge svg -->
@@ -332,15 +332,15 @@
             <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
               <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f1f5f9" stroke-width="8"></circle>
               <!-- 72% calculated circum: 2*PI*40 = 251.2 * (1 - 0.72) = 70.33 offset -->
-              <circle cx="50" cy="50" r="40" fill="transparent" stroke="#0f766e" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="70.33" stroke-linecap="round"></circle>
+              <circle id="reportsVelocityCircle" cx="50" cy="50" r="40" fill="transparent" stroke="#0f766e" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="70.33" stroke-linecap="round"></circle>
             </svg>
             <div class="absolute flex flex-col items-center justify-center text-center">
-              <span class="text-lg font-bold text-main leading-none">72%</span>
+              <span id="reportsVelocityText" class="text-lg font-bold text-main leading-none">72%</span>
             </div>
           </div>
 
           <div class="text-center mt-2">
-            <span class="text-[0.65rem] text-muted italic font-medium leading-relaxed block max-w-[220px] mx-auto">You are currently under your budget threshold for the week.</span>
+            <span id="reportsVelocitySubtext" class="text-[0.65rem] text-muted italic font-medium leading-relaxed block max-w-[220px] mx-auto">You are currently under your budget threshold for the week.</span>
           </div>
         </div>
 
@@ -352,7 +352,7 @@
             </div>
             
             <span class="text-[0.625rem] font-bold text-[#bfdbfe] uppercase tracking-wider block mt-3">Interest Accrued</span>
-            <h3 class="text-3xl font-bold text-white font-manrope mt-2 leading-none">₹1,20,445</h3>
+            <h3 id="reportsInterestAccruedText" class="text-3xl font-bold text-white font-manrope mt-2 leading-none">₹1,20,445</h3>
           </div>
 
           <div class="pb-1 mt-6">
@@ -366,12 +366,12 @@
             <span class="text-[0.625rem] font-bold text-muted uppercase tracking-wider block">Top Spending Category</span>
             
             <div class="flex items-center gap-4 mt-6">
-              <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+              <div id="reportsTopCategoryIcon" class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
                 <span class="material-symbols-rounded">shopping_bag</span>
               </div>
               <div>
-                <h4 class="font-bold text-sm text-main leading-snug">Retail & Luxury</h4>
-                <p class="text-xs text-muted mt-1 font-semibold">₹8,420 spent this month</p>
+                <h4 id="reportsTopCategoryName" class="font-bold text-sm text-main leading-snug">Retail & Luxury</h4>
+                <p id="reportsTopCategorySpend" class="text-xs text-muted mt-1 font-semibold">₹8,420 spent this month</p>
               </div>
             </div>
           </div>
@@ -379,7 +379,7 @@
           <!-- Progress indicator bar at the bottom -->
           <div class="mt-8 pb-1">
             <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-              <div class="bg-[#0f766e] h-full rounded-full" style="width: 65%"></div>
+              <div id="reportsTopCategoryBar" class="bg-[#0f766e] h-full rounded-full" style="width: 65%"></div>
             </div>
           </div>
         </div>
@@ -511,13 +511,13 @@
 
   <!-- Authentication session script handler -->
   <script type="module">
-    import { auth, saveData } from "./js/services/api.js";
+    import { auth, saveData, getData } from "./js/services/api.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
 
     // Enforce dashboard router security
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
       if (!user && !demoUser) {
         window.location.href = "login.html";
@@ -562,8 +562,177 @@
             }
           });
         }
+
+        // Load dynamic reports insights
+        await loadDynamicReportsData();
       }
     });
+
+    async function loadDynamicReportsData() {
+      const res = await getData();
+      if (!res || !res.success) return;
+      
+      const allTrans = res.data;
+      
+      let incomeSum = 0;
+      let expenseSum = 0;
+      
+      const categorySpends = {
+        Rent: 0,
+        Dining: 0,
+        Groceries: 0,
+        Transport: 0
+      };
+
+      // Base balances for interest calculation
+      const baseBalances = {
+        "HDFC Bank Savings": 842031.11,
+        "ICICI Bank FD": 1578999.91
+      };
+      
+      let hdfcChange = 0;
+      let iciciChange = 0;
+      
+      let maxExpense = 0;
+      let maxExpenseDesc = "unusual spending";
+
+      allTrans.forEach(t => {
+        const amt = parseFloat(t.amount) || 0;
+        if (amt > 0) {
+          incomeSum += amt;
+        } else {
+          const val = Math.abs(amt);
+          expenseSum += val;
+          const cat = t.category;
+          if (categorySpends.hasOwnProperty(cat)) {
+            categorySpends[cat] += val;
+          }
+          
+          if (val > maxExpense) {
+            maxExpense = val;
+            maxExpenseDesc = t.description;
+          }
+        }
+        
+        // Track HDFC/ICICI changes for interest calculation
+        if (t.account === "HDFC Bank Savings") {
+          hdfcChange += amt;
+        } else if (t.account === "ICICI Bank FD") {
+          iciciChange += amt;
+        }
+      });
+      
+      const netIncome = incomeSum - expenseSum;
+      
+      // Update DOM elements
+      // 1. Total Net Income
+      const netIncomeEl = document.getElementById("reportsNetIncomeText");
+      if (netIncomeEl) {
+        netIncomeEl.textContent = (netIncome >= 0 ? "₹" : "-₹") + Math.abs(netIncome).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+      
+      // 2. Unusual Activity
+      const unusualActivityEl = document.getElementById("reportsUnusualActivityText");
+      if (unusualActivityEl) {
+        if (maxExpense > 5000) {
+          unusualActivityEl.textContent = `We noticed an unusual expenditure of ₹${maxExpense.toLocaleString("en-IN", { maximumFractionDigits: 0 })} for "${maxExpenseDesc}".`;
+        } else {
+          unusualActivityEl.textContent = `No unusual price spikes detected. Standard subscription cycles are operating normally.`;
+        }
+      }
+      
+      // 3. AI Advisor Card
+      const advisorTitleEl = document.getElementById("reportsAdvisorTitle");
+      const advisorTextEl = document.getElementById("reportsAdvisorText");
+      if (advisorTitleEl && advisorTextEl) {
+        const diningSpend = categorySpends.Dining;
+        if (diningSpend > 1000) {
+          const saveVal = Math.round(diningSpend * 0.2);
+          advisorTitleEl.textContent = `You could save ₹${saveVal.toLocaleString("en-IN")} by reducing dining out next month.`;
+          advisorTextEl.textContent = `Based on your recent transactions, your Dining Out spending is ₹${diningSpend.toLocaleString("en-IN")}. Reducing it by 20% and reallocating it to your Sovereign Accounts would build savings faster.`;
+        } else {
+          advisorTitleEl.textContent = `Your private assets and spending distributions are in outstanding standing!`;
+          advisorTextEl.textContent = `All expenditures are well within their thresholds, and capital is flowing cleanly toward designated stashes. Keep maintaining this level of operational control.`;
+        }
+      }
+      
+      // 4. Spending Velocity
+      const reportsVelocityTitle = document.getElementById("reportsVelocityTitle");
+      const reportsVelocityCircle = document.getElementById("reportsVelocityCircle");
+      const reportsVelocityText = document.getElementById("reportsVelocityText");
+      const reportsVelocitySubtext = document.getElementById("reportsVelocitySubtext");
+      
+      const budgetLimit = 61000;
+      const spentRatio = Math.min(1.0, expenseSum / budgetLimit);
+      const spentPct = Math.round(spentRatio * 100);
+      const dashOffset = 251.2 * (1 - spentRatio);
+      
+      if (reportsVelocityCircle) reportsVelocityCircle.setAttribute("stroke-dashoffset", dashOffset);
+      if (reportsVelocityText) reportsVelocityText.textContent = `${spentPct}%`;
+      if (reportsVelocityTitle) {
+        if (spentPct > 100) {
+          reportsVelocityTitle.textContent = `Over limit by ${spentPct - 100}%`;
+          reportsVelocityTitle.className = "text-xl font-bold font-manrope text-danger leading-tight";
+          if (reportsVelocityCircle) reportsVelocityCircle.setAttribute("stroke", "#ba1a1a");
+        } else {
+          reportsVelocityTitle.textContent = `Under limit by ${100 - spentPct}%`;
+          reportsVelocityTitle.className = "text-xl font-bold font-manrope text-main leading-tight";
+          if (reportsVelocityCircle) reportsVelocityCircle.setAttribute("stroke", "#0f766e");
+        }
+      }
+      if (reportsVelocitySubtext) {
+        if (spentPct > 100) {
+          reportsVelocitySubtext.textContent = `Alert: Your current spends have exceeded the protective monthly barriers.`;
+        } else {
+          reportsVelocitySubtext.textContent = `You are currently under your budget threshold for the month.`;
+        }
+      }
+      
+      // 5. Interest Accrued
+      const reportsInterestAccruedText = document.getElementById("reportsInterestAccruedText");
+      if (reportsInterestAccruedText) {
+        const hdfcBal = baseBalances["HDFC Bank Savings"] + hdfcChange;
+        const iciciBal = baseBalances["ICICI Bank FD"] + iciciChange;
+        const annualInterest = (hdfcBal * 0.03) + (iciciBal * 0.071);
+        const quarterlyInterest = annualInterest / 4;
+        
+        reportsInterestAccruedText.textContent = "₹" + Math.round(quarterlyInterest).toLocaleString("en-IN");
+      }
+      
+      // 6. Top Spending Category
+      const reportsTopCategoryIcon = document.getElementById("reportsTopCategoryIcon");
+      const reportsTopCategoryName = document.getElementById("reportsTopCategoryName");
+      const reportsTopCategorySpend = document.getElementById("reportsTopCategorySpend");
+      const reportsTopCategoryBar = document.getElementById("reportsTopCategoryBar");
+      
+      let maxCat = "Rent";
+      let maxCatVal = 0;
+      for (const cat in categorySpends) {
+        if (categorySpends[cat] > maxCatVal) {
+          maxCatVal = categorySpends[cat];
+          maxCat = cat;
+        }
+      }
+      
+      const iconMap = {
+        Rent: { icon: "home", name: "Real Estate Maintenance", bg: "bg-purple-50", text: "text-purple-600" },
+        Dining: { icon: "restaurant", name: "Dining & Hospitality", bg: "bg-amber-50", text: "text-amber-600" },
+        Groceries: { icon: "shopping_basket", name: "Groceries & Essentials", bg: "bg-emerald-50", text: "text-emerald-600" },
+        Transport: { icon: "directions_car", name: "Transport & Travel", bg: "bg-indigo-50", text: "text-indigo-600" }
+      };
+      
+      if (reportsTopCategoryIcon && reportsTopCategoryName && reportsTopCategorySpend && reportsTopCategoryBar) {
+        const info = iconMap[maxCat];
+        reportsTopCategoryIcon.className = `w-12 h-12 rounded-xl ${info.bg} ${info.text} flex items-center justify-center shrink-0`;
+        reportsTopCategoryIcon.innerHTML = `<span class="material-symbols-rounded">${info.icon}</span>`;
+        reportsTopCategoryName.textContent = info.name;
+        reportsTopCategorySpend.textContent = `₹${maxCatVal.toLocaleString("en-IN", { maximumFractionDigits: 0 })} spent this month`;
+        
+        const pct = expenseSum > 0 ? Math.round((maxCatVal / expenseSum) * 100) : 0;
+        reportsTopCategoryBar.style.width = `${pct}%`;
+      }
+    }
+
 
     // Sign out handler
     const signOutBtn = document.querySelector("#btnSignOut");

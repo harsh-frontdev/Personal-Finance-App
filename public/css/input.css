@@ -654,5 +654,12 @@ html.dark #global-search-dropdown .border-slate-100\/50 {
   border-color: var(--color-border) !important;
 }
 
+/* Global Reset: Disable text underlines on all links, buttons, and underline/hover-underline utility classes */
+a, a:hover, button, button:hover, .underline, .hover\:underline, .clear-filters, .tip-link {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+}
+
+
 
 

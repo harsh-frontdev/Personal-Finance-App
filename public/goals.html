@@ -151,11 +151,11 @@
             <div class="flex gap-16 mt-4">
               <div>
                 <span class="text-[0.6rem] font-bold tracking-[0.05em] text-[#a2c6b6] uppercase block mb-1">TOTAL ASSETS SET ASIDE</span>
-                <span class="text-2xl font-bold text-white font-manrope">₹1,42,500.00</span>
+                <span id="goalsHeroTotalAssets" class="text-2xl font-bold text-white font-manrope">₹1,42,500.00</span>
               </div>
               <div class="border-l border-white/10 pl-16">
                 <span class="text-[0.6rem] font-bold tracking-[0.05em] text-[#a2c6b6] uppercase block mb-1">AVERAGE COMPLETION</span>
-                <span class="text-2xl font-bold text-white font-manrope">64%</span>
+                <span id="goalsHeroAverageCompletion" class="text-2xl font-bold text-white font-manrope">64%</span>
               </div>
             </div>
           </div>
@@ -210,18 +210,18 @@
 
                 <div class="text-right">
                   <span class="text-[0.6rem] font-bold text-emerald-700 bg-emerald-100/80 border border-emerald-200 px-2.5 py-1 rounded-full uppercase tracking-wider block w-fit ml-auto">ON TRACK</span>
-                  <span class="text-2xl font-bold text-main block font-manrope mt-2.5">₹18,450.00</span>
+                  <span id="goalTripSaved" class="text-2xl font-bold text-main block font-manrope mt-2.5">₹18,450.00</span>
                 </div>
               </div>
 
               <!-- Progress bar Section -->
               <div class="z-10 mt-auto">
                 <div class="flex justify-between text-xs font-bold text-main mb-2">
-                  <span>74% Complete</span>
+                  <span id="goalTripPctText">74% Complete</span>
                   <span class="text-muted">Target: ₹25,000.00</span>
                 </div>
                 <div class="w-full h-3 bg-white rounded-full overflow-hidden shadow-inner">
-                  <div class="bg-[#06402b] h-full rounded-full" style="width: 74%"></div>
+                  <div id="goalTripBar" class="bg-[#06402b] h-full rounded-full" style="width: 74%"></div>
                 </div>
               </div>
 
@@ -261,7 +261,7 @@
                 <p class="text-xs text-muted mt-1 font-medium">Foundational Stability</p>
                 
                 <div class="flex items-baseline gap-1 mt-4">
-                  <span class="text-2xl font-bold text-main font-manrope">₹42,000</span>
+                  <span id="goalEmergencySaved" class="text-2xl font-bold text-main font-manrope">₹42,000</span>
                   <span class="text-xs text-muted font-medium">of ₹50,000 goal</span>
                 </div>
               </div>
@@ -269,10 +269,10 @@
               <!-- Progress bar Section -->
               <div class="pt-4 border-t border-slate-100">
                 <div class="w-full h-2 bg-white rounded-full overflow-hidden shadow-inner">
-                  <div class="bg-[#ba1a1a] h-full rounded-full" style="width: 84%"></div>
+                  <div id="goalEmergencyBar" class="bg-[#ba1a1a] h-full rounded-full" style="width: 84%"></div>
                 </div>
                 <div class="flex justify-between text-[0.65rem] font-bold text-[#ba1a1a] mt-2">
-                  <span>84% SECURE</span>
+                  <span id="goalEmergencyPctText">84% SECURE</span>
                 </div>
               </div>
             </div>
@@ -301,7 +301,7 @@
             <div class="flex gap-12 my-auto mt-4">
               <div>
                 <span class="text-[0.6rem] font-bold tracking-[0.05em] text-muted uppercase block mb-0.5">CURRENT STASH</span>
-                <span class="text-xl font-bold text-main font-manrope">₹78,050.00</span>
+                <span id="goalHomeSaved" class="text-xl font-bold text-main font-manrope">₹78,050.00</span>
               </div>
               <div class="border-l border-slate-200 pl-12">
                 <span class="text-[0.6rem] font-bold tracking-[0.05em] text-muted uppercase block mb-0.5">TARGET</span>
@@ -311,7 +311,7 @@
 
             <div>
               <div class="w-full h-2 bg-white rounded-full overflow-hidden shadow-inner">
-                <div class="bg-blue-600 h-full rounded-full" style="width: 43.3%"></div>
+                <div id="goalHomeBar" class="bg-blue-600 h-full rounded-full" style="width: 43.3%"></div>
               </div>
               <p class="text-[0.68rem] text-muted italic font-medium mt-2 leading-snug">
                 "Projected completion by October 2025 based on current deposit velocity."
@@ -552,13 +552,13 @@
 
   <!-- Authentication session script handler -->
   <script type="module">
-    import { auth, saveData } from "./js/services/api.js";
+    import { auth, saveData, getData } from "./js/services/api.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
 
     // Enforce dashboard router security
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
       if (!user && !demoUser) {
         window.location.href = "login.html";
@@ -603,8 +603,85 @@
             }
           });
         }
+
+        // Load dynamic savings architecture and initiative progress
+        await loadDynamicGoalsData();
       }
     });
+
+    async function loadDynamicGoalsData() {
+      const res = await getData();
+      if (!res || !res.success) return;
+      
+      const allTrans = res.data;
+      
+      let incomeSum = 0;
+      let expenseSum = 0;
+      allTrans.forEach(t => {
+        const amt = parseFloat(t.amount) || 0;
+        if (amt > 0) incomeSum += amt;
+        else expenseSum += Math.abs(amt);
+      });
+      
+      const netSavings = Math.max(0, incomeSum - expenseSum);
+      
+      // Calculate dynamic goal stashes based on relative distributions of savings velocity
+      const tripBase = 18450;
+      const tripTarget = 25000;
+      // allocate 20% of net savings to the trip goal up to target limit
+      const tripSaved = Math.min(tripTarget, tripBase + 0.2 * netSavings);
+      const tripPct = Math.round((tripSaved / tripTarget) * 100);
+      
+      const emergencyBase = 42000;
+      const emergencyTarget = 50000;
+      // allocate 30% of net savings to emergency up to target limit
+      const emergencySaved = Math.min(emergencyTarget, emergencyBase + 0.3 * netSavings);
+      const emergencyPct = Math.round((emergencySaved / emergencyTarget) * 100);
+      
+      const homeBase = 78050;
+      const homeTarget = 180000;
+      // allocate 50% of net savings to home down payment up to target limit
+      const homeSaved = Math.min(homeTarget, homeBase + 0.5 * netSavings);
+      const homePct = Math.round((homeSaved / homeTarget) * 100);
+      
+      const totalAssets = tripSaved + emergencySaved + homeSaved;
+      const averageCompletion = Math.round((tripPct + emergencyPct + homePct) / 3);
+      
+      // Update DOM
+      const totalAssetsEl = document.getElementById("goalsHeroTotalAssets");
+      if (totalAssetsEl) totalAssetsEl.textContent = "₹" + totalAssets.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      
+      const averageCompletionEl = document.getElementById("goalsHeroAverageCompletion");
+      if (averageCompletionEl) averageCompletionEl.textContent = `${averageCompletion}%`;
+      
+      // Trip Card
+      const tripSavedEl = document.getElementById("goalTripSaved");
+      if (tripSavedEl) tripSavedEl.textContent = "₹" + tripSaved.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      
+      const tripPctTextEl = document.getElementById("goalTripPctText");
+      if (tripPctTextEl) tripPctTextEl.textContent = `${tripPct}% Complete`;
+      
+      const tripBarEl = document.getElementById("goalTripBar");
+      if (tripBarEl) tripBarEl.style.width = `${tripPct}%`;
+      
+      // Emergency Card
+      const emergencySavedEl = document.getElementById("goalEmergencySaved");
+      if (emergencySavedEl) emergencySavedEl.textContent = "₹" + Math.round(emergencySaved).toLocaleString("en-IN");
+      
+      const emergencyPctTextEl = document.getElementById("goalEmergencyPctText");
+      if (emergencyPctTextEl) emergencyPctTextEl.textContent = `${emergencyPct}% SECURE`;
+      
+      const emergencyBarEl = document.getElementById("goalEmergencyBar");
+      if (emergencyBarEl) emergencyBarEl.style.width = `${emergencyPct}%`;
+      
+      // Home Card
+      const homeSavedEl = document.getElementById("goalHomeSaved");
+      if (homeSavedEl) homeSavedEl.textContent = "₹" + homeSaved.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      
+      const homeBarEl = document.getElementById("goalHomeBar");
+      if (homeBarEl) homeBarEl.style.width = `${homePct}%`;
+    }
+
 
     // Sign out handler
     const signOutBtn = document.querySelector("#btnSignOut");
