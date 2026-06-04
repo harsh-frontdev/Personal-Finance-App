@@ -78,6 +78,14 @@
   font-variation-settings: "FILL" 1;
 }
 
+@utility loading-blur {
+  filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
 /* Simple-datatables User Design Overrides */
 .datatable-wrapper .datatable-table > thead > tr > th {
   vertical-align: bottom;
@@ -309,6 +317,12 @@ html.dark #updatePasswordModal input, html.dark #updatePasswordModal select, htm
 
 html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots {
   background-color: #032b1c !important;
+}
+
+/* Invert calendar picker indicator in dark mode */
+html.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) !important;
+  cursor: pointer;
 }
 
 /* Fix simple-datatables elements in dark mode */

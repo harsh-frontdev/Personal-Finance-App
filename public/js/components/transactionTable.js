@@ -4,6 +4,13 @@ import { updateDetailSidebar } from "../components/detailSidebar.js";
 export default async function updateTransactions(data) {
   if (!data) return;
 
+  // Sort data descending by date and time (newest first)
+  const sortedData = [...data].sort((a, b) => {
+    const dateA = new Date(`${a.date} ${a.time || ""}`);
+    const dateB = new Date(`${b.date} ${b.time || ""}`);
+    return dateB - dateA;
+  });
+
   // Destroy instance before mutating the DOM
   if (window.transactionDataTable) {
     window.transactionDataTable.destroy();
@@ -14,8 +21,30 @@ export default async function updateTransactions(data) {
   const transactionDataEl = document.getElementById("transactionData");
   if (!transactionDataEl) return;
   transactionDataEl.innerHTML = "";
-  if (data.length > 0) {
-    data.forEach((element) => {
+  
+  if (sortedData.length === 0) {
+    transactionDataEl.innerHTML = `
+      <tr>
+        <td colspan="5" class="px-6 py-16 text-center align-middle bg-white">
+          <div class="flex flex-col items-center justify-center gap-4 py-6">
+            <div class="w-16 h-16 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center border border-slate-100 shadow-inner">
+              <span class="material-symbols-rounded text-3xl">account_balance_wallet</span>
+            </div>
+            <div class="max-w-md mx-auto">
+              <h4 class="text-base font-bold text-main font-manrope">No Transactions Found</h4>
+              <p class="text-xs text-muted mt-2 leading-relaxed">
+                Your ledger is currently empty. Record a new transaction using the button above to begin orchestrating your capital accounts.
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    `;
+    updateDetailSidebar(null);
+    return;
+  }
+
+  sortedData.forEach((element) => {
 
       const formattedDate = formatDate(element.date);
 
@@ -67,7 +96,6 @@ export default async function updateTransactions(data) {
               </tr>
           `;
     });
-  }
 
   // Initialize simple-datatables safely
   setTimeout(() => {
@@ -82,7 +110,7 @@ export default async function updateTransactions(data) {
         sortable: false,
         labels: {
           info: "Showing {start}-{end} of {rows} transactions",
-          noRows: "No transactions found",
+          noRows: "No transaction are there to display, Please add transaction",
         },
       });
 
@@ -90,6 +118,6 @@ export default async function updateTransactions(data) {
     }
   }, 50);
 
-  updateDetailSidebar(data[0]);
+  updateDetailSidebar(sortedData[0]);
 
 }

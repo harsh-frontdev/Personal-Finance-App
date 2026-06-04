@@ -23,15 +23,37 @@ export const auth = getAuth(app);
 const transactionsCollection = collection(db, "transactions");
 
 export const getData = async () => {
-  try {
-    const user = auth.currentUser;
-    const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
-    const userId = user ? user.uid : (demoUser ? "demo-user" : null);
+  const user = auth.currentUser;
+  const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
+  const userId = user ? user.uid : (demoUser ? "demo-user" : null);
 
-    if (!userId) {
-      return { success: true, data: [] };
+  if (!userId) {
+    return { success: true, data: [] };
+  }
+
+  // Local Storage Mode Fallback for Demo User or Offline Testing
+  if (userId === "demo-user") {
+    let localData = localStorage.getItem("sovereign_local_transactions");
+    let parsed = [];
+    try {
+      if (localData) {
+        parsed = JSON.parse(localData);
+      }
+    } catch (e) {
+      console.error("Error parsing local transactions, resetting:", e);
+      localStorage.setItem("sovereign_local_transactions", JSON.stringify([]));
+      parsed = [];
     }
 
+    // Auto-clean legacy seed transactions
+    if (parsed.length > 0 && parsed.every(t => t.id && String(t.id).startsWith("seed_"))) {
+      localStorage.setItem("sovereign_local_transactions", JSON.stringify([]));
+      parsed = [];
+    }
+    return { success: true, data: parsed };
+  }
+
+  try {
     const q = query(transactionsCollection, where("userId", "==", userId));
     const querySnapshot = await getDocs(q);
     const transactions = [];
@@ -44,57 +66,7 @@ export const getData = async () => {
       });
     });
 
-    // Auto-seed if the user has no transactions to present a stunning and premium user experience immediately
-    if (transactions.length === 0) {
-      console.log("No transactions found for user in Firestore. Seeding premium default transactions...");
-      const seedTransactions = [
-        {
-          userId,
-          date: "2026-05-25",
-          time: "10:15 AM",
-          description: "Organic Produce & Fine Cheese (Artisan Market)",
-          category: "Groceries",
-          account: "HDFC Bank Savings",
-          amount: -3450.00
-        },
-        {
-          userId,
-          date: "2026-05-26",
-          time: "08:45 PM",
-          description: "Fine Dining (The Sterling Room)",
-          category: "Dining",
-          account: "AMEX India Card",
-          amount: -8200.00
-        },
-        {
-          userId,
-          date: "2026-05-24",
-          time: "06:30 AM",
-          description: "Premium Chauffeur Service (Airport Transfer)",
-          category: "Transport",
-          account: "HDFC Bank Savings",
-          amount: -2500.00
-        },
-        {
-          userId,
-          date: "2026-05-20",
-          time: "11:00 AM",
-          description: "Quarterly Rental Income (Sterling Tower)",
-          category: "Rent",
-          account: "HDFC Bank Savings",
-          amount: 125000.00
-        }
-      ];
-
-      for (const t of seedTransactions) {
-        const docRef = await addDoc(transactionsCollection, t);
-        transactions.push({
-          id: docRef.id,
-          _id: docRef.id,
-          ...t
-        });
-      }
-    }
+    // No auto-seeding of default transactions
 
     return { success: true, data: transactions };
   } catch (error) {
@@ -104,11 +76,31 @@ export const getData = async () => {
 };
 
 export const saveData = async (formData) => {
-  try {
-    const user = auth.currentUser;
-    const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
-    const userId = user ? user.uid : (demoUser ? "demo-user" : null);
+  const user = auth.currentUser;
+  const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
+  const userId = user ? user.uid : (demoUser ? "demo-user" : null);
 
+  if (userId === "demo-user") {
+    let localData = [];
+    try {
+      localData = JSON.parse(localStorage.getItem("sovereign_local_transactions") || "[]");
+    } catch (e) {
+      console.error("Error parsing local transactions for save, resetting:", e);
+      localData = [];
+    }
+    const newId = "local_" + Date.now();
+    const newTransaction = {
+      id: newId,
+      _id: newId,
+      userId,
+      ...formData
+    };
+    localData.push(newTransaction);
+    localStorage.setItem("sovereign_local_transactions", JSON.stringify(localData));
+    return { success: true, id: newId };
+  }
+
+  try {
     const dataWithUser = {
       ...formData,
       userId
@@ -123,6 +115,24 @@ export const saveData = async (formData) => {
 };
 
 export const updateData = async (id, formData) => {
+  const demoUser = localStorage.getItem("sovereign_demo_user");
+  if (demoUser) {
+    let localData = [];
+    try {
+      localData = JSON.parse(localStorage.getItem("sovereign_local_transactions") || "[]");
+    } catch (e) {
+      console.error("Error parsing local transactions for update:", e);
+      return { success: false, error: e.message };
+    }
+    const idx = localData.findIndex(t => t.id === id);
+    if (idx !== -1) {
+      localData[idx] = { ...localData[idx], ...formData };
+      localStorage.setItem("sovereign_local_transactions", JSON.stringify(localData));
+      return { success: true };
+    }
+    return { success: false, error: "Local transaction not found" };
+  }
+
   try {
     const docRef = doc(db, "transactions", id);
     await updateDoc(docRef, formData);
@@ -134,6 +144,20 @@ export const updateData = async (id, formData) => {
 };
 
 export const deleteData = async (id) => {
+  const demoUser = localStorage.getItem("sovereign_demo_user");
+  if (demoUser) {
+    let localData = [];
+    try {
+      localData = JSON.parse(localStorage.getItem("sovereign_local_transactions") || "[]");
+    } catch (e) {
+      console.error("Error parsing local transactions for delete:", e);
+      return { success: false, error: e.message };
+    }
+    localData = localData.filter(t => t.id !== id);
+    localStorage.setItem("sovereign_local_transactions", JSON.stringify(localData));
+    return { success: true };
+  }
+
   try {
     const docRef = doc(db, "transactions", id);
     await deleteDoc(docRef);

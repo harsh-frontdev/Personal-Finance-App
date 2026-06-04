@@ -87,7 +87,7 @@
         <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
           class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
         <div>
-          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1">Julian Sterling</div>
+          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse mt-0.5 inline-block"></div></div>
           <div class="text-[0.65rem] uppercase text-muted font-semibold tracking-wide">Premium Member</div>
         </div>
       </div>
@@ -147,17 +147,17 @@
             </div>
 
             <div class="my-auto z-10 mt-2">
-              <h2 class="text-[3rem] font-bold text-white tracking-tight leading-none font-manrope">₹1,24,85,920.00</h2>
+              <h2 class="text-[3rem] font-bold text-white tracking-tight leading-none font-manrope"><div class="h-[3.25rem] w-[280px] bg-white/20 rounded-md animate-pulse mt-2 inline-block"></div></h2>
             </div>
 
             <div class="flex gap-16 border-t border-white/10 pt-4 z-10">
               <div>
                 <span class="text-[0.6rem] font-bold tracking-[0.05em] text-[#a2c6b6] uppercase block mb-1">MONTHLY INCOME</span>
-                <span class="text-xl font-bold text-white font-manrope">+₹2,43,000</span>
+                <span class="text-xl font-bold text-white font-manrope"><div class="h-6 w-24 bg-white/20 rounded animate-pulse mt-1 inline-block"></div></span>
               </div>
               <div>
                 <span class="text-[0.6rem] font-bold tracking-[0.05em] text-[#a2c6b6] uppercase block mb-1">MONTHLY EXPENSES</span>
-                <span class="text-xl font-bold text-white font-manrope">-₹1,28,400</span>
+                <span class="text-xl font-bold text-white font-manrope"><div class="h-6 w-24 bg-white/20 rounded animate-pulse mt-1 inline-block"></div></span>
               </div>
             </div>
           </div>
@@ -176,75 +176,48 @@
 
             <!-- Transactions list -->
             <div id="recentTransactionsList" class="flex flex-col gap-5 mt-2">
-              
-              <!-- Item 1: Restaurant -->
-              <div class="flex items-center justify-between pb-4 border-b border-slate-50 last:border-none last:pb-0">
-                <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
-                    <span class="material-symbols-rounded">restaurant</span>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-sm text-main">The Gild Restaurant</h4>
-                    <p class="text-xs text-muted mt-0.5">Private Dining &bull; Oct 24</p>
+              <!-- Skeleton Row 1 -->
+              <div class="flex items-center justify-between pb-4 border-b border-slate-50 dark:border-border last:border-none last:pb-0">
+                <div class="flex items-center gap-4 w-full">
+                  <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 animate-pulse"></div>
+                  <div class="flex-1 flex flex-col gap-2">
+                    <div class="h-4 w-32 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+                    <div class="h-3 w-20 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
                   </div>
                 </div>
-                <div class="text-right">
-                  <span class="font-bold text-sm text-danger block">-₹1,420.00</span>
-                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">AMEX India</span>
+                <div class="flex flex-col items-end gap-2">
+                  <div class="h-4 w-16 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+                  <div class="h-3 w-12 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
                 </div>
               </div>
-
-              <!-- Item 2: Aviation -->
-              <div class="flex items-center justify-between pb-4 border-b border-slate-50 last:border-none last:pb-0">
-                <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-                    <span class="material-symbols-rounded">flight</span>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-sm text-main">NetJets Aviation</h4>
-                    <p class="text-xs text-muted mt-0.5">Charter Services &bull; Oct 22</p>
+              <!-- Skeleton Row 2 -->
+              <div class="flex items-center justify-between pb-4 border-b border-slate-50 dark:border-border last:border-none last:pb-0">
+                <div class="flex items-center gap-4 w-full">
+                  <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 animate-pulse"></div>
+                  <div class="flex-1 flex flex-col gap-2">
+                    <div class="h-4 w-40 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+                    <div class="h-3 w-24 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
                   </div>
                 </div>
-                <div class="text-right">
-                  <span class="font-bold text-sm text-danger block">-₹15,800.00</span>
-                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">ICICI Bank FD</span>
+                <div class="flex flex-col items-end gap-2">
+                  <div class="h-4 w-20 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+                  <div class="h-3 w-12 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
                 </div>
               </div>
-
-              <!-- Item 3: Payout -->
-              <div class="flex items-center justify-between pb-4 border-b border-slate-50 last:border-none last:pb-0">
-                <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                    <span class="material-symbols-rounded">account_balance</span>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-sm text-main">Dividend Payout</h4>
-                    <p class="text-xs text-muted mt-0.5">Equity Portfolio &bull; Oct 20</p>
+              <!-- Skeleton Row 3 -->
+              <div class="flex items-center justify-between pb-4 border-b border-slate-50 dark:border-border last:border-none last:pb-0">
+                <div class="flex items-center gap-4 w-full">
+                  <div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 animate-pulse"></div>
+                  <div class="flex-1 flex flex-col gap-2">
+                    <div class="h-4 w-28 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+                    <div class="h-3 w-16 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
                   </div>
                 </div>
-                <div class="text-right">
-                  <span class="font-bold text-sm text-primary block">+₹8,450.00</span>
-                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">Groww Portfolio</span>
+                <div class="flex flex-col items-end gap-2">
+                  <div class="h-4 w-12 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+                  <div class="h-3 w-12 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
                 </div>
               </div>
-
-              <!-- Item 4: Estate Care -->
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                  <div class="w-12 h-12 rounded-xl bg-slate-50 text-slate-600 flex items-center justify-center">
-                    <span class="material-symbols-rounded">work</span>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-sm text-main">Heritage Estate Care</h4>
-                    <p class="text-xs text-muted mt-0.5">Maintenance &bull; Oct 18</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="font-bold text-sm text-danger block">-₹2,100.00</span>
-                  <span class="text-[0.6rem] text-muted font-bold uppercase mt-0.5 tracking-wider block">HDFC Bank Savings</span>
-                </div>
-              </div>
-
             </div>
           </div>
           
@@ -267,7 +240,7 @@
               <div>
                 <div class="flex justify-between text-xs font-semibold text-main">
                   <span>Real Estate Maintenance</span>
-                  <span>72%</span>
+                  <span class="text-xs font-semibold text-main"><div class="h-3.5 w-8 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
                 </div>
                 <div class="w-full h-2 bg-[#dbe2f9] rounded-full mt-2 overflow-hidden">
                   <div class="bg-[#2b6954] h-full rounded-full" style="width: 72%"></div>
@@ -278,7 +251,7 @@
               <div>
                 <div class="flex justify-between text-xs font-semibold text-main">
                   <span>Luxury Lifestyle</span>
-                  <span>45%</span>
+                  <span class="text-xs font-semibold text-main"><div class="h-3.5 w-8 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
                 </div>
                 <div class="w-full h-2 bg-[#dbe2f9] rounded-full mt-2 overflow-hidden">
                   <div class="bg-[#3b82f6] h-full rounded-full" style="width: 45%"></div>
@@ -289,7 +262,7 @@
               <div>
                 <div class="flex justify-between text-xs font-semibold text-main">
                   <span>Global Travel</span>
-                  <span>89%</span>
+                  <span class="text-xs font-semibold text-main"><div class="h-3.5 w-8 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
                 </div>
                 <div class="w-full h-2 bg-[#dbe2f9] rounded-full mt-2 overflow-hidden">
                   <div class="bg-[#ba1a1a] h-full rounded-full" style="width: 89%"></div>
@@ -318,7 +291,7 @@
               <!-- Center Text inside the Donut -->
               <div class="absolute flex flex-col items-center justify-center text-center">
                 <span class="text-[0.6rem] text-muted font-semibold uppercase tracking-wider block">TOTAL SPENT</span>
-                <span class="text-2xl font-bold text-main block mt-1 font-manrope leading-none">₹32.4k</span>
+                <span class="text-2xl font-bold text-main block mt-1 font-manrope leading-none"><div class="h-6 w-16 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
               </div>
             </div>
 
@@ -645,7 +618,7 @@
           listEl.innerHTML = "";
 
           if (recentTrans.length === 0) {
-            listEl.innerHTML = `<p class="text-sm text-muted italic text-center py-6 w-full">No recent transactions found.</p>`;
+            listEl.innerHTML = `<p class="text-sm text-muted italic text-center py-6 w-full">No transactions recorded yet. Add a transaction to begin tracking your capital flows.</p>`;
           } else {
             const iconMap = {
               Groceries: { icon: "shopping_basket", bg: "bg-emerald-50", text: "text-emerald-600" },
@@ -682,6 +655,9 @@
             });
           }
         }
+
+        // Clear loading-blur effect once loaded
+        document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
       }
     }
 
@@ -707,7 +683,7 @@
   <!-- Add Transaction Modal -->
   <div id="addTransactionModal"
     class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
-    <div class="flex w-[900px] h-[560px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
+    <div class="flex w-[900px] h-[640px] max-h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
 
       <!-- Left Section -->
       <div class="bg-primary text-white w-[320px] p-[3rem_2.5rem] flex flex-col justify-between">
@@ -726,7 +702,7 @@
       </div>
 
       <!-- Right Section -->
-      <div class="flex-1 p-[2.5rem_3rem] bg-white">
+      <div class="flex-1 p-[2.5rem_3rem] bg-white overflow-y-auto">
         <form id="addTrasactionForm" class="flex flex-col gap-6 h-full">
           <input type="hidden" id="transactionId" name="transactionId" value="">
           
@@ -738,6 +714,25 @@
               <input id="transaction_price" name="price" type="text" placeholder="0.00"
                 class="border-none text-5xl font-semibold text-main outline-none w-full bg-transparent placeholder-[#e0e7ff]"
                 value="0.00" required>
+            </div>
+          </div>
+
+          <!-- Entry Type -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">ENTRY TYPE</label>
+            <div class="flex gap-3">
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="type" value="debit" class="peer hidden" checked required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.75rem] font-semibold rounded-lg py-3 px-2.5 flex flex-col items-center justify-center transition-all hover:bg-slate-100 hover:border-slate-200 peer-checked:bg-danger peer-checked:border-danger peer-checked:text-white cursor-pointer shadow-sm active:scale-98">
+                  Debit (Expense)
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="type" value="credit" class="peer hidden" required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.75rem] font-semibold rounded-lg py-3 px-2.5 flex flex-col items-center justify-center transition-all hover:bg-slate-100 hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white cursor-pointer shadow-sm active:scale-98">
+                  Credit (Income)
+                </div>
+              </label>
             </div>
           </div>
 

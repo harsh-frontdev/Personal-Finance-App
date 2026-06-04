@@ -129,7 +129,7 @@
         <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
           class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
         <div>
-          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1">Julian Sterling</div>
+          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse mt-0.5 inline-block"></div></div>
           <div class="text-[0.65rem] uppercase text-muted font-semibold tracking-wide">Premium Member</div>
         </div>
       </div>
@@ -195,7 +195,7 @@
                 </div>
                 
                 <div>
-                  <h4 class="text-xl font-bold text-main font-manrope userNameDisplay">Alexander Vance</h4>
+                  <h4 class="text-xl font-bold text-main font-manrope userNameDisplay"><div class="h-5.5 w-36 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></h4>
                   <p class="text-xs text-muted font-medium mt-1">Private Wealth Client &bull; Member since 2021</p>
                 </div>
               </div>
@@ -212,21 +212,21 @@
               <!-- Display Name -->
               <div class="flex flex-col gap-2">
                 <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Display Name</label>
-                <input type="text" value="Alexander Vance" id="settings_displayName"
+                <input type="text" value="" placeholder="Loading display name..." id="settings_displayName"
                   class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors shadow-sm">
               </div>
 
               <!-- Email Address -->
               <div class="flex flex-col gap-2">
                 <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Email Address</label>
-                <input type="email" value="alexander.v@vancecap.com" id="settings_emailAddress"
+                <input type="email" value="" placeholder="Loading email..." id="settings_emailAddress"
                   class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors shadow-sm">
               </div>
 
               <!-- Phone Number -->
               <div class="flex flex-col gap-2">
                 <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Phone Number</label>
-                <input type="text" value="+91 98765 43210" id="settings_phoneNumber"
+                <input type="text" value="" placeholder="Loading phone number..." id="settings_phoneNumber"
                   class="bg-white border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:border-slate-200 transition-colors shadow-sm">
               </div>
 
@@ -400,7 +400,7 @@
   <!-- Add Transaction Modal (Included for complete app synchronicity) -->
   <div id="addTransactionModal"
     class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
-    <div class="flex w-[900px] h-[560px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
+    <div class="flex w-[900px] h-[640px] max-h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
 
       <!-- Left Section -->
       <div class="bg-primary text-white w-[320px] p-[3rem_2.5rem] flex flex-col justify-between">
@@ -419,7 +419,7 @@
       </div>
 
       <!-- Right Section -->
-      <div class="flex-1 p-[2.5rem_3rem] bg-white">
+      <div class="flex-1 p-[2.5rem_3rem] bg-white overflow-y-auto">
         <form id="addTrasactionForm" class="flex flex-col gap-6 h-full">
           <input type="hidden" id="transactionId" name="transactionId" value="">
           
@@ -431,6 +431,25 @@
               <input id="transaction_price" name="price" type="text" placeholder="0.00"
                 class="border-none text-5xl font-semibold text-main outline-none w-full bg-transparent placeholder-[#e0e7ff]"
                 value="0.00" required>
+            </div>
+          </div>
+
+          <!-- Entry Type -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">ENTRY TYPE</label>
+            <div class="flex gap-3">
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="type" value="debit" class="peer hidden" checked required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.75rem] font-semibold rounded-lg py-3 px-2.5 flex flex-col items-center justify-center transition-all hover:bg-slate-100 hover:border-slate-200 peer-checked:bg-danger peer-checked:border-danger peer-checked:text-white cursor-pointer shadow-sm active:scale-98">
+                  Debit (Expense)
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="type" value="credit" class="peer hidden" required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.75rem] font-semibold rounded-lg py-3 px-2.5 flex flex-col items-center justify-center transition-all hover:bg-slate-100 hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white cursor-pointer shadow-sm active:scale-98">
+                  Credit (Income)
+                </div>
+              </label>
             </div>
           </div>
 

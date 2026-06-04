@@ -93,7 +93,7 @@
         <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
           class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
         <div>
-          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1">Julian Sterling</div>
+          <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse mt-0.5 inline-block"></div></div>
           <div class="text-[0.65rem] uppercase text-muted font-semibold tracking-wide">Premium Member</div>
         </div>
       </div>
@@ -147,7 +147,7 @@
             <div>
               <span class="text-[0.65rem] tracking-[0.1em] font-bold text-[#64748b] uppercase">Total Net Income</span>
               <div class="flex items-center gap-2 mt-1">
-                <h3 id="reportsNetIncomeText" class="text-4xl font-bold text-main font-manrope tracking-tight leading-none">₹42,850.00</h3>
+                <h3 id="reportsNetIncomeText" class="text-4xl font-bold text-main font-manrope tracking-tight leading-none"><div class="h-[2.75rem] w-[220px] bg-slate-200 dark:bg-slate-800 rounded animate-pulse mt-1 inline-block"></div></h3>
                 <span class="text-[0.7rem] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-2 py-0.5 inline-flex items-center gap-0.5 mt-1 font-manrope">
                   <span class="material-symbols-rounded text-[0.8rem] icon-filled">trending_up</span> 12.4%
                 </span>
@@ -324,7 +324,7 @@
           </div>
 
           <div class="my-2">
-            <h4 id="reportsVelocityTitle" class="text-xl font-bold font-manrope text-main leading-tight">Down 4.2%</h4>
+            <h4 id="reportsVelocityTitle" class="text-xl font-bold font-manrope text-main leading-tight"><div class="h-5.5 w-24 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></h4>
           </div>
 
           <!-- Circular gauge svg -->
@@ -335,7 +335,7 @@
               <circle id="reportsVelocityCircle" cx="50" cy="50" r="40" fill="transparent" stroke="#0f766e" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="70.33" stroke-linecap="round"></circle>
             </svg>
             <div class="absolute flex flex-col items-center justify-center text-center">
-              <span id="reportsVelocityText" class="text-lg font-bold text-main leading-none">72%</span>
+              <span id="reportsVelocityText" class="text-lg font-bold text-main leading-none"><div class="h-4.5 w-10 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
             </div>
           </div>
 
@@ -352,7 +352,7 @@
             </div>
             
             <span class="text-[0.625rem] font-bold text-[#bfdbfe] uppercase tracking-wider block mt-3">Interest Accrued</span>
-            <h3 id="reportsInterestAccruedText" class="text-3xl font-bold text-white font-manrope mt-2 leading-none">₹1,20,445</h3>
+            <h3 id="reportsInterestAccruedText" class="text-3xl font-bold text-white font-manrope mt-2 leading-none"><div class="h-[2rem] w-[130px] bg-white/20 rounded animate-pulse mt-2 inline-block"></div></h3>
           </div>
 
           <div class="pb-1 mt-6">
@@ -371,7 +371,7 @@
               </div>
               <div>
                 <h4 id="reportsTopCategoryName" class="font-bold text-sm text-main leading-snug">Retail & Luxury</h4>
-                <p id="reportsTopCategorySpend" class="text-xs text-muted mt-1 font-semibold">₹8,420 spent this month</p>
+                <p id="reportsTopCategorySpend" class="text-xs text-muted mt-1 font-semibold"><div class="h-3.5 w-32 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></p>
               </div>
             </div>
           </div>
@@ -392,7 +392,7 @@
   <!-- Add Transaction Modal Markup -->
   <div id="addTransactionModal"
     class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
-    <div class="flex w-[900px] h-[560px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
+    <div class="flex w-[900px] h-[640px] max-h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
 
       <!-- Left Section -->
       <div class="bg-primary text-white w-[320px] p-[3rem_2.5rem] flex flex-col justify-between">
@@ -411,7 +411,7 @@
       </div>
 
       <!-- Right Section -->
-      <div class="flex-1 p-[2.5rem_3rem] bg-white">
+      <div class="flex-1 p-[2.5rem_3rem] bg-white overflow-y-auto">
         <form id="addTrasactionForm" class="flex flex-col gap-6 h-full">
           <input type="hidden" id="transactionId" name="transactionId" value="">
           
@@ -423,6 +423,25 @@
               <input id="transaction_price" name="price" type="text" placeholder="0.00"
                 class="border-none text-5xl font-semibold text-main outline-none w-full bg-transparent placeholder-[#e0e7ff]"
                 value="0.00" required>
+            </div>
+          </div>
+
+          <!-- Entry Type -->
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">ENTRY TYPE</label>
+            <div class="flex gap-3">
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="type" value="debit" class="peer hidden" checked required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.75rem] font-semibold rounded-lg py-3 px-2.5 flex flex-col items-center justify-center transition-all hover:bg-slate-100 hover:border-slate-200 peer-checked:bg-danger peer-checked:border-danger peer-checked:text-white cursor-pointer shadow-sm active:scale-98">
+                  Debit (Expense)
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input type="radio" name="type" value="credit" class="peer hidden" required>
+                <div class="h-full bg-slate-50 border border-slate-100 text-main text-[0.75rem] font-semibold rounded-lg py-3 px-2.5 flex flex-col items-center justify-center transition-all hover:bg-slate-100 hover:border-slate-200 peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white cursor-pointer shadow-sm active:scale-98">
+                  Credit (Income)
+                </div>
+              </label>
             </div>
           </div>
 
@@ -731,6 +750,9 @@
         const pct = expenseSum > 0 ? Math.round((maxCatVal / expenseSum) * 100) : 0;
         reportsTopCategoryBar.style.width = `${pct}%`;
       }
+
+      // Clear loading-blur effect once loaded
+      document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
     }
 
 

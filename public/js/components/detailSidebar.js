@@ -30,7 +30,42 @@ const defaultStyle = {
 };
 
 export const updateDetailSidebar = (transaction) => {
-  if (!transaction) return;
+  if (!transaction) {
+    const descEl = document.querySelector("#detail-desc");
+    if (descEl) descEl.textContent = "No Transaction Selected";
+    const dateEl = document.querySelector("#detail-date");
+    if (dateEl) dateEl.textContent = "-- --, ----";
+    const timeEl = document.querySelector("#detail-time");
+    if (timeEl) timeEl.textContent = "--:--";
+    const catEl = document.querySelector("#detail-category");
+    if (catEl) catEl.textContent = "N/A";
+    const accEl = document.querySelector("#detail-account");
+    if (accEl) accEl.textContent = "N/A";
+    const amtEl = document.querySelector("#detail-amount");
+    if (amtEl) amtEl.textContent = "₹0.00";
+
+    const iconContainer = document.querySelector("#detail-icon-container");
+    const iconEl = document.querySelector("#detail-icon");
+    if (iconContainer && iconEl) {
+      iconEl.textContent = "bookmark";
+      iconContainer.className = "w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-2 transition-colors duration-300 bg-slate-50 text-slate-300 border border-slate-100";
+    }
+
+    const noteContainer = document.querySelector(".bg-\\[#fffbeb\\]");
+    if (noteContainer) {
+      noteContainer.classList.add("hidden");
+    }
+    return;
+  }
+
+  const noteContainer = document.querySelector(".bg-\\[#fffbeb\\]");
+  if (noteContainer) {
+    noteContainer.classList.remove("hidden");
+    const noteTextEl = noteContainer.querySelector(".text-\\[#92400e\\]");
+    if (noteTextEl) {
+      noteTextEl.textContent = transaction.description || "No internal notes recorded.";
+    }
+  }
 
   // Format Date
   const formattedDate = formatDate(transaction.date);

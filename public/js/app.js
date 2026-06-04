@@ -45,6 +45,9 @@ async function refreshData() {
   if (result && result.success) {
     setTransactions(result.data)
     updateTransactions(getTransactions());
+    
+    // Clear loading-blur effect once loaded
+    document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
   }
 }
 
