@@ -1,37 +1,47 @@
 # 🏛️ The Sovereign Ledger
 
-![Status: Ongoing](https://img.shields.io/badge/Status-Ongoing-blue)
+![Status: Deployed](https://img.shields.io/badge/Status-Deployed-success)
+![Platform: Netlify](https://img.shields.io/badge/Platform-Netlify-00C7B7)
 
-**The Sovereign Ledger** is a premium, full-stack wealth management dashboard designed for absolute financial clarity. It combines a robust **Node.js/MongoDB** backend with a high-performance **Vanilla JavaScript** frontend, styled with the cutting-edge **Tailwind CSS v4** and animated via **GSAP**.
+**The Sovereign Ledger** is a premium, full-stack wealth management dashboard designed for absolute financial clarity. It combines a high-performance **Vanilla JavaScript** frontend (styled with **Tailwind CSS v4** and animated via **GSAP**) with a flexible backend supporting both **Firebase/Firestore** authentication/persistence and a local-first **Demo Mode**.
 
-## 🚧 Project Status: Ongoing
-This project is currently under active development. Current focus is on perfecting the transition from local storage to a persistent MongoDB cloud infrastructure and refining complex GSAP scroll interactions.
+## 🌐 Live Application
+The application is deployed and accessible at:
+👉 **[https://thesovereignledger.netlify.app](https://thesovereignledger.netlify.app)**
+
+---
 
 ## 💎 The Vision
 Most trackers feel like chores. **The Sovereign Ledger** is designed to feel like an asset. By utilizing complex scroll-triggered animations and a minimalist "Dark Mode" aesthetic, it treats your personal data with the architectural respect of a private bank.
 
+---
+
 ## 🚀 Core Features
 
-* **Persistent Transaction Engine:** Full CRUD operations synced with **MongoDB Atlas**.
-* **Modern Styling:** Built with **Tailwind CSS v4**, leveraging CSS variables and high-speed utility processing.
-* **Cinematic UI:** Integrated **GSAP (GreenSock)** for sticky card stacking and smooth expansion effects.
-* **Unified Environment:** A single-command start using `concurrently` to manage the Tailwind compiler and the Express server.
-* **Modular Backend:** Clean MVC (Model-View-Controller) architecture for easy scalability.
+*   **Dynamic Data Skeleton Screens:** High-fidelity, text-less pulsing loading states (`animate-pulse`) match the visual structure of your accounts, budgets, goals, and reports while data is fetched, ensuring a premium loading transition without flashes of dummy data.
+*   **Persistent Transaction Engine:** Full CRUD operations synced with **Firebase/Firestore** or local storage.
+*   **Debit/Credit Entry Polarity:** Explicit form toggle in the transaction registration modal automatically applies correct mathematical sign and currency color schemes.
+*   **Modern Styling:** Built with **Tailwind CSS v4**, leveraging CSS variables and high-speed utility processing.
+*   **Cinematic UI:** Integrated **GSAP (GreenSock)** for sticky card stacking and smooth expansion effects.
+*   **Modular Architecture:** Structured split between API/Store state management, dynamic UI components, and static layout files.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### **Frontend**
-* **Language:** Vanilla JavaScript (ES6+)
-* **Styles:** Tailwind CSS v4 (PostCSS/CLI)
-* **Animation:** GSAP 3.x (GreenSock Animation Platform)
+*   **Language:** Vanilla JavaScript (ES6+ Modules)
+*   **Styles:** Tailwind CSS v4 (CLI compiled)
+*   **Animation:** GSAP 3.x (GreenSock Animation Platform)
+*   **Icons:** Google Material Symbols (Rounded)
 
-### **Backend**
-* **Runtime:** Node.js
-* **Framework:** Express v5
-* **Database:** MongoDB via Mongoose
-* **Utilities:** Dotenv, CORS, Concurrently, Nodemon
+### **Authentication & Persistence**
+*   **Platform:** Firebase v10 Auth & Firestore Database
+*   **Local Engine:** HTML5 LocalStorage fallback (for Demo Mode)
+
+### **Hosting & Deployment**
+*   **Hosting:** Netlify (Production Branch)
+*   **Dev Server:** `live-server`
 
 ---
 
@@ -41,13 +51,45 @@ Most trackers feel like chores. **The Sovereign Ledger** is designed to feel lik
 /The-Sovereign-Ledger
 ├── /public                # Client-facing assets
 │   ├── /css               # Tailwind input/output (main.css)
-│   ├── /js                # DOM logic & API fetch calls
-│   └── index.html         # The Dashboard UI
-├── /server                # Server-side logic
-│   ├── /config            # MongoDB connection (db.js)
-│   ├── /controllers       # Transaction business logic
-│   ├── /models            # Mongoose Schemas (Transaction.js)
-│   ├── /routes            # API endpoint definitions
-│   └── server.js          # Entry point & Static file hosting
-├── .env                   # DB credentials
+│   ├── /js                # State management, API calls, and components
+│   │   ├── /components    # Modular UI elements (transactionTable, detailSidebar, globalSearch)
+│   │   ├── /services      # API interfaces (api.js, store.js)
+│   │   └── app.js         # Entry point for dynamic script routing
+│   ├── /assets            # Logos, favicons, and branding
+│   ├── index.html         # Main Private Wealth Dashboard
+│   ├── transaction.html   # Full Ledger & Metadata Sidebar
+│   ├── budgets.html       # Spending thresholds and AI advisor warnings
+│   ├── accounts.html      # Asset types & balances
+│   ├── reports.html       # Net income and spending velocity gauges
+│   ├── goals.html         # Stashes and targets
+│   └── settings.html      # User preferences and profile credentials
+├── postcss.config.js      # Style compilation
+├── tailwind.config.js     # Tailwind configurations
 └── package.json           # Scripts & Dependencies
+```
+
+---
+
+## 🚀 Running Locally
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/harsh-frontdev/The-Sovereign-Ledger.git
+    cd The-Sovereign-Ledger
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the local development server:**
+    ```bash
+    npm start
+    ```
+    This launches `live-server` serving the `/public` folder on port `5001`.
+
+4.  **Compile CSS changes (Tailwind):**
+    ```bash
+    npm run build
+    ```
