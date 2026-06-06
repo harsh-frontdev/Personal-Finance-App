@@ -1,6 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./*.html", "./js/**/*.js"],
+  safelist: [
+    {
+      pattern: /bg-(teal|rose|cyan|fuchsia|sky|pink|emerald|amber|indigo|purple)-(50|600|800|950\/20)/,
+      variants: ['dark'],
+    },
+    {
+      pattern: /text-(teal|rose|cyan|fuchsia|sky|pink|emerald|amber|indigo|purple)-(300|400|600|700|800)/,
+      variants: ['dark'],
+    }
+  ],
   theme: {
     extend: {
       colors: {

@@ -234,7 +234,21 @@ html.dark {
   --color-light: #64748b !important;
   --color-primary: #10b981 !important;
   --color-primary-hover: #34d399 !important;
+  --color-danger: #ef4444 !important;
   --color-border: #182420 !important;
+}
+
+/* Fix checked radio buttons inside modals in dark mode */
+html.dark input[type="radio"]:checked + div {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: white !important;
+}
+
+html.dark input[type="radio"][value="debit"]:checked + div {
+  background-color: var(--color-danger) !important;
+  border-color: var(--color-danger) !important;
+  color: white !important;
 }
 
 html.dark body {
@@ -300,17 +314,18 @@ html.dark #toast-container > div {
 }
 
 /* Modals dark mode overrides */
-html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div {
+html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div {
   background-color: var(--color-sidebar) !important;
   color: var(--color-main) !important;
 }
 
-html.dark #addTransactionModal form, html.dark #updatePasswordModal form {
+html.dark #addTransactionModal form, html.dark #updatePasswordModal form, html.dark #editBudgetForm {
   color: var(--color-main) !important;
 }
 
 html.dark #addTransactionModal input, html.dark #addTransactionModal select, html.dark #addTransactionModal textarea,
-html.dark #updatePasswordModal input, html.dark #updatePasswordModal select, html.dark #updatePasswordModal textarea {
+html.dark #updatePasswordModal input, html.dark #updatePasswordModal select, html.dark #updatePasswordModal textarea,
+html.dark #editBudgetLimitInput {
   background-color: var(--color-card-alt) !important;
   color: var(--color-main) !important;
 }
@@ -528,6 +543,16 @@ html.dark svg circle[stroke="#06402b"] {
 
 html.dark svg circle[stroke="#2b6954"] {
   stroke: var(--color-primary) !important;
+}
+
+/* Gauge stroke and text muted overrides for premium dark mode contrast */
+html.dark svg circle[stroke="#0f766e"] {
+  stroke: var(--color-primary) !important;
+}
+
+html.dark .text-muted,
+html.dark #savingsRateFooterText {
+  color: var(--color-muted) !important;
 }
 
 /* Premium scrollbar styling for the notification dropdown list */
