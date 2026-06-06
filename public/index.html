@@ -418,12 +418,28 @@
         let expenseSum = 0;
         
         // Category aggregation for budgets and donut allocations
-        const categorySpends = {
-          Rent: 0,
-          Dining: 0,
-          Groceries: 0,
-          Transport: 0
-        };
+        // Category aggregation for budgets and donut allocations
+        const defaultCategories = [
+          { value: "Groceries", label: "Groceries", icon: "shopping_basket" },
+          { value: "Dining", label: "Dining", icon: "restaurant" },
+          { value: "Transport", label: "Transport", icon: "directions_car" },
+          { value: "Rent", label: "Rent", icon: "home" }
+        ];
+
+        const savedCats = localStorage.getItem("sovereign_categories");
+        let activeCategories = defaultCategories;
+        if (savedCats) {
+          try {
+            activeCategories = JSON.parse(savedCats);
+          } catch (e) {
+            console.warn("Failed to parse dynamic categories in dashboard.");
+          }
+        }
+
+        const categorySpends = {};
+        activeCategories.forEach(cat => {
+          categorySpends[cat.value] = 0;
+        });
 
         allTrans.forEach(t => {
           const amt = parseFloat(t.amount) || 0;
@@ -455,17 +471,38 @@
         }
 
         // 2. Populate Budgets dynamically
-        const budgetLimits = {
+        const savedLimits = JSON.parse(localStorage.getItem("sovereign_budget_limits")) || {};
+        const defaultLimits = {
           Rent: { limit: 45000, name: "Real Estate Maintenance", colorClass: "bg-primary" },
           Dining: { limit: 5000, name: "Dining & Hospitality", colorClass: "bg-amber-600" },
           Groceries: { limit: 8000, name: "Groceries & Essentials", colorClass: "bg-emerald-600" },
           Transport: { limit: 3000, name: "Transport & Travel", colorClass: "bg-indigo-600" }
         };
 
+        const budgetLimits = {};
+        activeCategories.forEach((cat, index) => {
+          const val = cat.value;
+          if (defaultLimits[val]) {
+            budgetLimits[val] = {
+              limit: savedLimits[val] || defaultLimits[val].limit,
+              name: defaultLimits[val].name,
+              colorClass: defaultLimits[val].colorClass
+            };
+          } else {
+            const customColors = ["bg-teal-600", "bg-rose-600", "bg-cyan-600", "bg-fuchsia-600", "bg-sky-600", "bg-pink-600"];
+            const colorClass = customColors[index % customColors.length];
+            budgetLimits[val] = {
+              limit: savedLimits[val] || 10000,
+              name: cat.label,
+              colorClass: colorClass
+            };
+          }
+        });
+
         const budgetsListEl = document.querySelector("#dashboardBudgetsList");
         if (budgetsListEl) {
           budgetsListEl.innerHTML = "";
-          const orderedCategories = ["Rent", "Dining", "Groceries", "Transport"];
+          const orderedCategories = activeCategories.map(cat => cat.value);
           orderedCategories.forEach(cat => {
             const spent = categorySpends[cat] || 0;
             const limit = budgetLimits[cat].limit;
@@ -503,6 +540,12 @@
           Groceries: "#10b981",
           Transport: "#a855f7"
         };
+        const customChartColors = ["#0d9488", "#e11d48", "#0891b2", "#c026d3", "#0284c7", "#db2777"];
+        activeCategories.forEach((cat, index) => {
+          if (!colors[cat.value]) {
+            colors[cat.value] = customChartColors[index % customChartColors.length];
+          }
+        });
 
         const donutContainer = document.querySelector("#dashboardDonutContainer");
         const legendsContainer = document.querySelector("#dashboardChartLegends");
@@ -629,12 +672,38 @@
           if (recentTrans.length === 0) {
             listEl.innerHTML = `<p class="text-sm text-muted italic text-center py-6 w-full">No transactions recorded yet. Add a transaction to begin tracking your capital flows.</p>`;
           } else {
-            const iconMap = {
-              Groceries: { icon: "shopping_basket", bg: "bg-emerald-50", text: "text-emerald-600" },
-              Dining: { icon: "restaurant", bg: "bg-amber-50", text: "text-amber-600" },
-              Transport: { icon: "directions_car", bg: "bg-indigo-50", text: "text-indigo-600" },
-              Rent: { icon: "home", bg: "bg-purple-50", text: "text-purple-600" }
+            const iconMap = {};
+            const defaultColors = {
+              Rent: { bg: "bg-purple-50", text: "text-purple-600" },
+              Dining: { bg: "bg-amber-50", text: "text-amber-600" },
+              Groceries: { bg: "bg-emerald-50", text: "text-emerald-600" },
+              Transport: { bg: "bg-indigo-50", text: "text-indigo-600" }
             };
+            activeCategories.forEach((cat, index) => {
+              const val = cat.value;
+              if (defaultColors[val]) {
+                iconMap[val] = {
+                  icon: cat.icon,
+                  bg: defaultColors[val].bg,
+                  text: defaultColors[val].text
+                };
+              } else {
+                const colorsList = [
+                  { bg: "bg-teal-50", text: "text-teal-600" },
+                  { bg: "bg-rose-50", text: "text-rose-600" },
+                  { bg: "bg-cyan-50", text: "text-cyan-600" },
+                  { bg: "bg-fuchsia-50", text: "text-fuchsia-600" },
+                  { bg: "bg-sky-50", text: "text-sky-600" },
+                  { bg: "bg-pink-50", text: "text-pink-600" }
+                ];
+                const selectedColor = colorsList[index % colorsList.length];
+                iconMap[val] = {
+                  icon: cat.icon,
+                  bg: selectedColor.bg,
+                  text: selectedColor.text
+                };
+              }
+            });
             const defaultIcon = { icon: "bookmark", bg: "bg-blue-50", text: "text-blue-600" };
 
             recentTrans.forEach(t => {

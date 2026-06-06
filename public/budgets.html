@@ -26,12 +26,7 @@
         url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
     }
 
-    .smart-advisor-bg {
-      background-color: #4b3208;
-      background-image: 
-        linear-gradient(135deg, rgba(92, 62, 10, 0.95) 0%, rgba(75, 50, 8, 0.98) 100%),
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
-    }
+
   </style>
 </head>
 
@@ -136,10 +131,10 @@
         <!-- ================= ROW 1: Overall Budget & Active Summary ================= -->
         <!-- ================= ROW 1: Overall Budget & Active Summary ================= -->
         <!-- Overall Budget Usage card -->
-        <div class="col-span-8 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm grid grid-cols-12 gap-6 items-center">
+        <div class="col-span-12 lg:col-span-6 bg-[#f0f3ff] rounded-2xl p-6 border border-transparent shadow-sm grid grid-cols-12 gap-6 items-center">
           <div class="col-span-7 flex flex-col gap-6">
             <div>
-              <span class="text-[0.65rem] tracking-[0.1em] font-bold text-[#64748b] uppercase">Overall Monthly Budget</span>
+              <span class="text-[0.65rem] tracking-[0.1em] font-bold text-muted uppercase">Overall Monthly Budget</span>
               <h3 id="overallBudgetTitle" class="text-3xl font-bold text-main font-manrope tracking-tight leading-tight mt-1"><div class="h-[2.25rem] w-[260px] bg-slate-200 dark:bg-slate-800 rounded animate-pulse mt-1 inline-block"></div></h3>
             </div>
 
@@ -183,7 +178,7 @@
         </div>
 
         <!-- Active Budgets Card -->
-        <div class="col-span-4 budgets-hero-bg text-white p-6 rounded-2xl shadow-md flex flex-col justify-between h-full">
+        <div class="col-span-12 md:col-span-6 lg:col-span-3 budgets-hero-bg text-white p-6 rounded-2xl shadow-md flex flex-col justify-between h-full">
           <div class="flex flex-col gap-2">
             <div class="bg-white/10 border border-white/10 rounded-full px-3 py-1 flex items-center gap-1.5 text-[0.6rem] font-bold text-emerald-300 uppercase tracking-widest leading-none w-fit">
               <span class="material-symbols-rounded text-xs text-emerald-300">verified_user</span> Private Allocations
@@ -203,133 +198,33 @@
           </div>
         </div>
 
-        <!-- ================= ROW 2: Category Budgets Grid ================= -->
-        <!-- Groceries Budget -->
-        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]" id="budgetCard_Groceries">
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center justify-between">
-              <span class="text-[0.625rem] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">Groceries</span>
-              <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                <span class="material-symbols-rounded text-base">shopping_basket</span>
-              </div>
-            </div>
-            <h4 class="text-lg font-bold text-main font-manrope leading-tight mt-1"><div class="h-5 w-24 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></h4>
-          </div>
-
-          <div>
-            <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-              <div class="bg-emerald-600 h-full rounded-full" style="width: 81.8%"></div>
-            </div>
-            <span class="text-[0.65rem] text-muted font-semibold mt-2.5 block text-right"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
-          </div>
-        </div>
-
-        <!-- Dining Budget -->
-        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]" id="budgetCard_Dining">
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center justify-between">
-              <span class="text-[0.625rem] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">Dining Out</span>
-              <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                <span class="material-symbols-rounded text-base">restaurant</span>
-              </div>
-            </div>
-            <h4 class="text-lg font-bold text-main font-manrope leading-tight mt-1"><div class="h-5 w-24 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></h4>
-          </div>
-
-          <div>
-            <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-              <div class="bg-amber-600 h-full rounded-full" style="width: 64%"></div>
-            </div>
-            <span class="text-[0.65rem] text-muted font-semibold mt-2.5 block text-right"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
-          </div>
-        </div>
-
-        <!-- Transport Budget -->
-        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]" id="budgetCard_Transport">
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center justify-between">
-              <span class="text-[0.625rem] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">Transport</span>
-              <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
-                <span class="material-symbols-rounded text-base">directions_car</span>
-              </div>
-            </div>
-            <h4 class="text-lg font-bold text-main font-manrope leading-tight mt-1"><div class="h-5 w-24 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></h4>
-          </div>
-
-          <div>
-            <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-              <div class="bg-indigo-600 h-full rounded-full" style="width: 81.6%"></div>
-            </div>
-            <span class="text-[0.65rem] text-muted font-semibold mt-2.5 block text-right"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
-          </div>
-        </div>
-
-        <!-- Rent Budget -->
-        <div class="col-span-3 bg-white rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px]" id="budgetCard_Rent">
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center justify-between">
-              <span class="text-[0.625rem] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">Rent & Bills</span>
-              <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
-                <span class="material-symbols-rounded text-base">home</span>
-              </div>
-            </div>
-            <h4 class="text-lg font-bold text-main font-manrope leading-tight mt-1"><div class="h-5 w-24 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></h4>
-          </div>
-
-          <div>
-            <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-              <div class="bg-purple-600 h-full rounded-full" style="width: 69.4%"></div>
-            </div>
-            <span class="text-[0.65rem] text-muted font-semibold mt-2.5 block text-right"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
-          </div>
-        </div>
-
-        <!-- ================= ROW 3: AI Smart Allocation & Savings Goals ================= -->
-        <!-- AI Smart Advisor Alert card -->
-        <div class="col-span-8 smart-advisor-bg text-white p-8 rounded-2xl shadow-md flex items-start gap-5 h-[230px]">
-          <div class="w-12 h-12 rounded-xl bg-white/10 text-[#fbbf24] flex items-center justify-center shrink-0 shadow-inner mt-1">
-            <span class="material-symbols-rounded text-xl icon-filled text-[#fbbf24]">lightbulb</span>
-          </div>
-          <div class="flex flex-col justify-between h-full">
-            <div>
-              <h4 class="text-lg font-bold text-white mb-2 font-manrope leading-none">Smart Allocation Alert</h4>
-              <p id="advisorAlertText" class="text-[0.875rem] text-[#d8c5a2] leading-relaxed font-semibold max-w-[580px] mt-3">
-                Based on your current dining spending pace, you will exceed your dining budget by ₹450 in 6 days. Consider scaling back or reallocating from your Transport budget.
-              </p>
-            </div>
-            
-            <div class="flex gap-4 mt-6">
-              <button class="bg-[#fbbf24] hover:bg-[#f59e0b] text-slate-900 border-none px-5 py-2.5 rounded-lg font-bold text-xs cursor-pointer transition-colors active:scale-[0.98]">
-                Adjust Allocation
-              </button>
-              <button class="bg-transparent text-white border border-white/20 px-5 py-2.5 rounded-lg font-bold text-xs cursor-pointer hover:bg-white/5 transition-colors active:scale-[0.98]">
-                Dismiss Alert
-              </button>
-            </div>
-          </div>
-        </div>
-
         <!-- Savings rate Gauge Card -->
-        <div class="col-span-4 bg-[#f0f3ff] rounded-2xl p-6 border border-transparent shadow-sm flex flex-col justify-between h-[230px]">
+        <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-[#f0f3ff] rounded-2xl p-6 border border-transparent shadow-sm flex flex-col justify-between h-full">
           <div class="flex justify-between items-center w-full">
-            <span class="text-[0.625rem] font-bold text-[#64748b] uppercase tracking-wider block">Savings Target</span>
+            <span class="text-[0.625rem] font-bold text-muted uppercase tracking-wider block">Savings Target</span>
             <span id="savingsRateMatchBadge" class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-manrope"><div class="h-3.5 w-14 bg-emerald-100/50 rounded animate-pulse inline-block"></div></span>
           </div>
 
-          <div class="w-24 h-24 mx-auto relative flex items-center justify-center my-2">
+          <div class="w-[200px] h-[200px] mx-auto relative flex items-center justify-center my-2">
             <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90">
               <circle cx="50" cy="50" r="40" fill="transparent" stroke="#dbe2f9" stroke-width="8"></circle>
               <!-- 62% calculation: 251.2 * (1 - 0.62) = 95.4 offset -->
               <circle id="savingsRateGaugeCircle" cx="50" cy="50" r="40" fill="transparent" stroke="#0f766e" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="95.4" stroke-linecap="round"></circle>
             </svg>
             <div class="absolute flex flex-col items-center justify-center text-center">
-              <span id="savingsRateGaugeText" class="text-base font-bold text-main font-manrope leading-none"><div class="h-4.5 w-8 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
+              <span id="savingsRateGaugeText" class="text-3xl font-bold text-main font-manrope leading-none"><div class="h-4.5 w-8 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
             </div>
           </div>
 
           <div class="text-center">
             <span id="savingsRateFooterText" class="text-[0.65rem] text-muted font-semibold tracking-wide"><div class="h-3 w-32 bg-slate-200 dark:bg-slate-800 rounded animate-pulse inline-block"></div></span>
           </div>
+        </div>
+
+        <!-- ================= ROW 2: Category Budgets Grid ================= -->
+        <!-- Dynamic Category Budgets Grid Container -->
+        <div class="col-span-12 grid grid-cols-12 gap-8" id="categoryBudgetsGridContainer">
+          <!-- Dynamically generated category budget cards will be injected here -->
         </div>
 
       </div>
@@ -550,12 +445,27 @@
         const allTrans = res.data;
 
         // 1. Calculate category spends dynamically from transaction records
-        const categorySpends = {
-          Rent: 0,
-          Dining: 0,
-          Groceries: 0,
-          Transport: 0
-        };
+        const defaultCategories = [
+          { value: "Groceries", label: "Groceries", icon: "shopping_basket" },
+          { value: "Dining", label: "Dining", icon: "restaurant" },
+          { value: "Transport", label: "Transport", icon: "directions_car" },
+          { value: "Rent", label: "Rent", icon: "home" }
+        ];
+
+        const savedCats = localStorage.getItem("sovereign_categories");
+        let activeCategories = defaultCategories;
+        if (savedCats) {
+          try {
+            activeCategories = JSON.parse(savedCats);
+          } catch (e) {
+            console.warn("Failed to parse dynamic categories in budgets.");
+          }
+        }
+
+        const categorySpends = {};
+        activeCategories.forEach(cat => {
+          categorySpends[cat.value] = 0;
+        });
 
         let incomeSum = 0;
         let expenseSum = 0;
@@ -574,61 +484,98 @@
           }
         });
 
-        // 2. Budget limits definition matching global standards
-        const budgetLimits = {
+        // 2. Budget limits definition matching global standards (loading custom overrides if set)
+        const savedLimits = JSON.parse(localStorage.getItem("sovereign_budget_limits")) || {};
+        const defaultLimits = {
           Rent: { limit: 45000, name: "Real Estate Maintenance", colorClass: "bg-purple-600" },
           Dining: { limit: 5000, name: "Dining & Hospitality", colorClass: "bg-amber-600" },
           Groceries: { limit: 8000, name: "Groceries & Essentials", colorClass: "bg-emerald-600" },
           Transport: { limit: 3000, name: "Transport & Travel", colorClass: "bg-indigo-600" }
         };
 
-        // 3. Update Category Budgets Grid in Row 2
-        const categories = ["Groceries", "Dining", "Transport", "Rent"];
-        categories.forEach(cat => {
-          const spent = categorySpends[cat] || 0;
-          const limit = budgetLimits[cat].limit;
-          const remaining = Math.max(0, limit - spent);
-          const percentage = Math.min(100, Math.round((spent / limit) * 100));
-
-          const cardEl = document.getElementById(`budgetCard_${cat}`);
-          if (cardEl) {
-            // Update Spent / Limit text
-            const textEl = cardEl.querySelector("h4");
-            if (textEl) {
-              textEl.innerHTML = `₹${spent.toLocaleString("en-IN", { maximumFractionDigits: 0 })} <span class="text-xs text-muted font-medium font-inter">/ ₹${limit.toLocaleString("en-IN", { maximumFractionDigits: 0 })}</span>`;
-            }
-
-            // Update Progress bar fill and percentage
-            const barFill = cardEl.querySelector(".h-full");
-            if (barFill) {
-              barFill.style.width = `${percentage}%`;
-              // If exceeded, make the bar red!
-              if (spent > limit) {
-                barFill.className = "bg-danger h-full rounded-full";
-              } else {
-                barFill.className = `${budgetLimits[cat].colorClass} h-full rounded-full`;
-              }
-            }
-
-            // Update Remaining text
-            const remainingEl = cardEl.querySelector("span.text-right");
-            if (remainingEl) {
-              if (spent > limit) {
-                remainingEl.textContent = `Exceeded: ₹${Math.abs(limit - spent).toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
-                remainingEl.className = "text-[0.65rem] text-danger font-bold mt-2.5 block text-right";
-              } else {
-                remainingEl.textContent = `Remaining: ₹${remaining.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
-                remainingEl.className = "text-[0.65rem] text-muted font-semibold mt-2.5 block text-right";
-              }
-            }
+        const budgetLimits = {};
+        activeCategories.forEach((cat, index) => {
+          const val = cat.value;
+          if (defaultLimits[val]) {
+            budgetLimits[val] = {
+              limit: savedLimits[val] || defaultLimits[val].limit,
+              name: defaultLimits[val].name,
+              colorClass: defaultLimits[val].colorClass
+            };
+          } else {
+            const customColors = ["bg-teal-600", "bg-rose-600", "bg-cyan-600", "bg-fuchsia-600", "bg-sky-600", "bg-pink-600"];
+            const colorClass = customColors[index % customColors.length];
+            budgetLimits[val] = {
+              limit: savedLimits[val] || 10000,
+              name: cat.label,
+              colorClass: colorClass
+            };
           }
         });
+
+        // 3. Update Category Budgets Grid in Row 2 dynamically
+        const gridContainer = document.getElementById("categoryBudgetsGridContainer");
+        if (gridContainer) {
+          gridContainer.innerHTML = "";
+          const categories = activeCategories.map(cat => cat.value);
+          categories.forEach(cat => {
+            const spent = categorySpends[cat] || 0;
+            const limit = budgetLimits[cat].limit;
+            const remaining = Math.max(0, limit - spent);
+            const percentage = Math.min(100, Math.round((spent / limit) * 100));
+            const colorClass = budgetLimits[cat].colorClass;
+            const colorName = colorClass.split("-")[1]; // e.g. emerald, purple
+
+            const categoryObj = activeCategories.find(c => c.value === cat);
+            const icon = categoryObj ? categoryObj.icon : "shopping_basket";
+            const displayName = categoryObj ? categoryObj.label : cat;
+
+            const remainingText = spent > limit
+              ? `Exceeded: ₹${Math.abs(limit - spent).toLocaleString("en-IN", { maximumFractionDigits: 0 })}`
+              : `Remaining: ₹${remaining.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
+            const remainingClass = spent > limit
+              ? "text-[0.65rem] text-danger font-bold mt-2.5 block text-right"
+              : "text-[0.65rem] text-muted font-semibold mt-2.5 block text-right";
+
+            const barColorClass = spent > limit ? "bg-danger" : colorClass;
+
+            const cardHTML = `
+              <div class="col-span-1 md:col-span-3 bg-white dark:bg-[#0b120f]/60 rounded-2xl p-5 border border-border shadow-sm flex flex-col justify-between h-[210px] relative group" id="budgetCard_${cat}">
+                <div class="flex flex-col gap-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[0.625rem] font-bold text-${colorName}-700 dark:text-${colorName}-300 bg-${colorName}-50 dark:bg-${colorName}-950/20 px-2 py-0.5 rounded-full uppercase tracking-wider font-manrope">${displayName}</span>
+                    <div class="flex items-center gap-1.5">
+                      <button class="btnEditBudget w-6 h-6 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-muted flex items-center justify-center border-none bg-transparent cursor-pointer transition-all opacity-0 group-hover:opacity-100 focus:opacity-100" data-category="${cat}" title="Edit Budget">
+                        <span class="material-symbols-rounded text-xs">edit</span>
+                      </button>
+                      <div class="w-8 h-8 rounded-lg bg-${colorName}-50 dark:bg-${colorName}-950/20 text-${colorName}-600 dark:text-${colorName}-400 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-rounded text-base">${icon}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <h4 class="text-lg font-bold text-main font-manrope leading-tight mt-1">
+                    ₹${spent.toLocaleString("en-IN", { maximumFractionDigits: 0 })} 
+                    <span class="text-xs text-muted font-medium font-inter">/ ₹${limit.toLocaleString("en-IN", { maximumFractionDigits: 0 })}</span>
+                  </h4>
+                </div>
+
+                <div>
+                  <div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div class="${barColorClass} h-full rounded-full" style="width: ${percentage}%"></div>
+                  </div>
+                  <span class="${remainingClass}">${remainingText}</span>
+                </div>
+              </div>
+            `;
+            gridContainer.insertAdjacentHTML("beforeend", cardHTML);
+          });
+        }
 
         // 4. Update Overall Monthly Budget card aggregates
         let overallSpent = 0;
         let overallLimit = 0;
         for (const cat in budgetLimits) {
-          overallSpent += categorySpends[cat];
+          overallSpent += categorySpends[cat] || 0;
           overallLimit += budgetLimits[cat].limit;
         }
 
@@ -657,16 +604,26 @@
           circleText.textContent = `${overallPercentage}%`;
         }
 
-        // 6. Update overall category list inside the overall card
+        // Sort categories by usage percentage (highest first)
+        const sortedCats = Object.keys(budgetLimits).map(cat => {
+          return {
+            cat,
+            name: budgetLimits[cat].name,
+            percentage: Math.round(((categorySpends[cat] || 0) / budgetLimits[cat].limit) * 100)
+          };
+        }).sort((a, b) => b.percentage - a.percentage);
+
+        // 6. Update overall category list inside the overall card (top 3)
         const overallCategoryBarsListEl = document.getElementById("overallCategoryBarsList");
         if (overallCategoryBarsListEl) {
           overallCategoryBarsListEl.innerHTML = "";
-          categories.forEach(cat => {
+          sortedCats.forEach(item => {
+            const cat = item.cat;
             const spent = categorySpends[cat] || 0;
             const limit = budgetLimits[cat].limit;
-            const percentage = Math.min(100, Math.round((spent / limit) * 100));
+            const percentage = Math.min(100, item.percentage);
             const colorClass = spent > limit ? "bg-danger" : budgetLimits[cat].colorClass;
-            const labelName = cat === "Rent" ? "Real Estate Maintenance" : (cat === "Dining" ? "Dining & Hospitality" : (cat === "Groceries" ? "Groceries & Provisions" : "Transport & Travel"));
+            const labelName = item.name;
             
             overallCategoryBarsListEl.innerHTML += `
               <div>
@@ -683,14 +640,6 @@
         }
 
         // 7. Update Active Budgets Card (Private Allocations)
-        const sortedCats = Object.keys(budgetLimits).map(cat => {
-          return {
-            cat,
-            name: cat === "Rent" ? "Real Estate Maintenance" : (cat === "Dining" ? "Dining & Hospitality" : (cat === "Groceries" ? "Groceries & Provisions" : "Transport & Travel")),
-            percentage: Math.round(((categorySpends[cat] || 0) / budgetLimits[cat].limit) * 100)
-          };
-        }).sort((a, b) => b.percentage - a.percentage);
-
         const activeBudgetsTitleEl = document.getElementById("activeBudgetsTitle");
         if (activeBudgetsTitleEl) {
           const activeCount = Object.values(categorySpends).filter(v => v > 0).length;
@@ -710,33 +659,7 @@
           });
         }
 
-        // 8. Update AI Advisor Smart Allocation alert text contextually
-        const advisorAlertTextEl = document.getElementById("advisorAlertText");
-        if (advisorAlertTextEl) {
-          let adviceGiven = false;
-          for (const item of sortedCats) {
-            if (item.percentage > 100) {
-              const spent = categorySpends[item.cat];
-              const limit = budgetLimits[item.cat].limit;
-              const over = spent - limit;
-              advisorAlertTextEl.textContent = `CRITICAL ALERT: Your ${item.name} has exceeded its monthly limit by ₹${over.toLocaleString("en-IN", { maximumFractionDigits: 0 })}. Consider adjusting allocations immediately or suspending luxury spends.`;
-              adviceGiven = true;
-              break;
-            }
-          }
 
-          if (!adviceGiven) {
-            const highest = sortedCats[0];
-            if (highest && highest.percentage > 75) {
-              const spent = categorySpends[highest.cat];
-              const limit = budgetLimits[highest.cat].limit;
-              const remaining = limit - spent;
-              advisorAlertTextEl.textContent = `Based on your current ${highest.cat.toLowerCase()} spending velocity, you are at ${highest.percentage}% of your capacity. Only ₹${remaining.toLocaleString("en-IN", { maximumFractionDigits: 0 })} remains. Reallocate from stable accounts if necessary.`;
-            } else {
-              advisorAlertTextEl.textContent = `Your allocations are in exceptional standing! Spends are well within their protective barriers, and your monthly savings target is matching projections. Keep up the high standard.`;
-            }
-          }
-        }
 
         // 9. Update Savings Target Gauge Card dynamically
         const savingsTarget = 15000;
@@ -765,6 +688,62 @@
           savingsRateFooterTextEl.textContent = `₹${netSavings.toLocaleString("en-IN", { maximumFractionDigits: 0 })} saved of ₹15,000 goal`;
         }
 
+        // Wire up Edit Budget button clicks
+        document.querySelectorAll(".btnEditBudget").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const cat = btn.getAttribute("data-category");
+            const limit = budgetLimits[cat].limit;
+            
+            const editModal = document.getElementById("editBudgetModal");
+            const editCatInput = document.getElementById("editBudgetCategory");
+            const editCatDisplay = document.getElementById("editBudgetCategoryDisplay");
+            const editLimitInput = document.getElementById("editBudgetLimitInput");
+            
+            if (editModal && editCatInput && editCatDisplay && editLimitInput) {
+              editCatInput.value = cat;
+              editCatDisplay.textContent = budgetLimits[cat].name + " (" + cat + ")";
+              editLimitInput.value = limit;
+              
+              editModal.classList.remove("hidden");
+              editModal.classList.add("flex");
+            }
+          });
+        });
+
+        // Edit Budget Modal Close Actions
+        const closeEditModal = () => {
+          const editModal = document.getElementById("editBudgetModal");
+          if (editModal) {
+            editModal.classList.remove("flex");
+            editModal.classList.add("hidden");
+          }
+        };
+
+        const btnCloseEditBudgetX = document.getElementById("btnCloseEditBudgetX");
+        const btnCancelEditBudget = document.getElementById("btnCancelEditBudget");
+        if (btnCloseEditBudgetX) btnCloseEditBudgetX.addEventListener("click", closeEditModal);
+        if (btnCancelEditBudget) btnCancelEditBudget.addEventListener("click", closeEditModal);
+
+        // Handle Edit Budget Submit
+        const editForm = document.getElementById("editBudgetForm");
+        if (editForm) {
+          editForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const cat = document.getElementById("editBudgetCategory").value;
+            const newLimit = parseFloat(document.getElementById("editBudgetLimitInput").value);
+            if (isNaN(newLimit) || newLimit <= 0) return;
+
+            const savedLimits = JSON.parse(localStorage.getItem("sovereign_budget_limits")) || {};
+            savedLimits[cat] = newLimit;
+            localStorage.setItem("sovereign_budget_limits", JSON.stringify(savedLimits));
+
+            closeEditModal();
+            window.location.reload();
+          });
+        }
+
         // Clear loading-blur effect once loaded
         document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
       }
@@ -788,6 +767,42 @@
       });
     }
   </script>
+
+  <!-- Edit Budget Modal Markup -->
+  <div id="editBudgetModal"
+    class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
+    <div class="flex w-[480px] h-[360px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
+      <div class="flex-1 p-[2.5rem_3rem] bg-white flex flex-col gap-6">
+        <div class="flex justify-between items-center pb-2 border-b border-border">
+          <h3 class="text-lg font-bold text-main font-manrope">Adjust Budget Limit</h3>
+          <button id="btnCloseEditBudgetX" class="bg-transparent border-none text-muted hover:text-main cursor-pointer">
+            <span class="material-symbols-rounded text-lg">close</span>
+          </button>
+        </div>
+        
+        <form id="editBudgetForm" class="flex flex-col gap-6">
+          <input type="hidden" id="editBudgetCategory" value="">
+          
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Category</label>
+            <div id="editBudgetCategoryDisplay" class="text-sm font-bold text-main font-manrope bg-slate-50 dark:bg-[#101a15] border border-border rounded-lg px-4 py-3">Groceries</div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Monthly Limit (₹)</label>
+            <input id="editBudgetLimitInput" type="number" placeholder="0" min="1"
+              class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-medium" required>
+          </div>
+
+          <div class="flex justify-end gap-3 pt-2">
+            <button type="button" id="btnCancelEditBudget" class="bg-transparent border-none text-[0.9rem] font-semibold text-main cursor-pointer hover:underline">Cancel</button>
+            <button type="submit" class="bg-primary text-white border-none rounded-md px-6 py-2.5 text-[0.85rem] font-semibold cursor-pointer hover:bg-primary-hover">Save Budget</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="js/components/globalSearch.js"></script>
 </body>
 

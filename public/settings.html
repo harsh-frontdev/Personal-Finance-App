@@ -177,10 +177,10 @@
         </div>
 
         <!-- ================= ROW 1: Profile Details & Security ================= -->
-        <div class="grid grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           <!-- Profile Details Card (Left - 8 Cols) -->
-          <div class="col-span-8 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
+          <div class="col-span-1 lg:col-span-8 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
             
             <div class="flex justify-between items-center border-b border-slate-100 pb-4">
               <!-- Avatar Stack & Details -->
@@ -208,7 +208,7 @@
             </div>
 
             <!-- Profile Forms Inputs -->
-            <div class="grid grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               
               <!-- Display Name -->
               <div class="flex flex-col gap-2">
@@ -250,7 +250,7 @@
           </div>
 
           <!-- Security Panel Card (Right - 4 Cols) -->
-          <div class="col-span-4 settings-security-bg text-white p-8 rounded-2xl shadow-md flex flex-col justify-between h-[255px] relative overflow-hidden">
+          <div class="col-span-1 lg:col-span-4 settings-security-bg text-white p-8 rounded-2xl shadow-md flex flex-col justify-between h-[255px] relative overflow-hidden">
             <div class="flex flex-col gap-3">
               <div class="w-12 h-12 rounded-xl bg-white/10 text-emerald-300 flex items-center justify-center shrink-0 shadow-inner">
                 <span class="material-symbols-rounded text-2xl text-emerald-300">verified_user</span>
@@ -273,10 +273,10 @@
         </div>
 
         <!-- ================= ROW 2: Notifications & Preferences ================= -->
-        <div class="grid grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           <!-- Notifications (Left - 6 Cols) -->
-          <div class="col-span-6 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
+          <div class="col-span-1 lg:col-span-6 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
             <div class="flex justify-between items-center w-full">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-white text-emerald-800 flex items-center justify-center shadow-sm">
@@ -332,7 +332,7 @@
           </div>
 
           <!-- Preferences Navigation (Right - 6 Cols) -->
-          <div class="col-span-6 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
+          <div class="col-span-1 lg:col-span-6 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-xl bg-white text-emerald-800 flex items-center justify-center shadow-sm">
                 <span class="material-symbols-rounded text-xl font-bold">tune</span>
@@ -379,6 +379,61 @@
                 <span class="material-symbols-rounded text-muted text-sm transition-transform group-hover:translate-x-0.5">arrow_forward_ios</span>
               </div>
 
+            </div>
+          </div>          <!-- Custom Categories Manager (Row 3: Full Width inside Row 2 grid) -->
+          <div class="col-span-1 lg:col-span-12 bg-white rounded-2xl p-8 border border-border shadow-sm flex flex-col gap-6 mt-4">
+            <div class="flex justify-between items-center w-full">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 text-emerald-800 dark:text-emerald-400 flex items-center justify-center shadow-sm border border-border">
+                  <span class="material-symbols-rounded text-xl">category</span>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-main font-manrope">Custom Transaction Categories</h3>
+                  <p class="text-[0.65rem] text-muted font-semibold mt-0.5">Manage and add categories for your ledger entries</p>
+                </div>
+              </div>
+            </div>
+ 
+            <!-- Categories List Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="customCategoriesGridList">
+              <!-- Dynamically populated categories -->
+            </div>
+
+            <!-- Add Category Form -->
+            <div class="border-t border-border pt-6 flex flex-col gap-4">
+              <h4 class="text-xs font-bold text-main uppercase tracking-wider">Add New Category</h4>
+              <div class="flex flex-col sm:flex-row gap-4 sm:items-end">
+                <div class="flex-1 flex flex-col gap-2 w-full">
+                  <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Category Name</label>
+                  <input type="text" id="newCategoryName" placeholder="e.g. Shopping"
+                    class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-2.5 text-[0.85rem] text-main outline-none w-full font-medium">
+                </div>
+
+                <div class="w-full sm:w-[220px] flex flex-col gap-2">
+                  <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Icon</label>
+                  <select id="newCategoryIcon"
+                    class="bg-slate-50 border border-slate-100 rounded-lg px-4 py-2.5 text-[0.85rem] text-main outline-none w-full font-medium cursor-pointer">
+                    <option value="shopping_basket">Shopping (shopping_basket)</option>
+                    <option value="restaurant">Dining (restaurant)</option>
+                    <option value="directions_car">Transport (directions_car)</option>
+                    <option value="home">Home (home)</option>
+                    <option value="receipt_long">Bills (receipt_long)</option>
+                    <option value="movie">Entertainment (movie)</option>
+                    <option value="sports_esports">Gaming (sports_esports)</option>
+                    <option value="fitness_center">Health/Gym (fitness_center)</option>
+                    <option value="school">Education (school)</option>
+                    <option value="flight">Travel (flight)</option>
+                    <option value="local_hospital">Medical (local_hospital)</option>
+                    <option value="card_membership">Subscription (card_membership)</option>
+                    <option value="savings">Savings (savings)</option>
+                    <option value="stars">Gift/Stars (stars)</option>
+                  </select>
+                </div>
+
+                <button id="btnAddCustomCategory" class="w-full sm:w-auto bg-primary text-white border-none rounded-md px-6 py-3 text-[0.85rem] font-semibold cursor-pointer hover:bg-primary-hover transition-colors shadow-sm active:scale-98">
+                  Add Category
+                </button>
+              </div>
             </div>
           </div>
 
@@ -709,14 +764,32 @@
         const toggleWeeklyRep = document.getElementById("toggle_weekly_rep");
         const toggleBudgetAl = document.getElementById("toggle_budget_al");
 
-        const savedSettings = JSON.parse(localStorage.getItem("sovereign_settings"));
-        if (savedSettings) {
-          if (phoneInput && savedSettings.phoneNumber) phoneInput.value = savedSettings.phoneNumber;
-          if (currencySelect && savedSettings.currency) currencySelect.value = savedSettings.currency;
-          if (toggleLargeTrans) toggleLargeTrans.checked = savedSettings.toggleLargeTrans;
-          if (toggleWeeklyRep) toggleWeeklyRep.checked = savedSettings.toggleWeeklyRep;
-          if (toggleBudgetAl) toggleBudgetAl.checked = savedSettings.toggleBudgetAl;
-        }
+        const savedSettings = JSON.parse(localStorage.getItem("sovereign_settings")) || {};
+        if (phoneInput && savedSettings.phoneNumber) phoneInput.value = savedSettings.phoneNumber;
+        if (currencySelect && savedSettings.currency) currencySelect.value = savedSettings.currency;
+        
+        // Restore values with appropriate defaults
+        if (toggleLargeTrans) toggleLargeTrans.checked = savedSettings.toggleLargeTrans !== false;
+        if (toggleWeeklyRep) toggleWeeklyRep.checked = savedSettings.toggleWeeklyRep !== false;
+        if (toggleBudgetAl) toggleBudgetAl.checked = savedSettings.toggleBudgetAl === true;
+
+        // Auto-save toggle states immediately on click/change
+        const saveToggleStates = () => {
+          const currentSettings = JSON.parse(localStorage.getItem("sovereign_settings")) || {};
+          const settingsToSave = {
+            ...currentSettings,
+            phoneNumber: phoneInput ? phoneInput.value.trim() : (currentSettings.phoneNumber || ""),
+            currency: currencySelect ? currencySelect.value : (currentSettings.currency || "₹ INR"),
+            toggleLargeTrans: toggleLargeTrans ? toggleLargeTrans.checked : true,
+            toggleWeeklyRep: toggleWeeklyRep ? toggleWeeklyRep.checked : true,
+            toggleBudgetAl: toggleBudgetAl ? toggleBudgetAl.checked : false
+          };
+          localStorage.setItem("sovereign_settings", JSON.stringify(settingsToSave));
+        };
+
+        if (toggleLargeTrans) toggleLargeTrans.addEventListener("change", saveToggleStates);
+        if (toggleWeeklyRep) toggleWeeklyRep.addEventListener("change", saveToggleStates);
+        if (toggleBudgetAl) toggleBudgetAl.addEventListener("change", saveToggleStates);
 
         // Initialize Add Transaction Modal locally if needed (linked inside app)
         initModal("addTransactionModal", "btnOpenAddTransaction", "btnCloseAddTransaction");
@@ -859,8 +932,109 @@
             }
           });
         }
+
+        // Initialize dynamic category manager in settings UI
+        initCategoryManager();
       }
     });
+
+    function initCategoryManager() {
+      const grid = document.getElementById("customCategoriesGridList");
+      if (!grid) return;
+
+      const defaultCategories = [
+        { value: "Groceries", label: "Groceries", icon: "shopping_basket" },
+        { value: "Dining", label: "Dining", icon: "restaurant" },
+        { value: "Transport", label: "Transport", icon: "directions_car" },
+        { value: "Rent", label: "Rent", icon: "home" }
+      ];
+
+      const loadCategories = () => {
+        const saved = localStorage.getItem("sovereign_categories");
+        let categories = defaultCategories;
+        if (saved) {
+          try {
+            categories = JSON.parse(saved);
+          } catch (e) {
+            console.warn("Failed to parse dynamic categories.");
+          }
+        } else {
+          localStorage.setItem("sovereign_categories", JSON.stringify(defaultCategories));
+        }
+        return categories;
+      };
+
+      const renderList = () => {
+        grid.innerHTML = "";
+        const categories = loadCategories();
+        categories.forEach(cat => {
+          const isDefault = defaultCategories.some(d => d.value === cat.value);
+          const deleteBtn = isDefault ? "" : `
+            <button class="btnDeleteCategory w-8 h-8 rounded-full hover:bg-red-50 dark:hover:bg-red-950/20 text-danger border-none bg-transparent cursor-pointer flex items-center justify-center transition-all active:scale-[0.85]" data-value="${cat.value}" title="Delete Category">
+              <span class="material-symbols-rounded text-sm">delete</span>
+            </button>
+          `;
+          const itemHTML = `
+            <div class="bg-slate-50 dark:bg-[#101a15] border border-border rounded-xl p-4 flex justify-between items-center hover:bg-slate-100/50 hover:border-slate-300 transition-all shadow-sm">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                  <span class="material-symbols-rounded text-md">${cat.icon}</span>
+                </div>
+                <span class="text-xs font-bold text-main">${cat.label}</span>
+              </div>
+              ${deleteBtn}
+            </div>
+          `;
+          grid.insertAdjacentHTML("beforeend", itemHTML);
+        });
+
+        // Wire up delete buttons
+        document.querySelectorAll(".btnDeleteCategory").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            const val = e.currentTarget.getAttribute("data-value");
+            let categories = loadCategories();
+            categories = categories.filter(c => c.value !== val);
+            localStorage.setItem("sovereign_categories", JSON.stringify(categories));
+            renderList();
+            showToast("Category deleted.", "success");
+          });
+        });
+      };
+
+      renderList();
+
+      // Add Category Handler
+      const btnAdd = document.getElementById("btnAddCustomCategory");
+      const nameInput = document.getElementById("newCategoryName");
+      const iconSelect = document.getElementById("newCategoryIcon");
+
+      if (btnAdd && nameInput && iconSelect) {
+        btnAdd.addEventListener("click", () => {
+          const name = nameInput.value.trim();
+          const icon = iconSelect.value;
+          if (!name) {
+            showToast("Category name cannot be empty.", "error");
+            return;
+          }
+
+          // Check if value already exists
+          const value = name.replace(/\s+/g, ""); // strip spaces
+          let categories = loadCategories();
+          const exists = categories.some(c => c.value.toLowerCase() === value.toLowerCase() || c.label.toLowerCase() === name.toLowerCase());
+          if (exists) {
+            showToast("Category already exists.", "error");
+            return;
+          }
+
+          categories.push({ value: value, label: name, icon: icon });
+          localStorage.setItem("sovereign_categories", JSON.stringify(categories));
+          
+          nameInput.value = "";
+          renderList();
+          showToast("Category added successfully!", "success");
+        });
+      }
+    }
 
     // Sign out handler
     const signOutBtn = document.querySelector("#btnSignOut");

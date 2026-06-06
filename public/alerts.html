@@ -358,14 +358,39 @@
       if (result && result.success) {
         const transactions = result.data || [];
         
-        // 1. Calculate budget spendings
-        const budgetLimits = {
-          "Groceries": 8000,
-          "Dining": 5000,
-          "Transport": 3000,
-          "Rent": 45000
+        // 1. Calculate budget spendings (loading custom overrides if set)
+        const savedLimits = JSON.parse(localStorage.getItem("sovereign_budget_limits")) || {};
+        const defaultCategories = [
+          { value: "Groceries", label: "Groceries", icon: "shopping_basket" },
+          { value: "Dining", label: "Dining", icon: "restaurant" },
+          { value: "Transport", label: "Transport", icon: "directions_car" },
+          { value: "Rent", label: "Rent", icon: "home" }
+        ];
+
+        const savedCats = localStorage.getItem("sovereign_categories");
+        let activeCategories = defaultCategories;
+        if (savedCats) {
+          try {
+            activeCategories = JSON.parse(savedCats);
+          } catch (e) {
+            console.warn("Failed to parse dynamic categories in alerts.");
+          }
+        }
+
+        const defaultLimits = {
+          Rent: 45000,
+          Dining: 5000,
+          Groceries: 8000,
+          Transport: 3000
         };
-        const categorySpends = { "Groceries": 0, "Dining": 0, "Transport": 0, "Rent": 0 };
+
+        const budgetLimits = {};
+        const categorySpends = {};
+        activeCategories.forEach(cat => {
+          const val = cat.value;
+          budgetLimits[val] = savedLimits[val] || defaultLimits[val] || 10000;
+          categorySpends[val] = 0;
+        });
         
         transactions.forEach(t => {
           const cat = t.category;
@@ -380,6 +405,7 @@
 
         // Fetch dismissed alerts from localStorage to avoid showing them again
         const dismissedAlertIds = JSON.parse(localStorage.getItem("sovereign_dismissed_alerts")) || [];
+        const settings = JSON.parse(localStorage.getItem("sovereign_settings")) || {};
 
         // Generate Budget Alerts
         for (const [cat, limit] of Object.entries(budgetLimits)) {
@@ -396,7 +422,7 @@
               desc: `Your monthly ${cat.toLowerCase()} spending has reached ₹${spent.toLocaleString("en-IN")} (exceeding limit of ₹${limit.toLocaleString("en-IN")} by ₹${over.toLocaleString("en-IN")}).`,
               time: "Just now"
             });
-          } else if (spent > 0.8 * limit) {
+          } else if (spent > 0.8 * limit && settings.toggleBudgetAl === true) {
             alerts.push({
               id: `budget_warn_${cat}`,
               type: "budget",
@@ -409,8 +435,7 @@
         }
 
         // Generate Large Transaction Alerts
-        const settings = JSON.parse(localStorage.getItem("sovereign_settings")) || {};
-        const threshold = settings.toggleLargeTrans ? 50000 : 9999999;
+        const threshold = settings.toggleLargeTrans !== false ? 50000 : 99999999;
         
         transactions.forEach(t => {
           const amt = Math.abs(Number(t.amount || 0));
