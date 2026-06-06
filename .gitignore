@@ -140,3 +140,8 @@ vite.config.ts.timestamp-*
 
 # Local Netlify folder
 .netlify
+
+# Local Test Profiles & Diagnostic tools
+chrome-profile/
+check_console.cjs
+check_console.js

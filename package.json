@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.2.2",
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "ws": "^8.21.0"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.2",
