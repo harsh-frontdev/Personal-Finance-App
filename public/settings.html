@@ -127,7 +127,7 @@
       <!-- Premium user profile display card at the bottom of sidebar navigation -->
       <div class="mt-auto pt-4 border-t border-border flex items-center gap-3">
         <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
-          class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
+          class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover userPhotoDisplay">
         <div>
           <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse mt-0.5 inline-block"></div></div>
           <div class="text-[0.65rem] uppercase text-muted font-semibold tracking-wide">Premium Member</div>
@@ -186,12 +186,13 @@
               <!-- Avatar Stack & Details -->
               <div class="flex items-center gap-5">
                 <div class="relative">
-                  <img src="https://i.pravatar.cc/150?img=11" alt="Alexander Vance"
+                  <img src="https://i.pravatar.cc/150?img=11" alt="Alexander Vance" id="settingsProfilePic"
                     class="w-16 h-16 rounded-full border-2 border-white shadow-sm object-cover">
                   <!-- Edit Pencil Overlay -->
-                  <button class="absolute bottom-0 right-0 w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer border border-white hover:bg-primary-hover shadow-sm active:scale-90">
+                  <button id="btnEditProfilePic" class="absolute bottom-0 right-0 w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer border border-white hover:bg-primary-hover shadow-sm active:scale-90">
                     <span class="material-symbols-rounded text-xs">edit</span>
                   </button>
+                  <input type="file" id="profilePicInput" accept="image/*" class="hidden">
                 </div>
                 
                 <div>
@@ -276,11 +277,16 @@
           
           <!-- Notifications (Left - 6 Cols) -->
           <div class="col-span-6 bg-[#f0f3ff] rounded-2xl p-8 border border-transparent shadow-sm flex flex-col gap-6">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-white text-emerald-800 flex items-center justify-center shadow-sm">
-                <span class="material-symbols-rounded text-xl">notifications</span>
+            <div class="flex justify-between items-center w-full">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-white text-emerald-800 flex items-center justify-center shadow-sm">
+                  <span class="material-symbols-rounded text-xl">notifications</span>
+                </div>
+                <h3 class="text-lg font-bold text-main font-manrope">Notifications</h3>
               </div>
-              <h3 class="text-lg font-bold text-main font-manrope">Notifications</h3>
+              <a href="alerts.html" class="text-xs font-bold text-primary hover:text-primary-hover flex items-center gap-1 group">
+                View All Alerts <span class="material-symbols-rounded text-xs transition-transform group-hover:translate-x-0.5">arrow_forward</span>
+              </a>
             </div>
 
             <!-- Alerts Toggle list -->
@@ -634,6 +640,56 @@
         names.forEach(el => {
           el.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
         });
+
+        // Populate custom profile photos
+        const photos = document.querySelectorAll(".userPhotoDisplay");
+        const previewPhoto = document.getElementById("settingsProfilePic");
+        const photoURL = user ? user.photoURL : (demoUser ? demoUser.photoURL : null);
+        if (photoURL) {
+          photos.forEach(el => {
+            el.src = photoURL;
+          });
+          if (previewPhoto) {
+            previewPhoto.src = photoURL;
+          }
+        }
+
+        // Handle profile picture update
+        const btnEditProfilePic = document.getElementById("btnEditProfilePic");
+        const profilePicInput = document.getElementById("profilePicInput");
+        
+        if (btnEditProfilePic && profilePicInput) {
+          btnEditProfilePic.addEventListener("click", () => {
+            profilePicInput.click();
+          });
+
+          profilePicInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = async (event) => {
+                const base64String = event.target.result;
+                // Update local previews immediately
+                if (previewPhoto) previewPhoto.src = base64String;
+                photos.forEach(el => el.src = base64String);
+
+                try {
+                  if (user) {
+                    await updateProfile(auth.currentUser, { photoURL: base64String });
+                  } else {
+                    const updatedDemoUser = { ...demoUser, photoURL: base64String };
+                    localStorage.setItem("sovereign_demo_user", JSON.stringify(updatedDemoUser));
+                  }
+                  showToast("Profile picture updated successfully!", "success");
+                } catch (err) {
+                  console.error(err);
+                  showToast("Failed to update profile picture: " + err.message, "error");
+                }
+              };
+              reader.readAsDataURL(file);
+            }
+          });
+        }
 
         // Pre-fill Display Name and Email input values based on active session
         const nameInput = document.querySelector("#settings_displayName");

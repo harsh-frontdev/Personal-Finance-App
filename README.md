@@ -19,6 +19,8 @@ Most trackers feel like chores. **The Sovereign Ledger** is designed to feel lik
 ## 🚀 Core Features
 
 *   **Dynamic Data Skeleton Screens:** High-fidelity, text-less pulsing loading states (`animate-pulse`) match the visual structure of your accounts, budgets, goals, and reports while data is fetched, ensuring a premium loading transition without flashes of dummy data.
+*   **Dedicated Alert Center:** Real-time budget monitoring (warning alerts at 80% consumption, critical over-limit warnings at 100%), large transaction logs (customizable ₹50,000 threshold), automated AI advisor pacing checks, and system security alerts with localStorage-backed dismiss state.
+*   **Custom Profile Photo Update:** Instant base64 profile picture updates saved to local storage for demo sessions, and synced directly with Firebase Auth profiles for active live users.
 *   **Persistent Transaction Engine:** Full CRUD operations synced with **Firebase/Firestore** or local storage.
 *   **Debit/Credit Entry Polarity:** Explicit form toggle in the transaction registration modal automatically applies correct mathematical sign and currency color schemes.
 *   **Modern Styling:** Built with **Tailwind CSS v4**, leveraging CSS variables and high-speed utility processing.
@@ -62,7 +64,8 @@ Most trackers feel like chores. **The Sovereign Ledger** is designed to feel lik
 │   ├── accounts.html      # Asset types & balances
 │   ├── reports.html       # Net income and spending velocity gauges
 │   ├── goals.html         # Stashes and targets
-│   └── settings.html      # User preferences and profile credentials
+│   ├── settings.html      # User preferences and profile credentials
+│   └── alerts.html        # Dedicated Alert Center for budget warnings and logs
 ├── postcss.config.js      # Style compilation
 ├── tailwind.config.js     # Tailwind configurations
 └── package.json           # Scripts & Dependencies

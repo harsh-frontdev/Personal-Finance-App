@@ -23,6 +23,15 @@ function initApp() {
       names.forEach(el => {
         el.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
       });
+
+      // Populate custom profile photos
+      const photos = document.querySelectorAll(".userPhotoDisplay");
+      const photoURL = user ? user.photoURL : (demoUser ? demoUser.photoURL : null);
+      if (photoURL) {
+        photos.forEach(el => {
+          el.src = photoURL;
+        });
+      }
       await refreshData();
 
       // Check if we need to auto-open the Add Transaction modal (triggered from other pages)

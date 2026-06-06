@@ -85,7 +85,7 @@
       <!-- Premium user profile display card at the bottom of sidebar navigation -->
       <div class="mt-auto pt-4 border-t border-border flex items-center gap-3">
         <img src="https://i.pravatar.cc/150?img=11" alt="Julian Sterling"
-          class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover">
+          class="w-10 h-10 rounded-full border-2 border-white shadow-sm object-cover userPhotoDisplay">
         <div>
           <div class="text-sm font-bold text-main font-manrope userNameDisplay leading-none mb-1"><div class="h-3 w-20 bg-slate-200 dark:bg-slate-800 rounded animate-pulse mt-0.5 inline-block"></div></div>
           <div class="text-[0.65rem] uppercase text-muted font-semibold tracking-wide">Premium Member</div>
@@ -358,6 +358,15 @@
         names.forEach(el => {
           el.textContent = user ? (user.displayName || user.email) : demoUser.displayName;
         });
+
+        // Populate custom profile photos
+        const photos = document.querySelectorAll(".userPhotoDisplay");
+        const photoURL = user ? user.photoURL : (demoUser ? demoUser.photoURL : null);
+        if (photoURL) {
+          photos.forEach(el => {
+            el.src = photoURL;
+          });
+        }
 
         // Initialize Add Transaction Modal locally on the dashboard page
         initModal("addTransactionModal", "btnOpenAddTransaction", "btnCloseAddTransaction");
