@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalSearch();
   initDarkMode();
   initNotifications();
+  initDynamicCategoryRadios();
 });
 
 async function initGlobalSearch() {
@@ -326,7 +327,7 @@ function initDarkMode() {
   }
 }
 
-function initNotifications() {
+async function initNotifications() {
   const notifIcon = Array.from(document.querySelectorAll('header span.material-symbols-rounded')).find(el => el.textContent.trim() === 'notifications');
   if (!notifIcon) return;
 
@@ -337,9 +338,9 @@ function initNotifications() {
   notifIcon.style.position = "relative";
   notifIcon.classList.add("cursor-pointer");
   
-  // Inject the red badge dot
+  // Inject the red badge dot/count
   const badge = document.createElement("span");
-  badge.className = "absolute top-0 right-0 w-2 h-2 bg-danger rounded-full border border-white dark:border-[#0b120f]";
+  badge.className = "absolute top-[-5px] right-[-5px] min-w-[16px] h-[16px] px-1 bg-danger text-white rounded-full border border-white dark:border-[#0b120f] flex items-center justify-center text-[9px] font-bold leading-none hidden z-10 animate-pulse";
   notifIcon.appendChild(badge);
 
   // Create the absolute dropdown element
@@ -353,65 +354,226 @@ function initNotifications() {
       <button id="btnClearNotifs" class="text-[0.65rem] font-bold text-primary hover:text-primary-hover cursor-pointer outline-none hover:underline">Clear all</button>
     </div>
     
-    <div class="flex flex-col gap-0 max-h-[260px] overflow-y-auto py-4 pr-2" id="notifItemsList">
-      <!-- Item 1 -->
-      <div class="flex gap-3 py-3.5 border-b border-slate-100 dark:border-border last:border-none last:pb-0">
-        <div class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-          <span class="material-symbols-rounded text-md">check_circle</span>
-        </div>
-        <div class="flex flex-col gap-0.5 min-w-0">
-          <span class="text-xs font-bold text-main leading-tight truncate">Large Credit Detected</span>
-          <span class="text-[0.65rem] text-muted leading-relaxed">₹1,25,000.00 credited to Axis Bank Savings account.</span>
-          <span class="text-[0.55rem] text-light font-bold mt-1 uppercase">2 hours ago</span>
-        </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="flex gap-3 py-3.5 border-b border-slate-100 dark:border-border last:border-none last:pb-0">
-        <div class="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-500/10 text-danger flex items-center justify-center shrink-0">
-          <span class="material-symbols-rounded text-md">warning</span>
-        </div>
-        <div class="flex flex-col gap-0.5 min-w-0">
-          <span class="text-xs font-bold text-main leading-tight truncate">Budget Limit Warning</span>
-          <span class="text-[0.65rem] text-muted leading-relaxed">You have exceeded your Dining & Hospitality budget.</span>
-          <span class="text-[0.55rem] text-light font-bold mt-1 uppercase">5 hours ago</span>
-        </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="flex gap-3 py-3.5 border-b border-slate-100 dark:border-border last:border-none last:pb-0">
-        <div class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-          <span class="material-symbols-rounded text-md">security</span>
-        </div>
-        <div class="flex flex-col gap-0.5 min-w-0">
-          <span class="text-xs font-bold text-main leading-tight truncate">Secure Session Key</span>
-          <span class="text-[0.65rem] text-muted leading-relaxed">New session authenticated using 256-bit encryption.</span>
-          <span class="text-[0.55rem] text-light font-bold mt-1 uppercase">1 day ago</span>
-        </div>
+    <div class="flex flex-col gap-0 max-h-[260px] overflow-y-auto py-2 pr-1" id="notifItemsList">
+      <div class="flex items-center justify-center py-6 text-center text-muted gap-2">
+        <div class="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <span class="text-xs font-medium">Checking ledger...</span>
       </div>
     </div>
     
     <div class="pt-2.5 border-t border-border text-center">
-      <a href="#" class="text-[0.7rem] font-bold text-primary hover:text-primary-hover hover:underline">View all alerts</a>
+      <a href="alerts.html" class="text-[0.7rem] font-bold text-primary hover:text-primary-hover hover:underline">View all alerts</a>
     </div>
   `;
 
-  // Make the parent of notifIcon relative so we can align the dropdown cleanly
   parent.style.position = "relative";
   parent.appendChild(dropdown);
 
+  // State variable to hold active alerts in dropdown
+  let activeAlerts = [];
+
+  // Function to refresh the dropdown content
+  async function refreshDropdownAlerts() {
+    try {
+      const res = await getData();
+      if (!res || !res.success) {
+        renderEmptyState();
+        return;
+      }
+      const transactions = res.data || [];
+      // Budget limits definition matching global standards (loading custom overrides if set)
+      const savedLimits = JSON.parse(localStorage.getItem("sovereign_budget_limits")) || {};
+      const defaultCategories = [
+        { value: "Groceries", label: "Groceries", icon: "shopping_basket" },
+        { value: "Dining", label: "Dining", icon: "restaurant" },
+        { value: "Transport", label: "Transport", icon: "directions_car" },
+        { value: "Rent", label: "Rent", icon: "home" }
+      ];
+
+      const savedCats = localStorage.getItem("sovereign_categories");
+      let activeCategories = defaultCategories;
+      if (savedCats) {
+        try {
+          activeCategories = JSON.parse(savedCats);
+        } catch (e) {
+          console.warn("Failed to parse dynamic categories in notifications.");
+        }
+      }
+
+      const defaultLimits = {
+        Rent: 45000,
+        Dining: 5000,
+        Groceries: 8000,
+        Transport: 3000
+      };
+
+      const budgetLimits = {};
+      const categorySpends = {};
+      activeCategories.forEach(cat => {
+        const val = cat.value;
+        budgetLimits[val] = savedLimits[val] || defaultLimits[val] || 10000;
+        categorySpends[val] = 0;
+      });
+      
+      transactions.forEach(t => {
+        const cat = t.category;
+        const amt = Number(t.amount || 0);
+        if (cat in categorySpends && amt < 0) {
+          categorySpends[cat] += Math.abs(amt);
+        }
+      });
+
+      const alerts = [];
+      const dismissedAlertIds = JSON.parse(localStorage.getItem("sovereign_dismissed_alerts")) || [];
+      const settings = JSON.parse(localStorage.getItem("sovereign_settings")) || {};
+
+      // Budget alerts
+      for (const [cat, limit] of Object.entries(budgetLimits)) {
+        const spent = categorySpends[cat];
+        const pct = Math.round((spent / limit) * 100);
+
+        if (spent > limit) {
+          alerts.push({
+            id: `budget_crit_${cat}`,
+            type: "budget",
+            level: "critical",
+            title: `${cat} Overlimit`,
+            desc: `Spent ₹${spent.toLocaleString("en-IN")} / ₹${limit.toLocaleString("en-IN")}.`,
+            time: "Just now",
+            icon: "error",
+            iconClass: "bg-red-50 text-red-800 dark:bg-red-950/20 dark:text-red-300"
+          });
+        } else if (spent > 0.8 * limit && settings.toggleBudgetAl === true) {
+          alerts.push({
+            id: `budget_warn_${cat}`,
+            type: "budget",
+            level: "warning",
+            title: `${cat} High Usage`,
+            desc: `Consumed ${pct}% of your limit.`,
+            time: "1h ago",
+            icon: "warning",
+            iconClass: "bg-amber-50 text-amber-800 dark:bg-amber-950/20 dark:text-amber-300"
+          });
+        }
+      }
+
+      // Large transactions
+      const threshold = settings.toggleLargeTrans !== false ? 50000 : 99999999;
+      
+      transactions.forEach(t => {
+        const amt = Math.abs(Number(t.amount || 0));
+        if (amt >= threshold) {
+          alerts.push({
+            id: `trans_${t.id || t.date}`,
+            type: "transaction",
+            level: "info",
+            title: "Large Transaction",
+            desc: `₹${amt.toLocaleString("en-IN")} on ${t.description || "Uncategorized"}.`,
+            time: "Today",
+            icon: "info",
+            iconClass: "bg-blue-50 text-blue-800 dark:bg-blue-950/20 dark:text-blue-300"
+          });
+        }
+      });
+
+      // AI insights
+      alerts.push({
+        id: "ai_insight_saving",
+        type: "ai",
+        level: "success",
+        title: "Savings Velocity",
+        desc: "Monthly savings target projections are stable.",
+        time: "Yesterday",
+        icon: "check_circle",
+        iconClass: "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-300"
+      });
+
+      // Security updates
+      if (localStorage.getItem("sovereign_settings")) {
+        alerts.push({
+          id: "sec_settings_updated",
+          type: "security",
+          level: "info",
+          title: "Settings Updated",
+          desc: "Primary workspace preferences were updated.",
+          time: "2d ago",
+          icon: "security",
+          iconClass: "bg-blue-50 text-blue-800 dark:bg-blue-950/20 dark:text-blue-300"
+        });
+      }
+
+      // Filter out dismissed alerts
+      activeAlerts = alerts.filter(a => !dismissedAlertIds.includes(a.id));
+      renderAlertsList();
+    } catch (err) {
+      console.warn("Failed to compile dropdown alerts: ", err);
+      renderEmptyState();
+    }
+  }
+
+  function renderAlertsList() {
+    const list = dropdown.querySelector("#notifItemsList");
+    if (!list) return;
+
+    list.innerHTML = "";
+
+    if (activeAlerts.length === 0) {
+      renderEmptyState();
+      badge.classList.add("hidden");
+      badge.textContent = "";
+      return;
+    }
+
+    // Update the notification badge
+    badge.textContent = activeAlerts.length;
+    badge.classList.remove("hidden");
+
+    // Only show top 3 alerts in dropdown to keep it compact
+    activeAlerts.slice(0, 3).forEach(alert => {
+      const item = document.createElement("div");
+      item.className = "flex gap-3 py-3.5 border-b border-slate-100 dark:border-border last:border-none last:pb-0";
+      item.innerHTML = `
+        <div class="w-8 h-8 rounded-lg ${alert.iconClass.split(" ")[0]} ${alert.iconClass.split(" ")[1]} flex items-center justify-center shrink-0">
+          <span class="material-symbols-rounded text-md">${alert.icon}</span>
+        </div>
+        <div class="flex flex-col gap-0.5 min-w-0 flex-1">
+          <span class="text-xs font-bold text-main leading-tight truncate">${alert.title}</span>
+          <span class="text-[0.65rem] text-muted leading-relaxed">${alert.desc}</span>
+          <span class="text-[0.55rem] text-light font-bold mt-1 uppercase">${alert.time}</span>
+        </div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  function renderEmptyState() {
+    const list = dropdown.querySelector("#notifItemsList");
+    if (list) {
+      list.innerHTML = `
+        <div class="flex flex-col items-center justify-center py-6 text-center text-muted gap-2 animate-fade-in">
+          <span class="material-symbols-rounded text-2xl text-light">notifications_off</span>
+          <span class="text-xs italic">No active notifications.</span>
+        </div>
+      `;
+    }
+  }
+
+  // Load dropdown data initially
+  await refreshDropdownAlerts();
+
   // Click toggle handler
-  notifIcon.addEventListener("click", (e) => {
+  notifIcon.addEventListener("click", async (e) => {
     e.stopPropagation();
     // Close search dropdown if open
-    const searchDropdown = document.querySelector("#globalSearchDropdown");
+    const searchDropdown = document.querySelector("#global-search-dropdown");
     if (searchDropdown) searchDropdown.classList.add("hidden");
     
-    dropdown.classList.toggle("hidden");
-    if (!dropdown.classList.contains("hidden")) {
-      // Mark as read (hide red dot badge)
-      badge.classList.add("hidden");
+    // Refresh alerts dynamic data on open
+    if (dropdown.classList.contains("hidden")) {
+      await refreshDropdownAlerts();
     }
+    
+    dropdown.classList.toggle("hidden");
   });
 
   // Clear all handler
@@ -419,16 +581,21 @@ function initNotifications() {
   if (btnClear) {
     btnClear.addEventListener("click", (e) => {
       e.stopPropagation();
-      const list = dropdown.querySelector("#notifItemsList");
-      if (list) {
-        list.innerHTML = `
-          <div class="flex flex-col items-center justify-center py-6 text-center text-muted gap-2">
-            <span class="material-symbols-rounded text-2xl text-light">notifications_off</span>
-            <span class="text-xs italic">All notifications cleared.</span>
-          </div>
-        `;
+      const dismissedAlertIds = JSON.parse(localStorage.getItem("sovereign_dismissed_alerts")) || [];
+      activeAlerts.forEach(a => {
+        if (!dismissedAlertIds.includes(a.id)) {
+          dismissedAlertIds.push(a.id);
+        }
+      });
+      localStorage.setItem("sovereign_dismissed_alerts", JSON.stringify(dismissedAlertIds));
+      
+      activeAlerts = [];
+      renderAlertsList();
+      
+      // If the current page is alerts.html, refresh it too to sync UI
+      if (window.location.pathname.endsWith("alerts.html")) {
+        window.location.reload();
       }
-      badge.classList.add("hidden");
     });
   }
 
@@ -437,5 +604,44 @@ function initNotifications() {
     if (!dropdown.classList.contains("hidden") && !dropdown.contains(e.target) && e.target !== notifIcon) {
       dropdown.classList.add("hidden");
     }
+  });
+}
+
+function initDynamicCategoryRadios() {
+  const container = document.getElementById("category-radio");
+  if (!container) return;
+
+  const defaultCategories = [
+    { value: "Groceries", label: "Groceries", icon: "shopping_basket" },
+    { value: "Dining", label: "Dining", icon: "restaurant" },
+    { value: "Transport", label: "Transport", icon: "directions_car" },
+    { value: "Rent", label: "Rent", icon: "home" }
+  ];
+
+  const saved = localStorage.getItem("sovereign_categories");
+  let categories = defaultCategories;
+  if (saved) {
+    try {
+      categories = JSON.parse(saved);
+    } catch (e) {
+      console.warn("Failed to parse dynamic categories, falling back to defaults.");
+    }
+  } else {
+    localStorage.setItem("sovereign_categories", JSON.stringify(defaultCategories));
+  }
+
+  container.innerHTML = "";
+  categories.forEach((cat, idx) => {
+    const isChecked = idx === 0 ? "checked" : "";
+    const radioHTML = `
+      <label class="flex-1 cursor-pointer min-w-[90px]">
+        <input type="radio" name="category" value="${cat.value}" class="peer hidden" ${isChecked} required>
+        <div class="h-full bg-slate-50 dark:bg-[#101a15] border border-slate-100 text-main text-[0.7rem] font-semibold rounded-lg py-3 px-2 flex flex-col items-center gap-1.5 peer-checked:bg-primary peer-checked:text-white transition-all hover:bg-slate-100 dark:hover:bg-slate-800">
+          <span class="material-symbols-rounded text-sm">${cat.icon}</span>
+          <span>${cat.label}</span>
+        </div>
+      </label>
+    `;
+    container.insertAdjacentHTML("beforeend", radioHTML);
   });
 }
