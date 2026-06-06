@@ -117,11 +117,35 @@
           </div>
 
           <!-- Time frame selector -->
-          <button class="flex items-center gap-2 bg-white border border-border rounded-lg px-4 py-2.5 text-xs font-bold text-main cursor-pointer shadow-sm hover:border-slate-300 transition-colors">
-            <span class="material-symbols-rounded text-sm text-muted">calendar_today</span>
-            Last 6 Months
-            <span class="material-symbols-rounded text-xs text-muted">expand_more</span>
-          </button>
+          <div class="relative inline-block text-left" id="timeframeContainer">
+            <button id="btnTimeframeSelector" class="flex items-center gap-2 bg-white dark:bg-card-alt border border-border rounded-lg px-4 py-2.5 text-xs font-bold text-main cursor-pointer shadow-sm hover:border-slate-300 transition-colors">
+              <span class="material-symbols-rounded text-sm text-muted">calendar_today</span>
+              <span id="lblTimeframe">Last 6 Months</span>
+              <span class="material-symbols-rounded text-xs text-muted">expand_more</span>
+            </button>
+            <div id="timeframeDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-card-alt border border-border rounded-xl shadow-xl hidden z-50 py-1">
+              <button class="timeframe-option flex items-center justify-between px-4 py-2.5 w-full text-left text-xs font-semibold text-main hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" data-range="30days">
+                Last 30 Days
+                <span class="material-symbols-rounded text-[1rem] text-primary invisible check-icon">check</span>
+              </button>
+              <button class="timeframe-option flex items-center justify-between px-4 py-2.5 w-full text-left text-xs font-semibold text-main hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" data-range="90days">
+                Last 90 Days
+                <span class="material-symbols-rounded text-[1rem] text-primary invisible check-icon">check</span>
+              </button>
+              <button class="timeframe-option flex items-center justify-between px-4 py-2.5 w-full text-left text-xs font-semibold text-main hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" data-range="6months">
+                Last 6 Months
+                <span class="material-symbols-rounded text-[1rem] text-primary invisible check-icon">check</span>
+              </button>
+              <button class="timeframe-option flex items-center justify-between px-4 py-2.5 w-full text-left text-xs font-semibold text-main hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" data-range="1year">
+                Last 1 Year
+                <span class="material-symbols-rounded text-[1rem] text-primary invisible check-icon">check</span>
+              </button>
+              <button class="timeframe-option flex items-center justify-between px-4 py-2.5 w-full text-left text-xs font-semibold text-main hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" data-range="all">
+                All Time
+                <span class="material-symbols-rounded text-[1rem] text-primary invisible check-icon">check</span>
+              </button>
+            </div>
+          </div>
 
           <!-- Notification & Help Tools -->
           <div class="flex items-center gap-4 text-muted cursor-pointer px-1">
@@ -170,56 +194,8 @@
           </div>
 
           <!-- Custom HTML Monthly Bar Chart -->
-          <div class="flex justify-between items-end mt-4 h-44 px-4 w-full relative">
-            
-            <!-- JAN -->
-            <div class="flex flex-col items-center gap-2 flex-1">
-              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
-                <div class="w-full bg-[#06402b] rounded-lg" style="height: 55%"></div>
-              </div>
-              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Jan</span>
-            </div>
-
-            <!-- FEB -->
-            <div class="flex flex-col items-center gap-2 flex-1">
-              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
-                <div class="w-full bg-[#06402b] rounded-lg" style="height: 75%"></div>
-              </div>
-              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Feb</span>
-            </div>
-
-            <!-- MAR -->
-            <div class="flex flex-col items-center gap-2 flex-1">
-              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
-                <div class="w-full bg-[#06402b] rounded-lg" style="height: 45%"></div>
-              </div>
-              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Mar</span>
-            </div>
-
-            <!-- APR -->
-            <div class="flex flex-col items-center gap-2 flex-1">
-              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
-                <div class="w-full bg-[#06402b] rounded-lg" style="height: 85%"></div>
-              </div>
-              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Apr</span>
-            </div>
-
-            <!-- MAY -->
-            <div class="flex flex-col items-center gap-2 flex-1">
-              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
-                <div class="w-full bg-[#06402b] rounded-lg" style="height: 95%"></div>
-              </div>
-              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">May</span>
-            </div>
-
-            <!-- JUN -->
-            <div class="flex flex-col items-center gap-2 flex-1">
-              <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner">
-                <div class="w-full bg-[#06402b] rounded-lg" style="height: 65%"></div>
-              </div>
-              <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">Jun</span>
-            </div>
-
+          <div id="reportsMonthlyBarChart" class="flex justify-between items-end mt-4 h-44 px-4 w-full relative">
+            <!-- Dynamically populated monthly bars go here -->
           </div>
         </div>
 
@@ -597,16 +573,200 @@
           });
         }
 
+        // Initialize timeframe dropdown event listeners
+        initTimeframeSelector();
+
         // Load dynamic reports insights
         await loadDynamicReportsData();
       }
     });
+
+    function getFilteredTransactions(allTrans, range) {
+      const today = new Date();
+      let startDate = null;
+      
+      if (range === "30days") {
+        startDate = new Date();
+        startDate.setDate(today.getDate() - 30);
+      } else if (range === "90days") {
+        startDate = new Date();
+        startDate.setDate(today.getDate() - 90);
+      } else if (range === "6months") {
+        startDate = new Date();
+        startDate.setMonth(today.getMonth() - 6);
+      } else if (range === "1year") {
+        startDate = new Date();
+        startDate.setFullYear(today.getFullYear() - 1);
+      }
+      
+      return allTrans.filter(t => {
+        if (!startDate) return true;
+        const tDate = new Date(t.date + "T00:00:00");
+        return tDate >= startDate;
+      });
+    }
+
+    function getMonthsInRange(range, allTrans) {
+      const months = [];
+      const today = new Date();
+      let count = 6;
+      
+      if (range === "30days") count = 2;
+      else if (range === "90days") count = 3;
+      else if (range === "6months") count = 6;
+      else if (range === "1year") count = 12;
+      
+      if (range === "all") {
+        if (!allTrans || allTrans.length === 0) {
+          count = 6;
+        } else {
+          let oldest = new Date();
+          allTrans.forEach(t => {
+            if (!t.date) return;
+            const d = new Date(t.date + "T00:00:00");
+            if (d < oldest) oldest = d;
+          });
+          
+          const start = new Date(oldest.getFullYear(), oldest.getMonth(), 1);
+          const end = new Date(today.getFullYear(), today.getMonth(), 1);
+          let current = new Date(start);
+          while (current <= end) {
+            const year = current.getFullYear();
+            const monthNum = String(current.getMonth() + 1).padStart(2, "0");
+            const monthKey = `${year}-${monthNum}`;
+            const monthLabel = current.toLocaleString("default", { month: "short" });
+            months.push({ key: monthKey, label: monthLabel });
+            current.setMonth(current.getMonth() + 1);
+          }
+          return months;
+        }
+      }
+      
+      for (let i = count - 1; i >= 0; i--) {
+        const d = new Date(today.getFullYear(), today.getMonth() - i, 1);
+        const year = d.getFullYear();
+        const monthNum = String(d.getMonth() + 1).padStart(2, "0");
+        const monthKey = `${year}-${monthNum}`;
+        const monthLabel = d.toLocaleString("default", { month: "short" });
+        months.push({ key: monthKey, label: monthLabel });
+      }
+      return months;
+    }
+
+    function populateMonthlyChart(filteredTrans, range, allTrans) {
+      const chartContainer = document.getElementById("reportsMonthlyBarChart");
+      if (!chartContainer) return;
+      
+      const months = getMonthsInRange(range, allTrans);
+      
+      const monthlyNet = {};
+      months.forEach(m => {
+        monthlyNet[m.key] = 0;
+      });
+      
+      filteredTrans.forEach(t => {
+        if (!t.date) return;
+        const monthKey = t.date.substring(0, 7);
+        if (monthlyNet.hasOwnProperty(monthKey)) {
+          const amt = parseFloat(t.amount) || 0;
+          monthlyNet[monthKey] += amt;
+        }
+      });
+      
+      const values = Object.values(monthlyNet);
+      const absValues = values.map(v => Math.abs(v));
+      const maxVal = Math.max(...absValues, 1000);
+      
+      chartContainer.innerHTML = "";
+      months.forEach(m => {
+        const net = monthlyNet[m.key];
+        const pct = Math.min(100, Math.round((Math.abs(net) / maxVal) * 95));
+        const barColor = net >= 0 ? "#06402b" : "#ba1a1a";
+        
+        chartContainer.innerHTML += `
+          <div class="flex flex-col items-center gap-2 flex-1 group relative">
+            <div class="absolute -top-10 scale-0 group-hover:scale-100 transition-transform bg-slate-900 text-white text-[0.65rem] font-bold py-1.5 px-2.5 rounded shadow-lg z-20 whitespace-nowrap">
+              Net: ${net >= 0 ? "+" : "-"}₹${Math.round(Math.abs(net)).toLocaleString("en-IN")}
+            </div>
+            
+            <div class="w-12 h-36 bg-[#dbe2f9] rounded-lg relative flex flex-col justify-end overflow-hidden shadow-inner cursor-pointer">
+              <div class="w-full rounded-lg transition-all duration-500 ease-out" style="height: ${pct}%; background-color: ${barColor};"></div>
+            </div>
+            <span class="text-[0.65rem] text-[#64748b] font-bold uppercase tracking-wide font-manrope">${m.label}</span>
+          </div>
+        `;
+      });
+    }
+
+    function updateTimeframeUI(range) {
+      const lblTimeframe = document.getElementById("lblTimeframe");
+      const timeframeOptions = document.querySelectorAll(".timeframe-option");
+      
+      const labels = {
+        "30days": "Last 30 Days",
+        "90days": "Last 90 Days",
+        "6months": "Last 6 Months",
+        "1year": "Last 1 Year",
+        "all": "All Time"
+      };
+      if (lblTimeframe) {
+        lblTimeframe.textContent = labels[range] || "Last 6 Months";
+      }
+      
+      timeframeOptions.forEach(opt => {
+        const check = opt.querySelector(".check-icon");
+        if (check) {
+          if (opt.getAttribute("data-range") === range) {
+            check.classList.remove("invisible");
+            check.classList.add("visible");
+          } else {
+            check.classList.remove("visible");
+            check.classList.add("invisible");
+          }
+        }
+      });
+    }
+
+    function initTimeframeSelector() {
+      const btnTimeframeSelector = document.getElementById("btnTimeframeSelector");
+      const timeframeDropdown = document.getElementById("timeframeDropdown");
+      const timeframeOptions = document.querySelectorAll(".timeframe-option");
+      
+      let selectedRange = localStorage.getItem("sovereign_report_range") || "6months";
+      updateTimeframeUI(selectedRange);
+      
+      if (btnTimeframeSelector && timeframeDropdown) {
+        btnTimeframeSelector.addEventListener("click", (e) => {
+          e.stopPropagation();
+          timeframeDropdown.classList.toggle("hidden");
+        });
+        
+        document.addEventListener("click", () => {
+          timeframeDropdown.classList.add("hidden");
+        });
+      }
+      
+      timeframeOptions.forEach(opt => {
+        opt.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          const range = opt.getAttribute("data-range");
+          localStorage.setItem("sovereign_report_range", range);
+          updateTimeframeUI(range);
+          timeframeDropdown.classList.add("hidden");
+          await loadDynamicReportsData();
+        });
+      });
+    }
 
     async function loadDynamicReportsData() {
       const res = await getData();
       if (!res || !res.success) return;
       
       const allTrans = res.data;
+      
+      // Get current timeframe selection
+      const range = localStorage.getItem("sovereign_report_range") || "6months";
+      const filteredTrans = getFilteredTransactions(allTrans, range);
       
       let incomeSum = 0;
       let expenseSum = 0;
@@ -645,7 +805,7 @@
       let maxExpense = 0;
       let maxExpenseDesc = "unusual spending";
 
-      allTrans.forEach(t => {
+      filteredTrans.forEach(t => {
         const amt = parseFloat(t.amount) || 0;
         if (amt > 0) {
           incomeSum += amt;
@@ -694,7 +854,7 @@
       const advisorTitleEl = document.getElementById("reportsAdvisorTitle");
       const advisorTextEl = document.getElementById("reportsAdvisorText");
       if (advisorTitleEl && advisorTextEl) {
-        const diningSpend = categorySpends.Dining;
+        const diningSpend = categorySpends.Dining || 0;
         if (diningSpend > 1000) {
           const saveVal = Math.round(diningSpend * 0.2);
           advisorTitleEl.textContent = `You could save ₹${saveVal.toLocaleString("en-IN")} by reducing dining out next month.`;
@@ -803,11 +963,14 @@
         reportsTopCategoryIcon.className = `w-12 h-12 rounded-xl ${info.bg} ${info.text} flex items-center justify-center shrink-0`;
         reportsTopCategoryIcon.innerHTML = `<span class="material-symbols-rounded">${info.icon}</span>`;
         reportsTopCategoryName.textContent = info.name;
-        reportsTopCategorySpend.textContent = `₹${maxCatVal.toLocaleString("en-IN", { maximumFractionDigits: 0 })} spent this month`;
+        reportsTopCategorySpend.textContent = `₹${maxCatVal.toLocaleString("en-IN", { maximumFractionDigits: 0 })} spent in this period`;
         
         const pct = expenseSum > 0 ? Math.round((maxCatVal / expenseSum) * 100) : 0;
         reportsTopCategoryBar.style.width = `${pct}%`;
       }
+
+      // Populate monthly bar chart
+      populateMonthlyChart(filteredTrans, range, allTrans);
 
       // Clear loading-blur effect once loaded
       document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
@@ -819,7 +982,9 @@
       btnExportCSV.addEventListener("click", async () => {
         const res = await getData();
         const transactions = (res && res.success) ? res.data : [];
-        exportToCSV(transactions);
+        const range = localStorage.getItem("sovereign_report_range") || "6months";
+        const filtered = getFilteredTransactions(transactions, range);
+        exportToCSV(filtered);
       });
     }
 
@@ -828,7 +993,9 @@
       btnExportExcel.addEventListener("click", async () => {
         const res = await getData();
         const transactions = (res && res.success) ? res.data : [];
-        exportToExcel(transactions);
+        const range = localStorage.getItem("sovereign_report_range") || "6months";
+        const filtered = getFilteredTransactions(transactions, range);
+        exportToExcel(filtered);
       });
     }
 
@@ -839,6 +1006,13 @@
         const transactions = (res && res.success) ? res.data : [];
         if (!transactions || transactions.length === 0) {
           alert("No transaction data available to download.");
+          return;
+        }
+
+        const range = localStorage.getItem("sovereign_report_range") || "6months";
+        const filtered = getFilteredTransactions(transactions, range);
+        if (!filtered || filtered.length === 0) {
+          alert("No transaction data available for the selected timeframe to download.");
           return;
         }
 
@@ -867,7 +1041,7 @@
           categorySpends[cat.value] = 0;
         });
 
-        transactions.forEach(t => {
+        filtered.forEach(t => {
           const amt = parseFloat(t.amount) || 0;
           if (amt > 0) {
             incomeSum += amt;
@@ -881,7 +1055,7 @@
           }
         });
 
-        downloadPDFReport(transactions, incomeSum, expenseSum, categorySpends, activeCategories);
+        downloadPDFReport(filtered, incomeSum, expenseSum, categorySpends, activeCategories);
       });
     }
 
