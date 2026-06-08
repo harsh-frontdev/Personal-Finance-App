@@ -1,5 +1,6 @@
 import { auth } from "./services/api.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { showToast } from "./components/toast.js";
 
 const form = document.querySelector("form");
 const emailInput = document.querySelector("#email");
@@ -38,7 +39,22 @@ form.addEventListener("submit", async (e) => {
         return;
       }
     }
-    alert("Login failed: " + error.message);
+    
+    // Custom friendly alerts based on Firebase Auth error codes
+    let friendlyMessage = "Login failed. Please verify your credentials.";
+    if (error.code === "auth/user-not-found" || error.code === "auth/invalid-email") {
+      friendlyMessage = "This user account does not exist.";
+    } else if (error.code === "auth/wrong-password") {
+      friendlyMessage = "The password does not match the account.";
+    } else if (error.code === "auth/invalid-credential") {
+      friendlyMessage = "Invalid credentials. The user does not exist or the password does not match the account.";
+    } else if (error.code === "auth/too-many-requests") {
+      friendlyMessage = "Too many failed login attempts. Access has been temporarily suspended.";
+    } else if (error.code === "auth/user-disabled") {
+      friendlyMessage = "This user account has been disabled.";
+    }
+    
+    showToast(friendlyMessage, "error");
     submitBtn.disabled = false;
     submitBtn.textContent = "Sign In to Ledger";
   }
