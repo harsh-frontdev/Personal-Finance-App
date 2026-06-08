@@ -346,12 +346,15 @@ async function initNotifications() {
   // Create the absolute dropdown element
   const dropdown = document.createElement("div");
   dropdown.id = "notificationDropdownContainer";
-  dropdown.className = "absolute right-0 top-12 w-[340px] bg-white/95 dark:bg-[#0b120f]/95 backdrop-blur-md border border-border rounded-2xl shadow-xl p-5 hidden flex-col gap-4 z-[999] animate-fade-in-up text-main";
+  dropdown.className = "absolute right-0 top-12 w-[360px] bg-white/90 dark:bg-[#0b120f]/90 backdrop-blur-xl border border-slate-100 dark:border-[#182420] ring-1 ring-slate-900/5 dark:ring-white/5 rounded-2xl shadow-2xl p-5 hidden flex-col gap-4 z-[999] animate-fade-in-up text-main";
   
   dropdown.innerHTML = `
-    <div class="flex justify-between items-center pb-2.5 border-b border-border">
-      <h4 class="text-xs font-bold font-manrope uppercase tracking-wider text-main">Notifications</h4>
-      <button id="btnClearNotifs" class="text-[0.65rem] font-bold text-primary hover:text-primary-hover cursor-pointer outline-none hover:underline">Clear all</button>
+    <div class="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-[#182420]">
+      <div class="flex items-center gap-2">
+        <h4 class="text-[0.68rem] font-extrabold font-manrope uppercase tracking-[0.12em] text-muted dark:text-slate-400">Notifications</h4>
+        <span id="notifCountBadge" class="px-2 py-0.5 text-[0.6rem] font-bold rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-hover hidden">0</span>
+      </div>
+      <button id="btnClearNotifs" class="text-[0.68rem] font-bold text-muted hover:text-danger cursor-pointer outline-none transition-colors">Clear all</button>
     </div>
     
     <div class="flex flex-col gap-0 max-h-[260px] overflow-y-auto py-2 pr-1" id="notifItemsList">
@@ -361,8 +364,8 @@ async function initNotifications() {
       </div>
     </div>
     
-    <div class="pt-2.5 border-t border-border text-center">
-      <a href="alerts.html" class="text-[0.7rem] font-bold text-primary hover:text-primary-hover hover:underline">View all alerts</a>
+    <div class="pt-3 border-t border-slate-100 dark:border-[#182420]">
+      <a href="alerts.html" class="block w-full py-2 text-center text-[0.7rem] font-bold text-primary dark:text-primary-hover bg-slate-50 dark:bg-slate-900/30 hover:bg-slate-100/80 dark:hover:bg-slate-900/60 rounded-xl transition-all border border-slate-100 dark:border-slate-800/40">View all alerts</a>
     </div>
   `;
 
@@ -517,10 +520,16 @@ async function initNotifications() {
 
     list.innerHTML = "";
 
+    const countBadge = dropdown.querySelector("#notifCountBadge");
+
     if (activeAlerts.length === 0) {
       renderEmptyState();
       badge.classList.add("hidden");
       badge.textContent = "";
+      if (countBadge) {
+        countBadge.classList.add("hidden");
+        countBadge.textContent = "0";
+      }
       return;
     }
 
@@ -528,21 +537,26 @@ async function initNotifications() {
     badge.textContent = activeAlerts.length;
     badge.classList.remove("hidden");
 
+    if (countBadge) {
+      countBadge.textContent = activeAlerts.length;
+      countBadge.classList.remove("hidden");
+    }
+
     // Only show top 3 alerts in dropdown to keep it compact
     activeAlerts.slice(0, 3).forEach(alert => {
       const item = document.createElement("a");
       item.href = "alerts.html";
-      item.className = "flex gap-3 p-3 rounded-xl hover:bg-slate-100/60 dark:hover:bg-[#101a15]/80 text-main transition-all border border-transparent hover:border-slate-200/50 dark:hover:border-[#182420] cursor-pointer group mb-2 last:mb-0";
+      item.className = "flex gap-3.5 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/40 text-main transition-all border border-transparent hover:border-slate-100/80 dark:hover:border-slate-800/40 cursor-pointer group mb-1.5 last:mb-0";
       item.innerHTML = `
-        <div class="w-8 h-8 rounded-lg ${alert.iconClass} flex items-center justify-center shrink-0 shadow-sm">
+        <div class="w-8 h-8 rounded-lg ${alert.iconClass} flex items-center justify-center shrink-0 shadow-sm transition-transform duration-200 group-hover:scale-105">
           <span class="material-symbols-rounded text-md">${alert.icon}</span>
         </div>
         <div class="flex flex-col gap-0.5 min-w-0 flex-1">
-          <div class="flex justify-between items-baseline">
-            <span class="text-xs font-bold text-main leading-tight truncate group-hover:text-primary transition-colors">${alert.title}</span>
-            <span class="text-[0.55rem] text-light font-bold uppercase shrink-0">${alert.time}</span>
+          <div class="flex justify-between items-baseline gap-2">
+            <span class="text-xs font-bold text-main leading-tight truncate group-hover:text-primary dark:group-hover:text-primary-hover transition-colors">${alert.title}</span>
+            <span class="text-[0.55rem] text-light font-bold uppercase tracking-wider shrink-0">${alert.time}</span>
           </div>
-          <span class="text-[0.65rem] text-muted leading-relaxed truncate">${alert.desc}</span>
+          <span class="text-[0.65rem] text-muted dark:text-slate-400 leading-relaxed truncate">${alert.desc}</span>
         </div>
       `;
       list.appendChild(item);
