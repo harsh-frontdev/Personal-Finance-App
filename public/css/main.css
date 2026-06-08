@@ -9,8 +9,10 @@
       "Courier New", monospace;
     --color-red-50: oklch(97.1% 0.013 17.38);
     --color-red-100: oklch(93.6% 0.032 17.717);
+    --color-red-200: oklch(88.5% 0.062 18.334);
     --color-red-300: oklch(80.8% 0.114 19.571);
     --color-red-600: oklch(57.7% 0.245 27.325);
+    --color-red-700: oklch(50.5% 0.213 27.518);
     --color-red-800: oklch(44.4% 0.177 26.899);
     --color-red-950: oklch(25.8% 0.092 26.042);
     --color-amber-50: oklch(98.7% 0.022 95.277);
@@ -100,6 +102,7 @@
     --color-slate-700: oklch(37.2% 0.044 257.287);
     --color-slate-800: oklch(27.9% 0.041 260.031);
     --color-slate-900: oklch(20.8% 0.042 265.755);
+    --color-slate-950: oklch(12.9% 0.042 264.695);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -141,6 +144,7 @@
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --animate-spin: spin 1s linear infinite;
@@ -393,6 +397,9 @@
   .-top-16 {
     top: calc(var(--spacing) * -16);
   }
+  .-top-24 {
+    top: calc(var(--spacing) * -24);
+  }
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
@@ -417,6 +424,9 @@
   .-right-16 {
     right: calc(var(--spacing) * -16);
   }
+  .-right-24 {
+    right: calc(var(--spacing) * -24);
+  }
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
@@ -432,6 +442,9 @@
   .-bottom-8 {
     bottom: calc(var(--spacing) * -8);
   }
+  .-bottom-24 {
+    bottom: calc(var(--spacing) * -24);
+  }
   .-bottom-32 {
     bottom: calc(var(--spacing) * -32);
   }
@@ -440,6 +453,9 @@
   }
   .bottom-6 {
     bottom: calc(var(--spacing) * 6);
+  }
+  .-left-24 {
+    left: calc(var(--spacing) * -24);
   }
   .-left-32 {
     left: calc(var(--spacing) * -32);
@@ -473,6 +489,9 @@
   }
   .z-\[2000\] {
     z-index: 2000;
+  }
+  .z-\[99999\] {
+    z-index: 99999;
   }
   .col-span-1 {
     grid-column: span 1 / span 1;
@@ -581,6 +600,9 @@
   }
   .mb-2\.5 {
     margin-bottom: calc(var(--spacing) * 2.5);
+  }
+  .mb-3 {
+    margin-bottom: calc(var(--spacing) * 3);
   }
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
@@ -797,6 +819,9 @@
   .h-\[360px\] {
     height: 360px;
   }
+  .h-\[520px\] {
+    height: 520px;
+  }
   .h-\[560px\] {
     height: 560px;
   }
@@ -935,6 +960,9 @@
   .w-\[480px\] {
     width: 480px;
   }
+  .w-\[800px\] {
+    width: 800px;
+  }
   .w-\[900px\] {
     width: 900px;
   }
@@ -958,6 +986,9 @@
   }
   .max-w-\[460px\] {
     max-width: 460px;
+  }
+  .max-w-\[480px\] {
+    max-width: 480px;
   }
   .max-w-\[580px\] {
     max-width: 580px;
@@ -1158,6 +1189,9 @@
   .rounded-2xl {
     border-radius: var(--radius-2xl);
   }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
+  }
   .rounded-\[4px\] {
     border-radius: 4px;
   }
@@ -1241,6 +1275,12 @@
   }
   .border-danger {
     border-color: var(--color-danger);
+  }
+  .border-danger\/20 {
+    border-color: color-mix(in srgb, #ba1a1a 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-danger) 20%, transparent);
+    }
   }
   .border-emerald-100 {
     border-color: var(--color-emerald-100);
@@ -1416,6 +1456,18 @@
   .bg-danger {
     background-color: var(--color-danger);
   }
+  .bg-danger\/10 {
+    background-color: color-mix(in srgb, #ba1a1a 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-danger) 10%, transparent);
+    }
+  }
+  .bg-danger\/15 {
+    background-color: color-mix(in srgb, #ba1a1a 15%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-danger) 15%, transparent);
+    }
+  }
   .bg-emerald-50 {
     background-color: var(--color-emerald-50);
   }
@@ -1543,6 +1595,12 @@
     background-color: color-mix(in srgb, oklch(20.8% 0.042 265.755) 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-slate-900) 40%, transparent);
+    }
+  }
+  .bg-slate-950\/95 {
+    background-color: color-mix(in srgb, oklch(12.9% 0.042 264.695) 95%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-slate-950) 95%, transparent);
     }
   }
   .bg-teal-50 {
@@ -2056,6 +2114,9 @@
   .text-\[\#fbbf24\] {
     color: #fbbf24;
   }
+  .text-\[\#fee2e2\] {
+    color: #fee2e2;
+  }
   .text-amber-600 {
     color: var(--color-amber-600);
   }
@@ -2133,6 +2194,9 @@
   }
   .text-purple-700 {
     color: var(--color-purple-700);
+  }
+  .text-red-200 {
+    color: var(--color-red-200);
   }
   .text-red-600 {
     color: var(--color-red-600);
@@ -2270,6 +2334,12 @@
     --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
+  .shadow-primary\/20 {
+    --tw-shadow-color: color-mix(in srgb, #2b6954 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-primary) 20%, transparent) var(--tw-shadow-alpha), transparent);
+    }
+  }
   .ring-slate-900\/5 {
     --tw-ring-color: color-mix(in srgb, oklch(20.8% 0.042 265.755) 5%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2302,6 +2372,11 @@
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .backdrop-blur-2xl {
+    --tw-backdrop-blur: blur(var(--blur-2xl));
+    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
   }
   .backdrop-blur-md {
     --tw-backdrop-blur: blur(var(--blur-md));
@@ -2719,6 +2794,13 @@
       }
     }
   }
+  .hover\:bg-red-700 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-red-700);
+      }
+    }
+  }
   .hover\:bg-slate-50 {
     &:hover {
       @media (hover: hover) {
@@ -2760,6 +2842,13 @@
         @supports (color: color-mix(in lab, red, red)) {
           background-color: color-mix(in oklab, var(--color-slate-100) 80%, transparent);
         }
+      }
+    }
+  }
+  .hover\:bg-slate-200 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-slate-200);
       }
     }
   }
@@ -3067,6 +3156,11 @@
       }
     }
   }
+  .dark\:bg-\[\#0b120f\]\/50 {
+    &:where(.dark, .dark *) {
+      background-color: color-mix(in oklab, #0b120f 50%, transparent);
+    }
+  }
   .dark\:bg-\[\#0b120f\]\/60 {
     &:where(.dark, .dark *) {
       background-color: color-mix(in oklab, #0b120f 60%, transparent);
@@ -3075,6 +3169,11 @@
   .dark\:bg-\[\#0b120f\]\/90 {
     &:where(.dark, .dark *) {
       background-color: color-mix(in oklab, #0b120f 90%, transparent);
+    }
+  }
+  .dark\:bg-\[\#060c09\]\/95 {
+    &:where(.dark, .dark *) {
+      background-color: color-mix(in oklab, #060c09 95%, transparent);
     }
   }
   .dark\:bg-\[\#101a15\] {
@@ -3599,7 +3698,7 @@ html.dark #toast-container > div {
   color: var(--color-main) !important;
   border-color: var(--color-border) !important;
 }
-html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div {
+html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div, html.dark #manageWorkspaceModal > div {
   background-color: var(--color-sidebar) !important;
   color: var(--color-main) !important;
 }
@@ -3610,7 +3709,7 @@ html.dark #addTransactionModal input, html.dark #addTransactionModal select, htm
   background-color: var(--color-card-alt) !important;
   color: var(--color-main) !important;
 }
-html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots {
+html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots, html.dark #manageWorkspaceModal .modal-left-dots {
   background-color: #032b1c !important;
 }
 html.dark input[type="date"]::-webkit-calendar-picker-indicator {

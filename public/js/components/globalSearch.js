@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initDarkMode();
   initNotifications();
   initDynamicCategoryRadios();
+  checkWorkspaceDeactivation();
 });
 
 async function initGlobalSearch() {
@@ -662,3 +663,68 @@ function initDynamicCategoryRadios() {
     container.insertAdjacentHTML("beforeend", radioHTML);
   });
 }
+
+function checkWorkspaceDeactivation() {
+  const isDeactivated = localStorage.getItem("sovereign_workspace_deactivated") === "true";
+  
+  // Clean up any existing overlay first
+  const existingOverlay = document.getElementById("deactivated-workspace-overlay");
+  if (existingOverlay) {
+    existingOverlay.remove();
+  }
+  
+  if (isDeactivated) {
+    // Inject full-screen block overlay
+    const overlay = document.createElement("div");
+    overlay.id = "deactivated-workspace-overlay";
+    overlay.className = "fixed inset-0 bg-slate-950/95 dark:bg-[#060c09]/95 backdrop-blur-2xl flex flex-col items-center justify-center z-[99999] p-6 text-white animate-fade-in";
+    overlay.innerHTML = `
+      <div class="max-w-[480px] w-full bg-white/5 dark:bg-[#0b120f]/50 border border-white/10 dark:border-[#182420] rounded-3xl p-8 flex flex-col items-center text-center shadow-2xl relative overflow-hidden">
+        <!-- Background decorative ambient glow -->
+        <div class="absolute -top-24 -left-24 w-48 h-48 bg-danger/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <!-- Big security / locked icon -->
+        <div class="w-16 h-16 rounded-2xl bg-danger/10 border border-danger/20 flex items-center justify-center mb-6 shadow-inner animate-pulse">
+          <span class="material-symbols-rounded text-3xl text-danger">lock</span>
+        </div>
+        
+        <span class="text-[0.6rem] tracking-[0.15em] uppercase bg-danger/15 text-danger font-extrabold px-3 py-1 rounded-full border border-danger/20 mb-4">WORKSPACE SUSPENDED</span>
+        
+        <h2 class="text-2xl font-bold font-manrope leading-tight text-white mb-3">Workspace Deactivated</h2>
+        <p class="text-xs text-slate-300 dark:text-slate-400 font-medium leading-relaxed mb-8">
+          Access to your ledgers, accounts, budgets, and financial intelligence has been temporarily paused. Your records are securely preserved but local sync has stopped.
+        </p>
+        
+        <button id="btnReactivateWorkspace" class="w-full bg-primary hover:bg-primary-hover text-white border-none rounded-xl py-3.5 text-xs font-bold cursor-pointer transition-all active:scale-98 shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+          <span class="material-symbols-rounded text-sm">lock_open</span>
+          Reactivate Workspace
+        </button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    
+    // Add event listener to reactivate button
+    const btnReactivate = overlay.querySelector("#btnReactivateWorkspace");
+    if (btnReactivate) {
+      btnReactivate.addEventListener("click", () => {
+        localStorage.setItem("sovereign_workspace_deactivated", "false");
+        overlay.classList.add("hidden");
+        overlay.remove();
+        if (typeof showToast === "function") {
+          showToast("Workspace reactivated successfully!", "success");
+        }
+        window.location.reload();
+      });
+    }
+    
+    // Prevent interaction with the main page
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+}
+
+// Make checkWorkspaceDeactivation globally accessible
+window.checkWorkspaceDeactivation = checkWorkspaceDeactivation;
+

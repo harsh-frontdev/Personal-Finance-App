@@ -315,7 +315,7 @@ html.dark #toast-container > div {
 }
 
 /* Modals dark mode overrides */
-html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div {
+html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div, html.dark #manageWorkspaceModal > div {
   background-color: var(--color-sidebar) !important;
   color: var(--color-main) !important;
 }
@@ -331,7 +331,7 @@ html.dark #editBudgetLimitInput {
   color: var(--color-main) !important;
 }
 
-html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots {
+html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots, html.dark #manageWorkspaceModal .modal-left-dots {
   background-color: #032b1c !important;
 }
 
