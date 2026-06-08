@@ -315,7 +315,7 @@ html.dark #toast-container > div {
 }
 
 /* Modals dark mode overrides */
-html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div, html.dark #manageWorkspaceModal > div {
+html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div, html.dark #manageWorkspaceModal > div, html.dark #deleteAccountModal > div {
   background-color: var(--color-sidebar) !important;
   color: var(--color-main) !important;
 }
@@ -326,12 +326,12 @@ html.dark #addTransactionModal form, html.dark #updatePasswordModal form, html.d
 
 html.dark #addTransactionModal input, html.dark #addTransactionModal select, html.dark #addTransactionModal textarea,
 html.dark #updatePasswordModal input, html.dark #updatePasswordModal select, html.dark #updatePasswordModal textarea,
-html.dark #editBudgetLimitInput {
+html.dark #editBudgetLimitInput, html.dark #deleteConfirmationInput {
   background-color: var(--color-card-alt) !important;
   color: var(--color-main) !important;
 }
 
-html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots, html.dark #manageWorkspaceModal .modal-left-dots {
+html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots, html.dark #manageWorkspaceModal .modal-left-dots, html.dark #deleteAccountModal .modal-left-dots {
   background-color: #032b1c !important;
 }
 

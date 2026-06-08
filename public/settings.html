@@ -448,9 +448,14 @@
             </p>
           </div>
           
-          <button id="btnOpenManageWorkspace" class="bg-transparent text-[#ba1a1a] border border-[#fecaca] hover:bg-[#fee2e2] rounded-lg px-5 py-2.5 font-bold text-xs cursor-pointer transition-colors active:scale-95">
-            Manage Account Access
-          </button>
+          <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+            <button id="btnOpenManageWorkspace" class="bg-transparent text-[#ba1a1a] border border-[#fecaca] hover:bg-[#fee2e2] rounded-lg px-5 py-2.5 font-bold text-xs cursor-pointer transition-colors active:scale-95">
+              Manage Account Access
+            </button>
+            <button id="btnOpenDeleteAccount" class="bg-[#ba1a1a] hover:bg-red-700 text-white border-none rounded-lg px-5 py-2.5 font-bold text-xs cursor-pointer transition-colors active:scale-95">
+              Delete Account
+            </button>
+          </div>
         </div>
 
       </div>
@@ -740,10 +745,80 @@
 
     </div>
   </div>
+  
+  <!-- Delete Account Modal -->
+  <div id="deleteAccountModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
+    <div class="flex w-[800px] h-[520px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
+      
+      <!-- Left Side Pane (Danger red layout) -->
+      <div class="modal-left-dots text-white w-[300px] p-[3rem_2.5rem] flex flex-col justify-between shrink-0">
+        <div>
+          <span class="text-[0.55rem] tracking-[0.12em] uppercase bg-white/10 border border-white/10 rounded-full px-2.5 py-1 font-bold inline-block leading-none">DESTRUCTION HAZARD</span>
+          <h2 class="text-3xl font-normal leading-[1.25] mb-4 font-manrope mt-6">Permanently<br>Delete Account</h2>
+          <p class="text-[0.8rem] text-[#fee2e2] leading-relaxed opacity-90">
+            This action is irreversible. All of your ledger records, transaction histories, budgets, and settings will be permanently erased.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3.5 mt-auto">
+          <div class="flex items-center gap-3 text-[0.7rem] font-bold text-[#fee2e2]">
+            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+              <span class="material-symbols-rounded text-base text-red-200">warning</span>
+            </div>
+            <span>No Recovery Possible</span>
+          </div>
+          <div class="flex items-center gap-3 text-[0.7rem] font-bold text-[#fee2e2]">
+            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+              <span class="material-symbols-rounded text-base text-red-200">delete_forever</span>
+            </div>
+            <span>Complete Data Erasure</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side Content -->
+      <div class="flex-1 p-[2.5rem_3rem] bg-white flex flex-col relative justify-between">
+        <!-- Close Button -->
+        <button id="btnCloseDeleteAccountX" class="absolute top-6 right-6 w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-muted border-none bg-transparent cursor-pointer active:scale-90 transition-transform">
+          <span class="material-symbols-rounded text-lg">close</span>
+        </button>
+
+        <div class="flex flex-col gap-5 pt-4">
+          <div>
+            <h3 class="text-lg font-bold text-main font-manrope">Confirm Account Deletion</h3>
+            <p class="text-[0.7rem] text-muted font-medium mt-0.5">Please confirm that you want to delete your account permanently.</p>
+          </div>
+
+          <div class="flex flex-col gap-4 bg-red-50/50 dark:bg-red-950/10 border border-red-100 dark:border-red-950/20 p-4 rounded-xl">
+            <h4 class="text-xs font-bold text-danger leading-none">Warning: Irreversible Action</h4>
+            <p class="text-[0.7rem] text-slate-600 dark:text-slate-400 leading-relaxed">
+              Once you confirm, we will delete your authentication credentials and remove all transactions, accounts, settings, and insights associated with your user identity from our database.
+            </p>
+          </div>
+
+          <!-- Typing confirmation field to prevent accidental deletion -->
+          <div class="flex flex-col gap-1.5 mt-2">
+            <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em]">Type "DELETE" to confirm</label>
+            <input type="text" id="deleteConfirmationInput" placeholder="TYPE CONFIRMATION WORD" required
+              class="bg-slate-50 border border-border rounded-lg px-4 py-3 text-[0.85rem] text-main outline-none w-full font-semibold focus:bg-slate-100 transition-all placeholder:text-slate-400">
+          </div>
+        </div>
+
+        <div class="flex gap-3 mt-8">
+          <button id="btnCancelDeleteAccount" class="flex-1 bg-slate-100 hover:bg-slate-200 text-main border-none rounded-lg py-3 text-xs font-bold cursor-pointer transition-colors active:scale-95">
+            Cancel
+          </button>
+          <button id="btnConfirmDeleteAccount" disabled class="flex-1 bg-danger hover:bg-red-700 text-white border-none rounded-lg py-3 text-xs font-bold cursor-not-allowed opacity-50 transition-colors active:scale-95">
+            Delete Permanently
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <!-- Authentication session script handler -->
   <script type="module">
-    import { auth, saveData } from "./js/services/api.js";
+    import { auth, saveData, deleteUserAccount } from "./js/services/api.js";
     import { onAuthStateChanged, signOut, updateProfile, updateEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
@@ -1034,6 +1109,97 @@
             showToast("Workspace deactivated successfully!", "success");
             if (typeof checkWorkspaceDeactivation === "function") {
               checkWorkspaceDeactivation();
+            }
+          });
+        }
+
+        // Initialize Delete Account Modal triggers
+        const deleteAccountModal = document.getElementById("deleteAccountModal");
+        const btnOpenDeleteAccount = document.getElementById("btnOpenDeleteAccount");
+        const btnCloseDeleteAccountX = document.getElementById("btnCloseDeleteAccountX");
+        const btnCancelDeleteAccount = document.getElementById("btnCancelDeleteAccount");
+        const btnConfirmDeleteAccount = document.getElementById("btnConfirmDeleteAccount");
+        const deleteConfirmationInput = document.getElementById("deleteConfirmationInput");
+
+        if (btnOpenDeleteAccount) {
+          btnOpenDeleteAccount.addEventListener("click", () => {
+            if (deleteConfirmationInput) {
+              deleteConfirmationInput.value = "";
+            }
+            if (btnConfirmDeleteAccount) {
+              btnConfirmDeleteAccount.setAttribute("disabled", "true");
+              btnConfirmDeleteAccount.classList.add("cursor-not-allowed", "opacity-50");
+              btnConfirmDeleteAccount.classList.remove("cursor-pointer");
+            }
+            deleteAccountModal.classList.remove("hidden");
+            deleteAccountModal.classList.add("flex");
+          });
+        }
+
+        const closeDeleteAccount = () => {
+          deleteAccountModal.classList.add("hidden");
+          deleteAccountModal.classList.remove("flex");
+        };
+
+        if (btnCloseDeleteAccountX) btnCloseDeleteAccountX.addEventListener("click", closeDeleteAccount);
+        if (btnCancelDeleteAccount) btnCancelDeleteAccount.addEventListener("click", closeDeleteAccount);
+
+        // Handle overlay click to close
+        deleteAccountModal.addEventListener("click", (e) => {
+          if (e.target === deleteAccountModal) {
+            closeDeleteAccount();
+          }
+        });
+
+        // Toggle confirm button disabled status based on "DELETE" text
+        if (deleteConfirmationInput && btnConfirmDeleteAccount) {
+          deleteConfirmationInput.addEventListener("input", (e) => {
+            const val = e.target.value.trim();
+            if (val === "DELETE") {
+              btnConfirmDeleteAccount.removeAttribute("disabled");
+              btnConfirmDeleteAccount.classList.remove("cursor-not-allowed", "opacity-50");
+              btnConfirmDeleteAccount.classList.add("cursor-pointer");
+            } else {
+              btnConfirmDeleteAccount.setAttribute("disabled", "true");
+              btnConfirmDeleteAccount.classList.add("cursor-not-allowed", "opacity-50");
+              btnConfirmDeleteAccount.classList.remove("cursor-pointer");
+            }
+          });
+        }
+
+        // Perform actual account deletion
+        if (btnConfirmDeleteAccount) {
+          btnConfirmDeleteAccount.addEventListener("click", async () => {
+            if (deleteConfirmationInput.value.trim() !== "DELETE") {
+              showToast("Please type DELETE to confirm.", "error");
+              return;
+            }
+
+            try {
+              // Show loading state on button
+              btnConfirmDeleteAccount.setAttribute("disabled", "true");
+              btnConfirmDeleteAccount.textContent = "Deleting User...";
+              
+              const res = await deleteUserAccount();
+              if (res && res.success) {
+                showToast("Account and data successfully deleted.", "success");
+                setTimeout(() => {
+                  window.location.href = "register.html";
+                }, 1500);
+              } else {
+                if (res.code === "auth/requires-recent-login") {
+                  showToast("Re-authentication required. Please sign out, sign in again, and retry account deletion.", "error");
+                } else {
+                  showToast("Error: " + (res.error || "Failed to delete account"), "error");
+                }
+                btnConfirmDeleteAccount.removeAttribute("disabled");
+                btnConfirmDeleteAccount.textContent = "Delete Permanently";
+              }
+            } catch (err) {
+              console.error(err);
+              showToast("An unexpected error occurred: " + err.message, "error");
+              btnConfirmDeleteAccount.removeAttribute("disabled");
+              btnConfirmDeleteAccount.textContent = "Delete Permanently";
             }
           });
         }

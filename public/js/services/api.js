@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/fireba
 import { 
   getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where 
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getAuth, deleteUser } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -224,3 +224,54 @@ export const deleteData = async (id) => {
 //   const result = await response.json();
 //   return result;
 // };
+
+export const deleteUserAccount = async () => {
+  const user = auth.currentUser;
+  const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
+  const userId = user ? user.uid : (demoUser ? "demo-user" : null);
+
+  if (!userId) {
+    return { success: false, error: "No active user session found" };
+  }
+
+  // 1. Delete Firestore transaction records
+  if (userId !== "demo-user") {
+    try {
+      const q = query(transactionsCollection, where("userId", "==", userId));
+      const querySnapshot = await getDocs(q);
+      
+      const deletePromises = [];
+      querySnapshot.forEach((document) => {
+        const docRef = doc(db, "transactions", document.id);
+        deletePromises.push(deleteDoc(docRef));
+      });
+      
+      await Promise.all(deletePromises);
+    } catch (err) {
+      console.error("Failed to delete user transactions from Firestore:", err);
+      return { success: false, error: "Failed to delete transaction history: " + err.message };
+    }
+  }
+
+  // 2. Delete Auth User from Firebase
+  if (user) {
+    try {
+      await deleteUser(user);
+    } catch (err) {
+      console.error("Failed to delete user from Auth:", err);
+      return { success: false, error: err.message, code: err.code };
+    }
+  }
+
+  // 3. Clean up localStorage prefixing sovereign_
+  const keysToRemove = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith("sovereign_")) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+
+  return { success: true };
+};
