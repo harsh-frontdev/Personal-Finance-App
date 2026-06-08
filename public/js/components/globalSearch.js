@@ -530,16 +530,19 @@ async function initNotifications() {
 
     // Only show top 3 alerts in dropdown to keep it compact
     activeAlerts.slice(0, 3).forEach(alert => {
-      const item = document.createElement("div");
-      item.className = "flex gap-3 py-3.5 border-b border-slate-100 dark:border-border last:border-none last:pb-0";
+      const item = document.createElement("a");
+      item.href = "alerts.html";
+      item.className = "flex gap-3 p-3 rounded-xl hover:bg-slate-100/60 dark:hover:bg-[#101a15]/80 text-main transition-all border border-transparent hover:border-slate-200/50 dark:hover:border-[#182420] cursor-pointer group mb-2 last:mb-0";
       item.innerHTML = `
-        <div class="w-8 h-8 rounded-lg ${alert.iconClass.split(" ")[0]} ${alert.iconClass.split(" ")[1]} flex items-center justify-center shrink-0">
+        <div class="w-8 h-8 rounded-lg ${alert.iconClass} flex items-center justify-center shrink-0 shadow-sm">
           <span class="material-symbols-rounded text-md">${alert.icon}</span>
         </div>
         <div class="flex flex-col gap-0.5 min-w-0 flex-1">
-          <span class="text-xs font-bold text-main leading-tight truncate">${alert.title}</span>
-          <span class="text-[0.65rem] text-muted leading-relaxed">${alert.desc}</span>
-          <span class="text-[0.55rem] text-light font-bold mt-1 uppercase">${alert.time}</span>
+          <div class="flex justify-between items-baseline">
+            <span class="text-xs font-bold text-main leading-tight truncate group-hover:text-primary transition-colors">${alert.title}</span>
+            <span class="text-[0.55rem] text-light font-bold uppercase shrink-0">${alert.time}</span>
+          </div>
+          <span class="text-[0.65rem] text-muted leading-relaxed truncate">${alert.desc}</span>
         </div>
       `;
       list.appendChild(item);
