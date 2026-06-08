@@ -756,7 +756,7 @@
           <span class="text-[0.55rem] tracking-[0.12em] uppercase bg-white/10 border border-white/10 rounded-full px-2.5 py-1 font-bold inline-block leading-none">DESTRUCTION HAZARD</span>
           <h2 class="text-3xl font-normal leading-[1.25] mb-4 font-manrope mt-6">Permanently<br>Delete Account</h2>
           <p class="text-[0.8rem] text-[#fee2e2] leading-relaxed opacity-90">
-            This action is irreversible. All of your ledger records, transaction histories, budgets, and settings will be permanently erased.
+            Once you delete the account, you will not be able to access this once again. All ledger records, transaction histories, budgets, and settings will be permanently erased.
           </p>
         </div>
         <div class="flex flex-col gap-3.5 mt-auto">
@@ -789,7 +789,7 @@
           </div>
 
           <div class="flex flex-col gap-4 bg-red-50/50 dark:bg-red-950/10 border border-red-100 dark:border-red-950/20 p-4 rounded-xl">
-            <h4 class="text-xs font-bold text-danger leading-none">Warning: Irreversible Action</h4>
+            <h4 class="text-xs font-bold text-danger leading-none">Warning: Once you delete the account you will not be able to access this once again</h4>
             <p class="text-[0.7rem] text-slate-600 dark:text-slate-400 leading-relaxed">
               Once you confirm, we will delete your authentication credentials and remove all transactions, accounts, settings, and insights associated with your user identity from our database.
             </p>
@@ -1182,6 +1182,11 @@
               
               const res = await deleteUserAccount();
               if (res && res.success) {
+                try {
+                  await signOut(auth);
+                } catch (signOutErr) {
+                  console.warn("Sign out during deletion warning: ", signOutErr);
+                }
                 showToast("Account and data successfully deleted.", "success");
                 setTimeout(() => {
                   window.location.href = "register.html";
