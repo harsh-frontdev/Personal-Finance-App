@@ -1,5 +1,5 @@
 import { auth } from "./services/api.js";
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { showToast } from "./components/toast.js";
 
 const form = document.querySelector("form");
@@ -42,12 +42,13 @@ form.addEventListener("submit", async (e) => {
     
     // Custom friendly alerts based on Firebase Auth error codes
     let friendlyMessage = "Login failed. Please verify your credentials.";
-    if (error.code === "auth/user-not-found" || error.code === "auth/invalid-email") {
-      friendlyMessage = "This user account does not exist.";
-    } else if (error.code === "auth/wrong-password") {
-      friendlyMessage = "The password does not match the account.";
-    } else if (error.code === "auth/invalid-credential") {
-      friendlyMessage = "Invalid credentials. The user does not exist or the password does not match the account.";
+    if (
+      error.code === "auth/user-not-found" ||
+      error.code === "auth/invalid-email" ||
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/invalid-credential"
+    ) {
+      friendlyMessage = "This user does not exist or the password does not match the account.";
     } else if (error.code === "auth/too-many-requests") {
       friendlyMessage = "Too many failed login attempts. Access has been temporarily suspended.";
     } else if (error.code === "auth/user-disabled") {
@@ -59,3 +60,83 @@ form.addEventListener("submit", async (e) => {
     submitBtn.textContent = "Sign In to Ledger";
   }
 });
+
+// Forgot password modal elements
+const forgotPasswordModal = document.getElementById("forgotPasswordModal");
+const btnOpenForgotPassword = document.getElementById("btnOpenForgotPassword");
+const btnCloseForgotPasswordX = document.getElementById("btnCloseForgotPasswordX");
+const btnCancelForgotPassword = document.getElementById("btnCancelForgotPassword");
+const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+const forgotPasswordEmailInput = document.getElementById("forgotPasswordEmail");
+const btnConfirmForgotPassword = document.getElementById("btnConfirmForgotPassword");
+
+if (btnOpenForgotPassword) {
+  btnOpenForgotPassword.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (forgotPasswordForm) {
+      forgotPasswordForm.reset();
+    }
+    if (emailInput && emailInput.value.trim() && forgotPasswordEmailInput) {
+      forgotPasswordEmailInput.value = emailInput.value.trim();
+    }
+    if (forgotPasswordModal) {
+      forgotPasswordModal.classList.remove("hidden");
+      forgotPasswordModal.classList.add("flex");
+    }
+  });
+}
+
+const closeForgotPassword = () => {
+  if (forgotPasswordModal) {
+    forgotPasswordModal.classList.add("hidden");
+    forgotPasswordModal.classList.remove("flex");
+  }
+};
+
+if (btnCloseForgotPasswordX) btnCloseForgotPasswordX.addEventListener("click", closeForgotPassword);
+if (btnCancelForgotPassword) btnCancelForgotPassword.addEventListener("click", closeForgotPassword);
+
+if (forgotPasswordModal) {
+  forgotPasswordModal.addEventListener("click", (e) => {
+    if (e.target === forgotPasswordModal) {
+      closeForgotPassword();
+    }
+  });
+}
+
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const email = forgotPasswordEmailInput.value.trim();
+    if (!email) return;
+
+    btnConfirmForgotPassword.disabled = true;
+    btnConfirmForgotPassword.textContent = "Sending...";
+
+    const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      showToast("A secure password reset link has been sent to your email address.", "success");
+      closeForgotPassword();
+    } catch (error) {
+      console.error("Password reset failed: ", error);
+      if (error.code === "auth/configuration-not-found" || demoUser) {
+        showToast("Demo Mode: Simulated password recovery link sent successfully.", "success");
+        closeForgotPassword();
+      } else {
+        let friendlyMessage = "Failed to send reset email. Please try again.";
+        if (error.code === "auth/user-not-found" || error.code === "auth/invalid-email") {
+          friendlyMessage = "This user account does not exist.";
+        } else if (error.code === "auth/invalid-credential") {
+          friendlyMessage = "Invalid credentials. The user does not exist.";
+        }
+        showToast(friendlyMessage, "error");
+      }
+    } finally {
+      btnConfirmForgotPassword.disabled = false;
+      btnConfirmForgotPassword.textContent = "Send Reset Link";
+    }
+  });
+}

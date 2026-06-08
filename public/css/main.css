@@ -819,6 +819,9 @@
   .h-\[360px\] {
     height: 360px;
   }
+  .h-\[480px\] {
+    height: 480px;
+  }
   .h-\[520px\] {
     height: 520px;
   }
@@ -2155,6 +2158,9 @@
   }
   .text-emerald-300 {
     color: var(--color-emerald-300);
+  }
+  .text-emerald-400 {
+    color: var(--color-emerald-400);
   }
   .text-emerald-600 {
     color: var(--color-emerald-600);
@@ -3736,18 +3742,18 @@ html.dark #toast-container > div {
   color: var(--color-main) !important;
   border-color: var(--color-border) !important;
 }
-html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div, html.dark #manageWorkspaceModal > div, html.dark #deleteAccountModal > div {
+html.dark #addTransactionModal > div, html.dark #updatePasswordModal > div, html.dark #editBudgetModal > div, html.dark #manageWorkspaceModal > div, html.dark #deleteAccountModal > div, html.dark #forgotPasswordModal > div {
   background-color: var(--color-sidebar) !important;
   color: var(--color-main) !important;
 }
 html.dark #addTransactionModal form, html.dark #updatePasswordModal form, html.dark #editBudgetForm {
   color: var(--color-main) !important;
 }
-html.dark #addTransactionModal input, html.dark #addTransactionModal select, html.dark #addTransactionModal textarea, html.dark #updatePasswordModal input, html.dark #updatePasswordModal select, html.dark #updatePasswordModal textarea, html.dark #editBudgetLimitInput, html.dark #deleteConfirmationInput {
+html.dark #addTransactionModal input, html.dark #addTransactionModal select, html.dark #addTransactionModal textarea, html.dark #updatePasswordModal input, html.dark #updatePasswordModal select, html.dark #updatePasswordModal textarea, html.dark #editBudgetLimitInput, html.dark #deleteConfirmationInput, html.dark #forgotPasswordEmail {
   background-color: var(--color-card-alt) !important;
   color: var(--color-main) !important;
 }
-html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots, html.dark #manageWorkspaceModal .modal-left-dots, html.dark #deleteAccountModal .modal-left-dots {
+html.dark #addTransactionModal .modal-left-dots, html.dark #updatePasswordModal .modal-left-dots, html.dark #manageWorkspaceModal .modal-left-dots, html.dark #deleteAccountModal .modal-left-dots, html.dark #forgotPasswordModal .modal-left-dots {
   background-color: #032b1c !important;
 }
 html.dark input[type="date"]::-webkit-calendar-picker-indicator {

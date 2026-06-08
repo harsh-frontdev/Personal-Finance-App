@@ -95,7 +95,7 @@
           <div class="flex flex-col gap-2 relative group mt-1">
             <div class="flex justify-between items-center">
               <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em] group-focus-within:text-primary transition-colors">PASSWORD</label>
-              <a href="#" class="text-[0.7rem] font-bold text-main hover:text-primary transition-colors hover:underline">Forgot Password?</a>
+              <a href="#" id="btnOpenForgotPassword" class="text-[0.7rem] font-bold text-main hover:text-primary transition-colors hover:underline">Forgot Password?</a>
             </div>
             <div class="relative flex items-center w-full">
               <input type="password" id="password" placeholder="••••••••" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3.5 text-[0.9rem] font-bold tracking-widest text-main outline-none w-full placeholder-[#a0aabf]/70 focus:border-primary focus:bg-white transition-all duration-300 hover:bg-[#e6ebf8]" required>
@@ -148,8 +148,70 @@
       </div>
     </footer>
     
-  </main>
-  
+  <!-- Forgot Password Modal -->
+  <div id="forgotPasswordModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm justify-center items-center z-[1000] hidden">
+    <div class="flex w-[800px] h-[480px] bg-white rounded-xl overflow-hidden shadow-2xl animate-fade-in-up">
+      
+      <!-- Left Side Pane (Primary green layout) -->
+      <div class="modal-left-dots text-white w-[300px] p-[3rem_2.5rem] flex flex-col justify-between shrink-0">
+        <div>
+          <span class="text-[0.55rem] tracking-[0.12em] uppercase bg-white/10 border border-white/10 rounded-full px-2.5 py-1 font-bold inline-block leading-none">RECOVERY ASSISTANCE</span>
+          <h2 class="text-3xl font-normal leading-[1.25] mb-4 font-manrope mt-6">Restore Account<br>Access</h2>
+          <p class="text-[0.8rem] text-[#8ba899] leading-relaxed opacity-90">
+            Provide the email address linked to your account, and we will dispatch password recovery instructions.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3.5 mt-auto">
+          <div class="flex items-center gap-3 text-[0.7rem] font-bold text-[#8ba899]">
+            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+              <span class="material-symbols-rounded text-base text-emerald-400">mail</span>
+            </div>
+            <span>Secure Email Reset Link</span>
+          </div>
+          <div class="flex items-center gap-3 text-[0.7rem] font-bold text-[#8ba899]">
+            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+              <span class="material-symbols-rounded text-base text-emerald-400">shield_lock</span>
+            </div>
+            <span>Enforced Cryptography</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side Content -->
+      <div class="flex-1 p-[2.5rem_3rem] bg-white flex flex-col relative justify-between">
+        <!-- Close Button -->
+        <button id="btnCloseForgotPasswordX" type="button" class="absolute top-6 right-6 w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-muted border-none bg-transparent cursor-pointer active:scale-90 transition-transform">
+          <span class="material-symbols-rounded text-lg">close</span>
+        </button>
+
+        <div class="flex flex-col gap-5 pt-4">
+          <div>
+            <h3 class="text-lg font-bold text-main font-manrope">Forgot Password</h3>
+            <p class="text-[0.7rem] text-muted font-medium mt-0.5">We will send a secure link to reset your password.</p>
+          </div>
+
+          <form id="forgotPasswordForm" class="flex flex-col gap-6 mt-4">
+            <div class="flex flex-col gap-2 relative group">
+              <label class="text-[0.65rem] font-bold text-muted uppercase tracking-[0.05em] group-focus-within:text-primary transition-colors">EMAIL ADDRESS</label>
+              <input type="email" id="forgotPasswordEmail" placeholder="name@institution.com" class="bg-[#eef2fc] border-2 border-transparent rounded-lg px-4 py-3 text-[0.9rem] font-medium text-main outline-none w-full placeholder-[#a0aabf] focus:border-primary focus:bg-white transition-all duration-300" required>
+            </div>
+            
+            <div class="flex gap-3 mt-8">
+              <button type="button" id="btnCancelForgotPassword" class="flex-1 bg-slate-100 hover:bg-slate-200 text-main border-none rounded-lg py-3 text-xs font-bold cursor-pointer transition-colors active:scale-95">
+                Cancel
+              </button>
+              <button type="submit" id="btnConfirmForgotPassword" class="flex-1 bg-primary hover:bg-primary-hover text-white border-none rounded-lg py-3 text-xs font-bold cursor-pointer transition-colors active:scale-95">
+                Send Reset Link
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
   <script src="js/login.js" type="module"></script>
 </body>
 
