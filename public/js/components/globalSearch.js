@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initNotifications();
   initDynamicCategoryRadios();
   checkWorkspaceDeactivation();
+  checkLocalFallbackBanner();
 });
 
 async function initGlobalSearch() {
@@ -727,4 +728,32 @@ function checkWorkspaceDeactivation() {
 
 // Make checkWorkspaceDeactivation globally accessible
 window.checkWorkspaceDeactivation = checkWorkspaceDeactivation;
+
+function checkLocalFallbackBanner() {
+  if (localStorage.getItem("sovereign_use_local_fallback") === "true") {
+    const main = document.querySelector("main");
+    const header = document.querySelector("header");
+    if (main && header && !document.getElementById("localFallbackBanner")) {
+      const banner = document.createElement("div");
+      banner.id = "localFallbackBanner";
+      banner.className = "bg-amber-600 text-white text-xs font-bold px-8 py-3 flex items-center justify-between z-20 shrink-0 shadow-sm";
+      banner.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-rounded text-base">warning</span>
+          <span>Running in local fallback mode (Firestore permissions restricted). Your data will be saved locally.</span>
+        </div>
+        <button id="btnReconnectDatabase" class="bg-white/20 hover:bg-white/30 text-white border-none rounded-md px-3 py-1.5 font-bold cursor-pointer transition-all active:scale-95 text-[0.7rem] uppercase tracking-wider">
+          Reconnect
+        </button>
+      `;
+      header.insertAdjacentElement("afterend", banner);
+
+      document.getElementById("btnReconnectDatabase").addEventListener("click", () => {
+        localStorage.removeItem("sovereign_use_local_fallback");
+        window.location.reload();
+      });
+    }
+  }
+}
+window.checkLocalFallbackBanner = checkLocalFallbackBanner;
 

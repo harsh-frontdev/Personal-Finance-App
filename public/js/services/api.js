@@ -31,9 +31,15 @@ export const getData = async () => {
     return { success: true, data: [] };
   }
 
-  // Local Storage Mode Fallback for Demo User or Offline Testing
-  if (userId === "demo-user") {
-    let localData = localStorage.getItem("sovereign_local_transactions");
+  const useLocalFallback = localStorage.getItem("sovereign_use_local_fallback") === "true";
+
+  // Local Storage Mode Fallback for Demo User, Offline Testing or Firestore failure fallback
+  if (userId === "demo-user" || useLocalFallback) {
+    const storageKey = `sovereign_local_transactions_${userId}`;
+    let localData = localStorage.getItem(storageKey);
+    if (!localData && userId === "demo-user") {
+      localData = localStorage.getItem("sovereign_local_transactions");
+    }
     let parsed = [];
     try {
       if (localData) {
@@ -41,16 +47,16 @@ export const getData = async () => {
       }
     } catch (e) {
       console.error("Error parsing local transactions, resetting:", e);
-      localStorage.setItem("sovereign_local_transactions", JSON.stringify([]));
+      localStorage.setItem(storageKey, JSON.stringify([]));
       parsed = [];
     }
 
-    // Auto-clean legacy seed transactions
-    if (parsed.length > 0 && parsed.every(t => t.id && String(t.id).startsWith("seed_"))) {
-      localStorage.setItem("sovereign_local_transactions", JSON.stringify([]));
+    // Auto-clean legacy seed transactions for demo user
+    if (userId === "demo-user" && parsed.length > 0 && parsed.every(t => t.id && String(t.id).startsWith("seed_"))) {
+      localStorage.setItem(storageKey, JSON.stringify([]));
       parsed = [];
     }
-    return { success: true, data: parsed };
+    return { success: true, data: parsed, fallback: useLocalFallback };
   }
 
   try {
@@ -66,11 +72,14 @@ export const getData = async () => {
       });
     });
 
-    // No auto-seeding of default transactions
-
     return { success: true, data: transactions };
   } catch (error) {
     console.error("Error getting documents from Firestore: ", error);
+    if (error.code === "permission-denied" || error.message.toLowerCase().includes("permission")) {
+      localStorage.setItem("sovereign_use_local_fallback", "true");
+      // Seamlessly reload to fallback mode
+      window.location.reload();
+    }
     return { success: false, error: error.message };
   }
 };
@@ -80,10 +89,13 @@ export const saveData = async (formData) => {
   const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
   const userId = user ? user.uid : (demoUser ? "demo-user" : null);
 
-  if (userId === "demo-user") {
+  const useLocalFallback = localStorage.getItem("sovereign_use_local_fallback") === "true";
+
+  if (userId === "demo-user" || useLocalFallback) {
+    const storageKey = `sovereign_local_transactions_${userId}`;
     let localData = [];
     try {
-      localData = JSON.parse(localStorage.getItem("sovereign_local_transactions") || "[]");
+      localData = JSON.parse(localStorage.getItem(storageKey) || "[]");
     } catch (e) {
       console.error("Error parsing local transactions for save, resetting:", e);
       localData = [];
@@ -96,7 +108,7 @@ export const saveData = async (formData) => {
       ...formData
     };
     localData.push(newTransaction);
-    localStorage.setItem("sovereign_local_transactions", JSON.stringify(localData));
+    localStorage.setItem(storageKey, JSON.stringify(localData));
     return { success: true, id: newId };
   }
 
@@ -110,16 +122,25 @@ export const saveData = async (formData) => {
     return { success: true, id: docRef.id };
   } catch (error) {
     console.error("Error adding document to Firestore: ", error);
+    if (error.code === "permission-denied" || error.message.toLowerCase().includes("permission")) {
+      localStorage.setItem("sovereign_use_local_fallback", "true");
+      window.location.reload();
+    }
     return { success: false, error: error.message };
   }
 };
 
 export const updateData = async (id, formData) => {
   const demoUser = localStorage.getItem("sovereign_demo_user");
-  if (demoUser) {
+  const useLocalFallback = localStorage.getItem("sovereign_use_local_fallback") === "true";
+  const user = auth.currentUser;
+  const userId = user ? user.uid : (demoUser ? "demo-user" : null);
+
+  if (demoUser || useLocalFallback) {
+    const storageKey = `sovereign_local_transactions_${userId}`;
     let localData = [];
     try {
-      localData = JSON.parse(localStorage.getItem("sovereign_local_transactions") || "[]");
+      localData = JSON.parse(localStorage.getItem(storageKey) || "[]");
     } catch (e) {
       console.error("Error parsing local transactions for update:", e);
       return { success: false, error: e.message };
@@ -127,7 +148,7 @@ export const updateData = async (id, formData) => {
     const idx = localData.findIndex(t => t.id === id);
     if (idx !== -1) {
       localData[idx] = { ...localData[idx], ...formData };
-      localStorage.setItem("sovereign_local_transactions", JSON.stringify(localData));
+      localStorage.setItem(storageKey, JSON.stringify(localData));
       return { success: true };
     }
     return { success: false, error: "Local transaction not found" };
@@ -139,22 +160,31 @@ export const updateData = async (id, formData) => {
     return { success: true };
   } catch (error) {
     console.error("Error updating document in Firestore: ", error);
+    if (error.code === "permission-denied" || error.message.toLowerCase().includes("permission")) {
+      localStorage.setItem("sovereign_use_local_fallback", "true");
+      window.location.reload();
+    }
     return { success: false, error: error.message };
   }
 };
 
 export const deleteData = async (id) => {
   const demoUser = localStorage.getItem("sovereign_demo_user");
-  if (demoUser) {
+  const useLocalFallback = localStorage.getItem("sovereign_use_local_fallback") === "true";
+  const user = auth.currentUser;
+  const userId = user ? user.uid : (demoUser ? "demo-user" : null);
+
+  if (demoUser || useLocalFallback) {
+    const storageKey = `sovereign_local_transactions_${userId}`;
     let localData = [];
     try {
-      localData = JSON.parse(localStorage.getItem("sovereign_local_transactions") || "[]");
+      localData = JSON.parse(localStorage.getItem(storageKey) || "[]");
     } catch (e) {
       console.error("Error parsing local transactions for delete:", e);
       return { success: false, error: e.message };
     }
     localData = localData.filter(t => t.id !== id);
-    localStorage.setItem("sovereign_local_transactions", JSON.stringify(localData));
+    localStorage.setItem(storageKey, JSON.stringify(localData));
     return { success: true };
   }
 
@@ -164,6 +194,10 @@ export const deleteData = async (id) => {
     return { success: true };
   } catch (error) {
     console.error("Error deleting document from Firestore: ", error);
+    if (error.code === "permission-denied" || error.message.toLowerCase().includes("permission")) {
+      localStorage.setItem("sovereign_use_local_fallback", "true");
+      window.location.reload();
+    }
     return { success: false, error: error.message };
   }
 };
