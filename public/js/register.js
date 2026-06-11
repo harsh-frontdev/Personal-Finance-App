@@ -1,5 +1,15 @@
 import { auth } from "./services/api.js";
-import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+  const demoUser = localStorage.getItem("sovereign_demo_user");
+  if (user || demoUser) {
+    localStorage.setItem("sovereign_logged_in", "true");
+    window.location.replace("index.html");
+  } else {
+    localStorage.removeItem("sovereign_logged_in");
+  }
+});
 
 const form = document.querySelector("form");
 const nameInput = document.querySelector("#name");
@@ -32,6 +42,7 @@ form.addEventListener("submit", async (e) => {
     });
     
     alert("Registration successful! Welcome to the Sovereign Ledger.");
+    localStorage.setItem("sovereign_logged_in", "true");
     window.location.href = "index.html";
   } catch (error) {
     console.error("Registration failed: ", error);

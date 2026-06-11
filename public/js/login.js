@@ -1,6 +1,16 @@
 import { auth } from "./services/api.js";
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 import { showToast } from "./components/toast.js";
+
+onAuthStateChanged(auth, (user) => {
+  const demoUser = localStorage.getItem("sovereign_demo_user");
+  if (user || demoUser) {
+    localStorage.setItem("sovereign_logged_in", "true");
+    window.location.replace("index.html");
+  } else {
+    localStorage.removeItem("sovereign_logged_in");
+  }
+});
 
 const form = document.querySelector("form");
 const emailInput = document.querySelector("#email");
@@ -28,6 +38,7 @@ form.addEventListener("submit", async (e) => {
   
   try {
     await signInWithEmailAndPassword(auth, email, password);
+    localStorage.setItem("sovereign_logged_in", "true");
     window.location.href = "index.html";
   } catch (error) {
     console.error("Login failed: ", error);
