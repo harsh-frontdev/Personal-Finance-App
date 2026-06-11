@@ -1,0 +1,17 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Security rules for the transactions collection
+    match /transactions/{transactionId} {
+      
+      // Allow read, update, and delete only if the user is authenticated and is the owner of the transaction
+      allow read, update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+      
+      // Allow creation only if the user is authenticated and the new document's userId matches their UID
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      
+    }
+  }
+}
