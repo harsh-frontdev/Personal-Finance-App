@@ -578,6 +578,7 @@
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
+    import { showToast } from "./js/components/toast.js";
 
     // Enforce dashboard router security
     onAuthStateChanged(auth, async (user) => {
@@ -643,7 +644,36 @@
 
     async function loadDynamicGoalsData() {
       const res = await getData();
-      if (!res || !res.success) return;
+      if (!res || !res.success) {
+        const errorMsg = res?.error || "Failed to load database. Insufficient permissions or offline connection.";
+        console.error("Goals error: ", errorMsg);
+        showToast("Database Error: " + errorMsg, "error");
+        
+        // Stop animations and clear skeletons
+        const totalAssetsEl = document.getElementById("goalsHeroTotalAssets");
+        if (totalAssetsEl) totalAssetsEl.innerHTML = '<span class="text-lg text-[#a2c6b6]">Permission Denied</span>';
+        
+        const averageCompletionEl = document.getElementById("goalsHeroAverageCompletion");
+        if (averageCompletionEl) averageCompletionEl.textContent = "--%";
+        
+        const tripSavedEl = document.getElementById("goalTripSaved");
+        if (tripSavedEl) tripSavedEl.textContent = "Unavailable";
+        
+        const tripPctTextEl = document.getElementById("goalTripPctText");
+        if (tripPctTextEl) tripPctTextEl.textContent = "Error";
+        
+        const emergencySavedEl = document.getElementById("goalEmergencySaved");
+        if (emergencySavedEl) emergencySavedEl.textContent = "Unavailable";
+        
+        const emergencyPctTextEl = document.getElementById("goalEmergencyPctText");
+        if (emergencyPctTextEl) emergencyPctTextEl.textContent = "ERROR";
+        
+        const homeSavedEl = document.getElementById("goalHomeSaved");
+        if (homeSavedEl) homeSavedEl.textContent = "Unavailable";
+        
+        document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
+        return;
+      }
       
       const allTrans = res.data;
       

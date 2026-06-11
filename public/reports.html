@@ -513,6 +513,7 @@
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
+    import { showToast } from "./js/components/toast.js";
 
     // Enforce dashboard router security
     onAuthStateChanged(auth, async (user) => {
@@ -764,7 +765,47 @@
 
     async function loadDynamicReportsData() {
       const res = await getData();
-      if (!res || !res.success) return;
+      if (!res || !res.success) {
+        const errorMsg = res?.error || "Failed to load database. Insufficient permissions or offline connection.";
+        console.error("Reports error: ", errorMsg);
+        showToast("Database Error: " + errorMsg, "error");
+        
+        // Stop animations and clear skeletons
+        const netIncomeEl = document.getElementById("reportsNetIncomeText");
+        if (netIncomeEl) netIncomeEl.innerHTML = '<span class="text-sm text-danger font-medium">Permission Denied</span>';
+        
+        const unusualActivityEl = document.getElementById("reportsUnusualActivityText");
+        if (unusualActivityEl) unusualActivityEl.textContent = `Error: ${errorMsg}`;
+        
+        const advisorTitleEl = document.getElementById("reportsAdvisorTitle");
+        const advisorTextEl = document.getElementById("reportsAdvisorText");
+        if (advisorTitleEl) advisorTitleEl.textContent = "Error Loading AI Insights";
+        if (advisorTextEl) advisorTextEl.textContent = `Could not retrieve advisor recommendations: ${errorMsg}`;
+        
+        const reportsVelocityTitle = document.getElementById("reportsVelocityTitle");
+        const reportsVelocityText = document.getElementById("reportsVelocityText");
+        if (reportsVelocityTitle) {
+          reportsVelocityTitle.textContent = "Unavailable";
+          reportsVelocityTitle.className = "text-xl font-bold font-manrope text-danger leading-tight";
+        }
+        if (reportsVelocityText) reportsVelocityText.textContent = "--%";
+        
+        const reportsInterestAccruedText = document.getElementById("reportsInterestAccruedText");
+        if (reportsInterestAccruedText) reportsInterestAccruedText.textContent = "₹0";
+        
+        const reportsTopCategoryName = document.getElementById("reportsTopCategoryName");
+        const reportsTopCategorySpend = document.getElementById("reportsTopCategorySpend");
+        if (reportsTopCategoryName) reportsTopCategoryName.textContent = "Unavailable";
+        if (reportsTopCategorySpend) reportsTopCategorySpend.textContent = "Database read error";
+        
+        const chartContainer = document.getElementById("reportsMonthlyBarChart");
+        if (chartContainer) {
+          chartContainer.innerHTML = `<div class="w-full flex items-center justify-center text-xs text-danger py-16 font-medium text-center">Failed to load chart: ${errorMsg}</div>`;
+        }
+        
+        document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
+        return;
+      }
       
       const allTrans = res.data;
       

@@ -55,10 +55,21 @@ async function refreshData() {
   if (result && result.success) {
     setTransactions(result.data)
     updateTransactions(getTransactions());
-    
-    // Clear loading-blur effect once loaded
-    document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
+  } else {
+    const errorMsg = result?.error || "Failed to load database. Insufficient permissions or offline connection.";
+    showToast("Database Error: " + errorMsg, "error");
+    const transactionDataEl = document.getElementById("transactionData");
+    if (transactionDataEl) {
+      transactionDataEl.innerHTML = `
+        <tr>
+          <td colspan="5" class="px-6 py-16 text-center align-middle bg-white text-danger font-medium text-sm">
+            Failed to load transactions: ${errorMsg}
+          </td>
+        </tr>
+      `;
+    }
   }
+  document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
 }
 
 const mainForm = document.querySelector("#addTrasactionForm");

@@ -380,6 +380,7 @@
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
+    import { showToast } from "./js/components/toast.js";
 
     // Enforce dashboard router security
     onAuthStateChanged(auth, async (user) => {
@@ -749,6 +750,28 @@
         }
 
         // Clear loading-blur effect once loaded
+        document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
+      } else {
+        const errorMsg = res?.error || "Failed to load database. Insufficient permissions or offline connection.";
+        console.error("Budgets error: ", errorMsg);
+        showToast("Database Error: " + errorMsg, "error");
+        
+        // Stop animations and clear skeletons
+        const overallBudgetTitleEl = document.getElementById("overallBudgetTitle");
+        if (overallBudgetTitleEl) {
+          overallBudgetTitleEl.innerHTML = '<span class="text-sm text-danger font-medium">Permission Denied</span>';
+        }
+        
+        const activeBudgetsTitleEl = document.getElementById("activeBudgetsTitle");
+        if (activeBudgetsTitleEl) {
+          activeBudgetsTitleEl.textContent = "Error Loading Budgets";
+        }
+        
+        const gridContainer = document.getElementById("categoryBudgetsGridContainer");
+        if (gridContainer) {
+          gridContainer.innerHTML = `<div class="col-span-12 bg-white dark:bg-[#0b120f]/60 rounded-2xl p-6 border border-border shadow-sm text-center text-danger font-medium text-sm">Failed to load budget details: ${errorMsg}</div>`;
+        }
+        
         document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
       }
     }

@@ -349,6 +349,7 @@
     import { formatDate, formatCurrency } from "./js/utils/helper.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
+    import { showToast } from "./js/components/toast.js";
 
     // Enforce dashboard router security
     onAuthStateChanged(auth, async (user) => {
@@ -739,6 +740,24 @@
         }
 
         // Clear loading-blur effect once loaded
+        document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
+      } else {
+        const errorMsg = res?.error || "Failed to load database. Insufficient permissions or offline connection.";
+        console.error("Dashboard error: ", errorMsg);
+        showToast("Database Error: " + errorMsg, "error");
+        
+        // Stop animations and clear skeletons
+        const netWorthValEl = document.querySelector(".networth-bg h2");
+        if (netWorthValEl) netWorthValEl.innerHTML = '<span class="text-lg text-[#a2c6b6]">Permission Denied</span>';
+        
+        const statsValues = document.querySelectorAll(".networth-bg span.font-manrope");
+        statsValues.forEach(el => el.textContent = "₹0");
+        
+        const listEl = document.querySelector("#recentTransactionsList");
+        if (listEl) {
+          listEl.innerHTML = `<p class="text-xs text-danger text-center py-6 font-medium">Failed to load transactions: ${errorMsg}</p>`;
+        }
+        
         document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
       }
     }

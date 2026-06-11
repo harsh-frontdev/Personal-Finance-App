@@ -359,8 +359,25 @@
 
     async function refreshAlerts() {
       const result = await getData();
-      if (result && result.success) {
-        const transactions = result.data || [];
+      if (!result || !result.success) {
+        const errorMsg = result?.error || "Failed to load database. Insufficient permissions or offline connection.";
+        console.error("Alerts error: ", errorMsg);
+        showToast("Database Error: " + errorMsg, "error");
+        
+        const container = document.getElementById("alertsListContainer");
+        if (container) {
+          container.innerHTML = `
+            <div class="flex flex-col items-center justify-center text-center p-12 bg-white rounded-2xl border border-border shadow-sm text-danger font-medium text-sm">
+              <span class="material-symbols-rounded text-[4rem] text-danger mb-4">error</span>
+              <h4 class="text-md font-bold font-manrope">Error Loading Alerts</h4>
+              <p class="text-xs text-muted mt-1 max-w-[280px]">${errorMsg}</p>
+            </div>
+          `;
+        }
+        return;
+      }
+      
+      const transactions = result.data || [];
         
         // 1. Calculate budget spendings (loading custom overrides if set)
         const savedLimits = JSON.parse(localStorage.getItem("sovereign_budget_limits")) || {};

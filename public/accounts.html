@@ -858,6 +858,7 @@
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { initModal } from "./js/components/modal.js";
     import { getFormData } from "./js/utils/formHandler.js";
+    import { showToast } from "./js/components/toast.js";
 
     // Accounts metadata definitions (pre-loaded with default mock positions)
     const accountsData = {
@@ -1011,7 +1012,31 @@
 
     async function loadDynamicAccountsData() {
       const res = await getData();
-      if (!res || !res.success) return;
+      if (!res || !res.success) {
+        const errorMsg = res?.error || "Failed to load database. Insufficient permissions or offline connection.";
+        console.error("Accounts error: ", errorMsg);
+        showToast("Database Error: " + errorMsg, "error");
+        
+        // Stop animations and clear skeletons
+        const nwTitle = document.querySelector(".networth-hero-bg h2");
+        if (nwTitle) nwTitle.innerHTML = '<span class="text-lg text-[#a2c6b6]">Permission Denied</span>';
+        
+        const liquidCashEl = document.getElementById("accountsLiquidCash");
+        if (liquidCashEl) liquidCashEl.textContent = "Unavailable";
+        
+        const totalDebtEl = document.getElementById("accountsTotalDebt");
+        if (totalDebtEl) totalDebtEl.textContent = "Unavailable";
+        
+        const velocitySpans = document.querySelectorAll(".col-span-4 .font-semibold");
+        velocitySpans.forEach(el => el.textContent = "Unavailable");
+        
+        // Set all specific card values to Unavailable / Error
+        const allCardValEls = document.querySelectorAll('.account-card span.text-2xl');
+        allCardValEls.forEach(el => el.textContent = "Unavailable");
+        
+        document.querySelectorAll(".loading-blur").forEach(el => el.classList.remove("loading-blur"));
+        return;
+      }
       
       const allTrans = res.data;
 
