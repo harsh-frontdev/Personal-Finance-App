@@ -16,6 +16,7 @@ function initApp() {
   onAuthStateChanged(auth, async (user) => {
     const demoUser = JSON.parse(localStorage.getItem("sovereign_demo_user"));
     if (!user && !demoUser) {
+      localStorage.removeItem("sovereign_logged_in");
       window.location.href = "login.html";
     } else {
       // Dynamic profile name in the header & sidebar

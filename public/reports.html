@@ -524,6 +524,7 @@
         console.warn("Failed to parse sovereign_demo_user from localStorage.");
       }
       if (!user && !demoUser) {
+        localStorage.removeItem("sovereign_logged_in");
         window.location.href = "login.html";
       } else {
         // Populate custom profile name in the header and sidebar card
