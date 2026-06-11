@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
 import { 
   getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where 
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
@@ -18,6 +19,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const db = getFirestore(app);
 export const auth = getAuth(app);
 const transactionsCollection = collection(db, "transactions");
